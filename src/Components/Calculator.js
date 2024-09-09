@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import data from "./drugdose 16.json";
+import data from "../drugdose 16.json";
 import SwitchSelector from "./SwitchSelector";
 import { FaRegCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import DrugDosageFinder from "./DrugDosageFinder";
-import "./Calculator.css";
+import "../Styles/styles.css";
 
 const Calculator = () => {
   const [medicine, setMedicine] = useState("");
@@ -107,7 +107,7 @@ const Calculator = () => {
           <div style={styles.container}>
             <div style={{ padding: "20px" }}>
               <h3 style={styles.header}>TB Prevention</h3>
-              <div style={styles.fieldContainer}>
+              <div style={styles.fieldContainer} className="fade-in">
                 <label style={styles.label}>Medicine</label>
                 <button
                   style={styles.fieldButton}
@@ -161,7 +161,7 @@ const Calculator = () => {
                 )}
               </div>
               {medicine && (
-                <div style={styles.fieldContainer}>
+                <div style={styles.fieldContainer} className="fade-in">
                   <label style={styles.label}>Age</label>
                   <button
                     style={styles.fieldButton}
@@ -214,7 +214,7 @@ const Calculator = () => {
                 </div>
               )}
               {data?.prevention?.[medicine]?.isWeight && agedata && (
-                <div style={styles.fieldContainer}>
+                <div style={styles.fieldContainer} className="fade-in">
                   <label style={styles.label}>Weight</label>
                   <button
                     style={styles.fieldButton}
@@ -297,7 +297,7 @@ const Calculator = () => {
           <div style={{ marginLeft: "30px", width: "40%", marginTop: "20px" }}>
             <h3 style={styles.header}>Result</h3>
             {regimen && result && showResult ? (
-              <div>
+              <div className="slide-down">
                 <div
                   style={{
                     marginTop: 30,
@@ -334,7 +334,7 @@ const Calculator = () => {
                     }}
                   >
                     <img
-                      src={require("./assets/drug.png")}
+                      src={require("../assets/drug.png")}
                       style={{
                         width: 40,
                         height: 40,

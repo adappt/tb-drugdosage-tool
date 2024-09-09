@@ -6,14 +6,14 @@ import {
   translations,
   weightJson,
   weightRange,
-} from "./drugtooltitle";
+} from "./utils/drugtooltitle";
 import { IoMdRadioButtonOff } from "react-icons/io";
 import { IoMdRadioButtonOn, IoMdDownload } from "react-icons/io";
 import { Modal } from "@mui/material";
 import { saveAs } from "file-saver";
 import { pdf } from "@react-pdf/renderer";
 import PdfComponent from "./PdfComponent";
-import "./Calculator.css";
+import "../Styles/styles.css";
 
 export default function DrugDosageFinder(props) {
   const styles = {
@@ -142,7 +142,7 @@ export default function DrugDosageFinder(props) {
       border: "none",
       color: "#494949",
       backgroundColor: "#fbfcfd",
-      fontSize: 18,
+      fontSize: 16,
       width: "50%",
       //fontFamily: "AvenirNextCondensed-DemiBold",
       marginInline: 10,
@@ -169,10 +169,8 @@ export default function DrugDosageFinder(props) {
       marginLeft: 20,
     },
     resultContainer: {
-      // display: 'flex',
       width: "100%",
-      //backgroundColor: "green",
-      marginTop: 10,
+      marginTop: 30,
     },
     resultTitleContainer: {
       display: "flex",
@@ -180,12 +178,65 @@ export default function DrugDosageFinder(props) {
       alignItems: "center",
     },
     resultTitle: {
-      //fontFamily: "AvenirNextCondensed-DemiBold",
       color: "#000",
       margin: 0,
       fontSize: 20,
       marginBottom: 20,
       textAlign: "left",
+    },
+    categoryContainer: {
+      width: "100%",
+      backgroundColor: "#006ab6",
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      paddingBlock: 10,
+    },
+    catergoryName: {
+      margin: 0,
+      paddingLeft: 10,
+      color: "#fff",
+    },
+    emptyResultLabel: { fontSize: 18, color: "#abb4c4" },
+    remarksHeaderContainer: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+    },
+    remarksLink: {
+      cursor: "pointer",
+      color: "blue",
+      fontSize: 16,
+      marginLeft: "20px",
+      textDecorationLine: "underline",
+    },
+    remarksContent: {
+      color: "#000",
+      textAlign: "left",
+      fontSize: 16,
+      margin: "10px 0px 0px 10px",
+    },
+    regimenDropdownContainer: {
+      display: "flex",
+      width: "90%",
+      flexDirection: "row",
+      border: "none",
+      backgroundColor: "#fff",
+      marginInline: "10px",
+      alignItems: "center",
+    },
+    regimenDropdownItem: {
+      paddingInline: 10,
+      color: "#000",
+      margin: "8px",
+      fontSize: 14,
+      fontWeight: "400",
+    },
+    divider: {
+      width: "100%",
+      height: "1px",
+      backgroundColor: "#ccc",
     },
     flex: {
       flexDirection: "row",
@@ -343,21 +394,6 @@ export default function DrugDosageFinder(props) {
       marginBottom: 5,
       textAlign: "left",
       color: "red",
-    },
-    icon: {
-      //paddingHorizontal: 10,
-      //color: Theme.customColor.primaryColor,
-    },
-    downloadBtn: {
-      borderRadius: 5,
-      height: 45,
-      alignItems: "center",
-      justifyContent: "center",
-      borderWidth: 1,
-      //borderColor: Theme.customColor.primaryColor,
-      backgroundColor: "#dbeaf5",
-      flex: 7,
-      flexDirection: "row",
     },
   };
   const [age, setAge] = useState("");
@@ -683,7 +719,6 @@ export default function DrugDosageFinder(props) {
   };
 
   const renderModal = () => {
-    // const {modalData, regimenLabel, age} = this.state;
     if (!modalData) {
       return null;
     }
@@ -712,14 +747,11 @@ export default function DrugDosageFinder(props) {
           <div style={styles.modalContainer}>
             <div
               style={{
-                //width: "75%",
-                //overflowY: "auto",
                 backgroundColor: "white",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: 10,
-                //width: "70%",
                 height: filteredModalData.length * 50 + 50,
               }}
             >
@@ -803,15 +835,7 @@ export default function DrugDosageFinder(props) {
     return (
       <>
         <button
-          style={{
-            display: "flex",
-            width: "90%",
-            flexDirection: "row",
-            border: "none",
-            backgroundColor: "#fff",
-            marginInline: "10px",
-            alignItems: "center",
-          }}
+          style={styles.regimenDropdownContainer}
           onClick={() => {
             onSelectRegimen(rowData, index);
             setOpenRegimenOptions(false);
@@ -829,26 +853,10 @@ export default function DrugDosageFinder(props) {
               color={regIdx === index ? "#016ab6" : "#dddd"}
             />
           )}
-          <p
-            style={{
-              paddingInline: 10,
-              color: "#000",
-              margin: "8px",
-              fontSize: 14,
-              fontWeight: "400",
-            }}
-          >
-            {rowData.name}
-          </p>
+          <p style={styles.regimenDropdownItem}>{rowData.name}</p>
         </button>
         {index < regArray.length - 1 ? (
-          <div
-            style={{
-              width: "100%",
-              height: "1px",
-              backgroundColor: "#ccc",
-            }}
-          ></div>
+          <div style={styles.divider}></div>
         ) : null}
       </>
     );
@@ -1821,25 +1829,14 @@ export default function DrugDosageFinder(props) {
                   color: "#0071c2",
                 }}
               >
-                {/* {LANGUAGES[this.props.languageCode].remarks} */} Remarks
+                Remarks
               </h3>
             </div>
             <p style={{ margin: 0, textAlign: "left" }}>
               {parts.map((remarks, index) => {
                 if (remarks.match(urlRegex)) {
                   return (
-                    <a
-                      key={index}
-                      href={remarks}
-                      style={{
-                        cursor: "pointer",
-                        color: "blue",
-                        fontSize: 16,
-                        marginLeft: "20px",
-                        //fontFamily: Theme.fonts.custFontNormal,
-                        textDecorationLine: "underline",
-                      }}
-                    >
+                    <a key={index} href={remarks} style={styles.remarksLink}>
                       {remarks}
                     </a>
                   );
@@ -1897,7 +1894,7 @@ export default function DrugDosageFinder(props) {
       <section div style={styles.container}>
         <div style={{ padding: "20px" }}>
           <h3 style={styles.headerTitle}>TB Treatment</h3>
-          <div style={styles.ageContainer}>
+          <div style={styles.ageContainer} className="fade-in">
             <div
               style={{
                 flex: 1,
@@ -1916,7 +1913,7 @@ export default function DrugDosageFinder(props) {
                   maxLength={2}
                 />
                 <p
-                  className="slide-in"
+                  className="slide-in-2"
                   style={{ margin: "10px", color: "#abb4c4" }}
                 >
                   by Years
@@ -1924,7 +1921,7 @@ export default function DrugDosageFinder(props) {
               </div>
             </div>
             {age === "0" ? (
-              <div style={{ flex: 2, width: "100%" }}>
+              <div style={{ flex: 2, width: "100%" }} className="fade-in">
                 <label style={styles.label}>Months</label>
                 <div style={styles.dropdown}>
                   <input
@@ -1940,7 +1937,7 @@ export default function DrugDosageFinder(props) {
             ) : null}
           </div>
           {age > 0 || months ? (
-            <div style={{ marginTop: 20, width: "100%" }}>
+            <div style={{ marginTop: 20, width: "100%" }} className="fade-in">
               <label style={styles.label}>Weight</label>
               <div style={styles.dropdown}>
                 <input
@@ -1960,7 +1957,7 @@ export default function DrugDosageFinder(props) {
             </div>
           ) : null}
           {weight ? (
-            <div style={{ marginTop: 20, width: "100%" }}>
+            <div style={{ marginTop: 20, width: "100%" }} className="fade-in">
               <label style={styles.label}>Regimen</label>
               <button
                 style={styles.fieldButton}
@@ -1993,6 +1990,7 @@ export default function DrugDosageFinder(props) {
                 width: "100%",
                 marginTop: 20,
               }}
+              className="fade-in"
             >
               <label style={styles.label}>Regimen</label>
               <button
@@ -2023,6 +2021,7 @@ export default function DrugDosageFinder(props) {
                 width: "100%",
                 marginTop: 20,
               }}
+              className="fade-in"
             >
               <label style={styles.label}>Select Drug</label>
               <button
@@ -2055,6 +2054,7 @@ export default function DrugDosageFinder(props) {
                 width: "100%",
                 marginTop: 20,
               }}
+              className="fade-in"
             >
               <label style={styles.label}>Formulation</label>
               <button
@@ -2105,6 +2105,7 @@ export default function DrugDosageFinder(props) {
                 borderRadius: "8px",
                 marginRight: "5px",
                 fontSize: "14px",
+                cursor: "pointer",
                 fontWeight: "500",
                 backgroundColor:
                   ((regimenLabel || regimenItem || regimenName) &&
@@ -2125,11 +2126,24 @@ export default function DrugDosageFinder(props) {
               Reset
             </button>
             <button
+              disabled={
+                ((regimenLabel || regimenItem || regimenName) &&
+                  (result === undefined || result) &&
+                  (regselected || itemIdx)) ||
+                ((regimenLabel || regimenItem) &&
+                  isGrouped &&
+                  medicineLabel.length > 0 &&
+                  selectedFormsArray.length > 0) ||
+                isValid
+                  ? false
+                  : true
+              }
               style={{
                 width: "50%",
                 borderRadius: "8px",
                 marginLeft: "5px",
                 fontSize: "14px",
+                cursor: "pointer",
                 color:
                   ((regimenLabel || regimenItem || regimenName) &&
                     (result === undefined || result) &&
@@ -2195,7 +2209,7 @@ export default function DrugDosageFinder(props) {
         </div>
         {(showResult && result) ||
         (showResult && typeof groupedData === "object") ? (
-          <div style={styles.resultContainer}>
+          <div style={styles.resultContainer} className="slide-down">
             <div style={styles.resultTitleContainer}>
               <p style={styles.resultTitle}>
                 {getFinalTitle(
@@ -2248,26 +2262,8 @@ export default function DrugDosageFinder(props) {
                     return (
                       <div>
                         {item?.category ? (
-                          <div
-                            style={{
-                              width: "100%",
-                              backgroundColor: "#006ab6",
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              alignItems: "center",
-                              paddingBlock: 10,
-                              //fontFamily: "AvenirNextCondensed-DemiBold",
-                            }}
-                          >
-                            <p
-                              style={{
-                                margin: 0,
-                                paddingLeft: 10,
-                                color: "#fff",
-                              }}
-                            >
-                              {item?.category}
-                            </p>
+                          <div style={styles.categoryContainer}>
+                            <p style={styles.catergoryName}>{item?.category}</p>
                           </div>
                         ) : null}
                         {item?.items?.map((item, index) => {
@@ -2368,14 +2364,7 @@ export default function DrugDosageFinder(props) {
                         })}
                         {item.remarks && item.remarks.length > 0 ? (
                           <div style={{ padding: 10 }}>
-                            <div
-                              style={{
-                                width: "100%",
-                                display: "flex",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                              }}
-                            >
+                            <div style={styles.remarksHeaderContainer}>
                               <h3
                                 style={{
                                   ...styles.headerTitle,
@@ -2383,7 +2372,6 @@ export default function DrugDosageFinder(props) {
                                   color: "#0071c2",
                                 }}
                               >
-                                {/* {LANGUAGES[this.props.languageCode].remarks} */}{" "}
                                 Remarks
                               </h3>
                             </div>
@@ -2398,14 +2386,7 @@ export default function DrugDosageFinder(props) {
                                           <a
                                             key={index}
                                             href={remarks}
-                                            style={{
-                                              color: "#0e79c5",
-                                              cursor: "pointer",
-                                              fontSize: 16,
-                                              marginLeft: "10px",
-                                              //fontFamily: Theme.fonts.custFontNormal,
-                                              textDecorationLine: "underline",
-                                            }}
+                                            style={styles.remarksLink}
                                           >
                                             {part}
                                           </a>
@@ -2413,13 +2394,7 @@ export default function DrugDosageFinder(props) {
                                       } else {
                                         return (
                                           <p
-                                            style={{
-                                              color: "#000",
-                                              textAlign: "left",
-                                              fontSize: 16,
-                                              margin: "10px 0px 0px 10px",
-                                              //fontFamily: Theme.fonts.custFontNormal,
-                                            }}
+                                            style={styles.remarksContent}
                                             key={part}
                                           >
                                             {part}
@@ -2450,14 +2425,7 @@ export default function DrugDosageFinder(props) {
                         ) : null}
                         {item?.note ? (
                           <div>
-                            <div
-                              style={{
-                                width: "100%",
-                                display: "flex",
-                                justifyContent: "flex-start",
-                                alignItems: "center",
-                              }}
-                            >
+                            <div style={styles.remarksHeaderContainer}>
                               <h3
                                 style={{
                                   ...styles.headerTitle,
@@ -2476,30 +2444,14 @@ export default function DrugDosageFinder(props) {
                                     <a
                                       key={index}
                                       href={remarks}
-                                      style={{
-                                        color: "#0e79c5",
-                                        cursor: "pointer",
-                                        fontSize: 16,
-                                        marginLeft: "10px",
-                                        //fontFamily: Theme.fonts.custFontNormal,
-                                        textDecorationLine: "underline",
-                                      }}
+                                      style={styles.remarksLink}
                                     >
                                       {remarks}
                                     </a>
                                   );
                                 }
                                 return (
-                                  <p
-                                    key={index}
-                                    style={{
-                                      color: "#000",
-                                      textAlign: "left",
-                                      fontSize: 16,
-                                      margin: "10px 0px 0px 10px",
-                                      //fontFamily: Theme.fonts.custFontNormal,
-                                    }}
-                                  >
+                                  <p key={index} style={styles.remarksContent}>
                                     {remarks}
                                   </p>
                                 );
@@ -2513,14 +2465,7 @@ export default function DrugDosageFinder(props) {
                 ;
                 {regimenItem === compareLabel["en"].nmonthoral && remarks ? (
                   <div style={{ padding: 10 }}>
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
+                    <div style={styles.remarksHeaderContainer}>
                       <h3
                         style={{
                           ...styles.headerTitle,
@@ -2538,28 +2483,14 @@ export default function DrugDosageFinder(props) {
                             <a
                               key={index}
                               href={remarks}
-                              style={{
-                                color: "#0e79c5",
-                                cursor: "pointer",
-                                fontSize: 16,
-                                marginLeft: "10px",
-                                textDecorationLine: "underline",
-                              }}
+                              style={styles.remarksLink}
                             >
                               {remarks}
                             </a>
                           );
                         }
                         return (
-                          <p
-                            key={index}
-                            style={{
-                              color: "#000",
-                              textAlign: "left",
-                              fontSize: 16,
-                              margin: "10px 0px 0px 10px",
-                            }}
-                          >
+                          <p key={index} style={styles.remarksContent}>
                             {remarks}
                           </p>
                         );
@@ -2572,7 +2503,7 @@ export default function DrugDosageFinder(props) {
           </div>
         ) : (
           <div style={{ marginTop: 150 }}>
-            <p style={{ fontSize: 18, color: "#abb4c4" }}>
+            <p style={styles.emptyResultLabel}>
               Fill the fields to see the result
             </p>
           </div>

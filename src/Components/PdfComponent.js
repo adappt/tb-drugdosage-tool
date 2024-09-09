@@ -8,16 +8,16 @@ import {
   Image,
   Font,
 } from "@react-pdf/renderer";
-import iconInfo from "./assets/icon-info-base64";
+import iconInfo from "../assets/icon-info-base64";
 
 Font.register({
   family: "Calibri",
-  src: require("./assets/Fonts/calibri.ttf"),
+  src: require("../assets/Fonts/calibri.ttf"),
 });
 
 Font.register({
   family: "Calibri",
-  src: require("./assets/Fonts/calibrib.ttf"),
+  src: require("../assets/Fonts/calibrib.ttf"),
   fontWeight: "bold",
 });
 

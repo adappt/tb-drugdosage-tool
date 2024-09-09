@@ -1,0 +1,57 @@
+.slide-in {
+    animation: slideIn 0.9s forwards;
+  }
+
+.slide-in-2 {
+    animation: slideIn2 0.5s forwards;
+}
+
+.slide-down {
+    animation: slideDown 0.7s forwards;
+}
+
+.fade-in {
+    animation: fadeIn 0.7s forwards;
+}
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn2 {
+    from {
+      transform: translateX(15px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-15px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
