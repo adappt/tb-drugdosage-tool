@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import data from "./drugdose 16.json";
 import SwitchSelector from "./SwitchSelector";
-import {FaRegCircle} from "react-icons/fa";
-import {FaRegCheckCircle} from "react-icons/fa";
-import {FaChevronDown} from "react-icons/fa";
+import { FaRegCircle } from "react-icons/fa";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 import DrugDosageFinder from "./DrugDosageFinder";
+import "./Calculator.css";
 
 const Calculator = () => {
   const [medicine, setMedicine] = useState("");
@@ -21,7 +22,6 @@ const Calculator = () => {
     default_tool: "tpt_finder",
   });
   const [showResult, setShowResult] = useState(false);
-
 
   const onClickReset = () => {
     setMedicine("");
@@ -76,7 +76,7 @@ const Calculator = () => {
     })
   );
 
-  const options= {
+  const options = {
     en: [
       { label: "TB Prevention", value: "tpt_finder" },
       { label: "TB Treatment", value: "dosage_finder" },
@@ -110,56 +110,31 @@ const Calculator = () => {
               <div style={styles.fieldContainer}>
                 <label style={styles.label}>Medicine</label>
                 <button
-                  style={{
-                    width: "100%",
-                    //height: 55,
-                    border: "1px solid #ccc",
-                    borderRadius: 5,
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    //alignSelf: "flex-start",
-                    //marginInline: 20,
-                    backgroundColor: "#fff",
-                    cursor: "pointer",
-                  }}
+                  style={styles.fieldButton}
                   onClick={() => {
                     setOpenMedicine(!openMedicine);
                     setOpenAge(false);
                     setOpenWeight(false);
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <p
-                      style={{ fontSize: 16, color: "#595959", margin: "10px" }}
-                    >
-                      {medicineName ? medicineName : "Select Medicine..."}
+                  <div style={styles.fieldSubContainer}>
+                    <p style={styles.fieldLabel}>
+                      {medicineName
+                        ? medicineName.toUpperCase()
+                        : "Select Medicine..."}
                     </p>
                   </div>
                   <div>
-                    <FaChevronDown size={14} color="#000" />
+                    <FaChevronDown
+                      className="slide-in"
+                      size={14}
+                      style={{ marginRight: 10 }}
+                      color="#000"
+                    />
                   </div>
                 </button>
                 {openMedicine && (
-                  <section
-                    style={{
-                      //border: "2px solid #ccc",
-                      position: "absolute",
-                      backgroundColor: "#fff",
-                      //marginTop: 15,
-                      zIndex: 50,
-                      width: "45%",
-                      //border: '1px solid #ccc',
-                      borderRadius: "8px",
-                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
+                  <section style={styles.dropdownSection}>
                     {medicineOptions.map((item, index) => (
                       <>
                         <button
@@ -168,45 +143,17 @@ const Calculator = () => {
                             selectMedicine(item);
                             setOpenMedicine(false);
                           }}
-                          style={{
-                            display: "flex",
-                            width: "90%",
-                            flexDirection: "row",
-                            // borderBlockStart: "none",
-                            // borderInline: "none",
-                            border: "none",
-                            backgroundColor: "#fff",
-                            marginInline: "10px",
-                            // paddingInline: 20,
-                            // borderBottomWidth: "1px",
-                            // borderBottomColor: "#ccc",
-                            alignItems: "center",
-                          }}
+                          style={styles.dropdownItem}
                         >
                           {medicineName === item.label ? (
                             <FaRegCheckCircle color="#0A2C59" size={15} />
                           ) : (
                             <FaRegCircle color="#DDDDDD" size={15} />
                           )}
-                          <p
-                            style={{
-                              paddingInline: 10,
-                              color: "#808080",
-                              margin: "10px",
-                              fontSize: 16,
-                            }}
-                          >
-                            {item.label}
-                          </p>
+                          <p style={styles.dropdownLabel}>{item.label}</p>
                         </button>
                         {index < medicineOptions.length - 1 ? (
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "1px",
-                              backgroundColor: "#ccc",
-                            }}
-                          ></div>
+                          <div style={styles.divider}></div>
                         ) : null}
                       </>
                     ))}
@@ -217,60 +164,29 @@ const Calculator = () => {
                 <div style={styles.fieldContainer}>
                   <label style={styles.label}>Age</label>
                   <button
-                    style={{
-                      width: "100%",
-                      //height: 55,
-                      border: "1px solid #ccc",
-                      borderRadius: 5,
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      //alignSelf: "flex-start",
-                      //marginInline: 20,
-                      backgroundColor: "#fff",
-                      cursor: "pointer",
-                    }}
+                    style={styles.fieldButton}
                     onClick={() => {
                       setOpenAge(!openAge);
                       setOpenWeight(false);
                       setOpenMedicine(false);
                     }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontSize: 16,
-                          color: "#595959",
-                          margin: "10px",
-                        }}
-                      >
-                        {ageName ? ageName : "Select Age..."}
+                    <div style={styles.fieldSubContainer}>
+                      <p style={styles.fieldLabel}>
+                        {ageName ? ageName.toUpperCase() : "Select Age..."}
                       </p>
                     </div>
                     <div>
-                      <FaChevronDown size={14} color="#000" />
+                      <FaChevronDown
+                        className="slide-in"
+                        size={14}
+                        color="#000"
+                        style={{ marginRight: 10 }}
+                      />
                     </div>
                   </button>
                   {openAge && (
-                    <section
-                      style={{
-                        //border: "2px solid #ccc",
-                        position: "absolute",
-                        backgroundColor: "#fff",
-                        //marginTop: 15,
-                        zIndex: 50,
-                        width: "45%",
-                        //border: '1px solid #ccc',
-                        borderRadius: "8px",
-                        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
+                    <section style={styles.dropdownSection}>
                       {ageOptions.map((item, index) => (
                         <>
                           <button
@@ -279,45 +195,17 @@ const Calculator = () => {
                               selectAge(item);
                               setOpenAge(false);
                             }}
-                            style={{
-                              display: "flex",
-                              width: "90%",
-                              flexDirection: "row",
-                              // borderBlockStart: "none",
-                              // borderInline: "none",
-                              border: "none",
-                              backgroundColor: "#fff",
-                              marginInline: "10px",
-                              // paddingInline: 20,
-                              // borderBottomWidth: "1px",
-                              // borderBottomColor: "#ccc",
-                              alignItems: "center",
-                            }}
+                            style={styles.dropdownItem}
                           >
                             {ageName === item.label ? (
                               <FaRegCheckCircle color="#0A2C59" size={15} />
                             ) : (
                               <FaRegCircle color="#DDDDDD" size={15} />
                             )}
-                            <p
-                              style={{
-                                paddingInline: 10,
-                                color: "#808080",
-                                margin: "10px",
-                                fontSize: 16,
-                              }}
-                            >
-                              {item.label}
-                            </p>
+                            <p style={styles.dropdownLabel}>{item.label}</p>
                           </button>
                           {index < ageOptions.length - 1 ? (
-                            <div
-                              style={{
-                                width: "100%",
-                                height: "1px",
-                                backgroundColor: "#ccc",
-                              }}
-                            ></div>
+                            <div style={styles.divider}></div>
                           ) : null}
                         </>
                       ))}
@@ -329,60 +217,31 @@ const Calculator = () => {
                 <div style={styles.fieldContainer}>
                   <label style={styles.label}>Weight</label>
                   <button
-                    style={{
-                      width: "100%",
-                      //height: 55,
-                      border: "1px solid #ccc",
-                      borderRadius: 5,
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      //alignSelf: "flex-start",
-                      //marginInline: 20,
-                      backgroundColor: "#fff",
-                      cursor: "pointer",
-                    }}
+                    style={styles.fieldButton}
                     onClick={() => {
                       setOpenWeight(!openWeight);
                       setOpenMedicine(false);
                       setOpenAge(false);
                     }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <p
-                        style={{
-                          fontSize: 16,
-                          color: "#595959",
-                          margin: "10px",
-                        }}
-                      >
-                        {weightName ? weightName : "Select Weight..."}
+                    <div style={styles.fieldSubContainer}>
+                      <p style={styles.fieldLabel}>
+                        {weightName
+                          ? weightName.toUpperCase()
+                          : "Select Weight..."}
                       </p>
                     </div>
                     <div>
-                      <FaChevronDown size={14} color="#000" />
+                      <FaChevronDown
+                        className="slide-in"
+                        style={{ marginRight: 10 }}
+                        size={14}
+                        color="#000"
+                      />
                     </div>
                   </button>
                   {openWeight && (
-                    <section
-                      style={{
-                        //border: "2px solid #ccc",
-                        position: "absolute",
-                        backgroundColor: "#fff",
-                        //marginTop: 15,
-                        zIndex: 50,
-                        width: "44%",
-                        //border: '1px solid #ccc',
-                        borderRadius: "8px",
-                        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
+                    <section style={styles.dropdownSection}>
                       {weightOptions.map((item, index) => (
                         <>
                           <button
@@ -391,45 +250,17 @@ const Calculator = () => {
                               selectWeight(item);
                               setOpenWeight(false);
                             }}
-                            style={{
-                              display: "flex",
-                              width: "90%",
-                              flexDirection: "row",
-                              // borderBlockStart: "none",
-                              // borderInline: "none",
-                              border: "none",
-                              backgroundColor: "#fff",
-                              marginInline: "10px",
-                              // paddingInline: 20,
-                              // borderBottomWidth: "1px",
-                              // borderBottomColor: "#ccc",
-                              alignItems: "center",
-                            }}
+                            style={styles.dropdownItem}
                           >
                             {weightName === item.label ? (
                               <FaRegCheckCircle color="#0A2C59" size={15} />
                             ) : (
                               <FaRegCircle color="#DDDDDD" size={15} />
                             )}
-                            <p
-                              style={{
-                                paddingInline: 10,
-                                color: "#808080",
-                                margin: "10px",
-                                fontSize: 16,
-                              }}
-                            >
-                              {item.label}
-                            </p>
+                            <p style={styles.dropdownLabel}>{item.label}</p>
                           </button>
                           {index < weightOptions.length - 1 ? (
-                            <div
-                              style={{
-                                width: "100%",
-                                height: "1px",
-                                backgroundColor: "#ccc",
-                              }}
-                            ></div>
+                            <div style={StyleSheet.divider}></div>
                           ) : null}
                         </>
                       ))}
@@ -439,24 +270,12 @@ const Calculator = () => {
               )}
             </div>
             <div>
-              <div
-                style={{
-                  width: "100%",
-                  height: "1px",
-                  backgroundColor: "#ccc",
-                }}
-              ></div>
-              <div style={{ display: "flex", padding: "20px" }}>
+              <div style={styles.divider}></div>
+              <div style={styles.buttonContainer}>
                 <button
                   style={{
-                    width: "50%",
-                    borderRadius: "8px",
-                    marginRight: "5px",
-                    fontSize: "14px",
-                    fontWeight: "500",
+                    ...styles.resetReusltButton,
                     backgroundColor: result ? "#d9dce1" : "#e7eaed",
-                    border: "none",
-                    padding: "10px",
                   }}
                   onClick={onClickReset}
                 >
@@ -464,15 +283,9 @@ const Calculator = () => {
                 </button>
                 <button
                   style={{
-                    width: "50%",
-                    borderRadius: "8px",
-                    marginLeft: "5px",
-                    fontSize: "14px",
+                    ...styles.resetReusltButton,
                     color: result ? "#0661c5" : "#000",
-                    fontWeight: "500",
                     backgroundColor: result ? "#c4dcf6" : "#e7eaed",
-                    border: "none",
-                    padding: "10px",
                   }}
                   onClick={() => setShowResult(true)}
                 >
@@ -481,7 +294,7 @@ const Calculator = () => {
               </div>
             </div>
           </div>
-          <div style={{ marginLeft: "30px", width: "40%", marginTop: "20px"}}>
+          <div style={{ marginLeft: "30px", width: "40%", marginTop: "20px" }}>
             <h3 style={styles.header}>Result</h3>
             {regimen && result && showResult ? (
               <div>
@@ -499,13 +312,14 @@ const Calculator = () => {
                     style={{
                       color: "white",
                       fontSize: 16,
-                      backgroundColor: "#006ab6",
-                      paddingBlock: 6,
-                      fontFamily: "AvenirNextCondensed-Bold",
-                      alignSelf: "center",
+                      backgroundColor: "#3aa5fb",
+                      padding: 5,
+                      //fontFamily: "AvenirNextCondensed-Bold",
+                      display: "flex",
+                      justifyContent: "flex-start",
                     }}
                   >
-                    DOSE BY AGE AND WEIGHT BAND
+                    Dose by age and weight band
                   </p>
                   <div
                     style={{
@@ -516,14 +330,14 @@ const Calculator = () => {
                       borderColor: "#6baddf",
                       borderTopWidth: 0,
                       paddingInline: 5,
-                      paddingBlock: 10,
+                      paddingBottom: 10,
                     }}
                   >
                     <img
                       src={require("./assets/drug.png")}
                       style={{
-                        width: 50,
-                        height: 50,
+                        width: 40,
+                        height: 40,
                         marginRight: 5,
                         marginLeft: 5,
                         alignSelf: "center",
@@ -532,10 +346,11 @@ const Calculator = () => {
                     />
                     <p
                       style={{
-                        fontFamily: "AvenirNextCondensed-DemiBold",
-                        fontSize: 16,
-                        color: "#696969",
-                        padding: 5,
+                        //fontFamily: "AvenirNextCondensed-DemiBold",
+                        fontSize: 18,
+                        color: "#203c71",
+                        lineHeight: "20px",
+                        fontWeight: "700",
                         display: "flex",
                         flexWrap: "wrap",
                         textAlign: "center",
@@ -567,19 +382,22 @@ const Calculator = () => {
                       style={{
                         color: "white",
                         fontSize: 16,
-                        paddingBlock: 6,
-                        backgroundColor: "#006ab6",
-                        fontFamily: "AvenirNextCondensed-Bold",
-                        alignSelf: "center",
+                        padding: 5,
+                        backgroundColor: "#3aa5fb",
+                        //fontFamily: "AvenirNextCondensed-Bold",
+                        display: "flex",
+                        justifyContent: "flex-start",
                       }}
                     >
-                      REGIMEN
+                      Regimen
                     </p>
                     <p
                       style={{
-                        fontFamily: "AvenirNextCondensed-DemiBold",
-                        fontSize: 16,
-                        color: "#696969",
+                        //fontFamily: "AvenirNextCondensed-DemiBold",
+                        fontSize: 18,
+                        lineHeight: "20px",
+                        fontWeight: "700",
+                        color: "#203c71",
                         padding: 10,
                         display: "flex",
                         justifyContent: "flex-start",
@@ -591,8 +409,10 @@ const Calculator = () => {
                 </div>
               </div>
             ) : (
-              <div style={{marginTop: 150}}>
-                <p style={{fontSize: 18,  color: "#abb4c4",}}>Fill the fields to see the result</p>
+              <div style={{ marginTop: 150 }}>
+                <p style={{ fontSize: 18, color: "#abb4c4" }}>
+                  Fill the fields to see the result
+                </p>
               </div>
             )}
           </div>
@@ -606,20 +426,19 @@ const Calculator = () => {
 
 const styles = {
   container1: {
-     paddingBlock: "20px",
-     paddingInline: "50px"
+    paddingBlock: "20px",
+    paddingInline: "50px",
   },
   container: {
     backgroundColor: "#F8FAFC",
-    //padding: "20px",
+    position: "relative",
     border: "1px solid #ccc",
     borderRadius: "12px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     width: "50%",
-    height: "700px",
-    //boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.1)",
+    height: "650px",
   },
   header: {
     display: "flex",
@@ -632,30 +451,72 @@ const styles = {
   fieldContainer: {
     marginBottom: "20px",
   },
+  fieldButton: {
+    width: "100%",
+    border: "1px solid #ccc",
+    borderRadius: 5,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#fbfcfd",
+    cursor: "pointer",
+  },
+  fieldSubContainer: {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  fieldLabel: { fontSize: 16, color: "#595959", margin: "10px" },
   label: {
     display: "flex",
     justifyContent: "flex-start",
     fontSize: "14px",
-    fontWeight: "500",
-    color: "#475569",
+    fontWeight: "600",
+    color: "#000",
     marginBottom: "8px",
   },
-  select: {
-    width: "100%",
-    padding: "10px",
+  dropdownSection: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    zIndex: 50,
+    width: "95%",
     borderRadius: "8px",
-    border: "1px solid #E2E8F0",
-    backgroundColor: "white",
+    boxShadow: "2px 4px 8px 1px rgba(0, 0, 0, 0.1)",
+  },
+  dropdownItem: {
+    display: "flex",
+    width: "90%",
+    flexDirection: "row",
+    border: "none",
+    backgroundColor: "#fff",
+    marginInline: "10px",
+    alignItems: "center",
+  },
+  dropdownLabel: {
+    paddingInline: 10,
+    color: "#000",
+    margin: "10px",
+    fontSize: 14,
+    fontWeight: "400",
+  },
+  divider: {
+    width: "100%",
+    height: "1px",
+    backgroundColor: "#ccc",
+  },
+  buttonContainer: {
+    display: "flex",
+    padding: "20px",
+  },
+  resetReusltButton: {
+    width: "50%",
+    borderRadius: "8px",
+    marginRight: "5px",
     fontSize: "14px",
-    color: "#0F172A",
-    outline: "none",
-    background:
-      "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAANpJREFUOE/F0rFKglEYxvGfg4OLTo1dQheQd6CIUy72tQfugktDFxAErTbVYqAu0t4FtNTe2CgOLuKgB44gH599loEHznTe53+e93nfggNP4UC9fwEkePqjkyQ4uMcMN7+E3KISAOH28Ym7PSEdVHG1yaCIIUZ4zIFcBiGaWGyHWMIEDxGWxWmgixrmoSA9hTJe0cNbinAeW6xjunnLGuNJdHK9tvkeC89ia8H29zZ41x6cYow2lhisQ77AV7qvnxYp/PocBSG4j6xQ8jaxFUUvuyaTB8hdi+MDVgONHgCTs9PAAAAAAElFTkSuQmCC) no-repeat right #fff",
-    backgroundPositionX: "calc(100% - 10px)",
+    fontWeight: "500",
     cursor: "pointer",
-    appearance: "none", // Hide default arrow
-    WebkitAppearance: "none",
-    MozAppearance: "none",
+    border: "none",
+    padding: "10px",
   },
   icon: {
     position: "absolute",

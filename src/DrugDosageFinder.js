@@ -13,18 +13,20 @@ import { Modal } from "@mui/material";
 import { saveAs } from "file-saver";
 import { pdf } from "@react-pdf/renderer";
 import PdfComponent from "./PdfComponent";
+import "./Calculator.css";
 
 export default function DrugDosageFinder(props) {
   const styles = {
     container: {
       backgroundColor: "#F8FAFC",
       border: "1px solid #ccc",
+      position: "relative",
       borderRadius: "12px",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
       width: "50%",
-      height: "700px",
+      height: "650px",
     },
     headerTitle: {
       display: "flex",
@@ -49,6 +51,54 @@ export default function DrugDosageFinder(props) {
       backgroundColor: "#fbfcfd",
       display: "flex",
       justifyContent: "space-between",
+      alignItems: "center",
+    },
+    fieldButton: {
+      width: "100%",
+      border: "1px solid #ccc",
+      borderRadius: 5,
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      backgroundColor: "#fbfcfd",
+      cursor: "pointer",
+    },
+    fieldSubContainer: {
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+    },
+    fieldLabel: {
+      fontSize: 16,
+      color: "#595959",
+      margin: "10px",
+    },
+    dropdownSection: {
+      position: "absolute",
+      backgroundColor: "#fff",
+      zIndex: 50,
+      width: "94%",
+      borderRadius: "8px",
+      boxShadow: "2px 4px 8px 1px rgba(0, 0, 0, 0.1)",
+    },
+    resultHeaderContainer: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    downloadButton: {
+      display: "flex",
+      borderRadius: "8px",
+      marginLeft: "5px",
+      fontSize: "14px",
+      justifyContent: "center",
+      cursor: "pointer",
+      alignItems: "center",
+      color: "#fff",
+      fontWeight: "500",
+      backgroundColor: "#0A2C59",
+      border: "none",
+      padding: "10px",
     },
     modalDropdownLabelContainer: { flexDirection: "row", paddingTop: 6 },
     dropdownContainer: { flex: 1, paddingBottom: 20 },
@@ -124,6 +174,11 @@ export default function DrugDosageFinder(props) {
       //backgroundColor: "green",
       marginTop: 10,
     },
+    resultTitleContainer: {
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+    },
     resultTitle: {
       //fontFamily: "AvenirNextCondensed-DemiBold",
       color: "#000",
@@ -138,7 +193,7 @@ export default function DrugDosageFinder(props) {
       justifyContent: "space-between",
     },
     kgText: {
-      color: "#000",
+      color: "#abb4c4",
       fontSize: 16,
       //fontFamily: "AvenirNextCondensed-DemiBold",
       margin: "0px 15px 0px",
@@ -203,8 +258,8 @@ export default function DrugDosageFinder(props) {
       display: "flex",
       justifyContent: "flex-start",
       fontSize: "14px",
-      fontWeight: "500",
-      color: "#475569",
+      fontWeight: "600",
+      color: "#000",
       marginBottom: "8px",
     },
     buttonContainer: {
@@ -752,14 +807,9 @@ export default function DrugDosageFinder(props) {
             display: "flex",
             width: "90%",
             flexDirection: "row",
-            // borderBlockStart: "none",
-            // borderInline: "none",
             border: "none",
             backgroundColor: "#fff",
             marginInline: "10px",
-            // paddingInline: 20,
-            // borderBottomWidth: "1px",
-            // borderBottomColor: "#ccc",
             alignItems: "center",
           }}
           onClick={() => {
@@ -782,9 +832,10 @@ export default function DrugDosageFinder(props) {
           <p
             style={{
               paddingInline: 10,
-              color: "#808080",
+              color: "#000",
               margin: "8px",
-              fontSize: 16,
+              fontSize: 14,
+              fontWeight: "400",
             }}
           >
             {rowData.name}
@@ -1864,7 +1915,12 @@ export default function DrugDosageFinder(props) {
                   placeholder={"Enter the age"}
                   maxLength={2}
                 />
-                <p style={{ margin: "10px" }}>by Years</p>
+                <p
+                  className="slide-in"
+                  style={{ margin: "10px", color: "#abb4c4" }}
+                >
+                  by Years
+                </p>
               </div>
             </div>
             {age === "0" ? (
@@ -1895,7 +1951,11 @@ export default function DrugDosageFinder(props) {
                   placeholder={"Enter weight in kg"}
                   maxLength={3}
                 />
-                {weight > 0 && <p style={styles.kgText}>kg</p>}
+                {weight > 0 && (
+                  <p className="slide-in" style={styles.kgText}>
+                    kg
+                  </p>
+                )}
               </div>
             </div>
           ) : null}
@@ -1903,56 +1963,23 @@ export default function DrugDosageFinder(props) {
             <div style={{ marginTop: 20, width: "100%" }}>
               <label style={styles.label}>Regimen</label>
               <button
-                style={{
-                  width: "100%",
-                  border: "1px solid #ccc",
-                  borderRadius: 5,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  backgroundColor: "#fff",
-                  cursor: "pointer",
-                }}
+                style={styles.fieldButton}
                 onClick={() => {
                   setOpenRegimen(!openRegimen);
                   setRegimenOptions(false);
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: 16,
-                      color: "#595959",
-                      margin: "10px",
-                    }}
-                  >
+                <div style={styles.fieldSubContainer}>
+                  <p style={styles.fieldLabel}>
                     {regimenLabel ? regimenLabel : "Select Regimen..."}
                   </p>
                 </div>
                 <div>
-                  <FaChevronDown size={14} color="#000" />
+                  <FaChevronDown className="slide-in" size={14} color="#000" />
                 </div>
               </button>
               {openRegimen && (
-                <section
-                  style={{
-                    //border: "2px solid #ccc",
-                    position: "absolute",
-                    backgroundColor: "#fff",
-                    //marginTop: 15,
-                    zIndex: 50,
-                    width: "44%",
-                    //border: '1px solid #ccc',
-                    borderRadius: "8px",
-                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
+                <section style={styles.dropdownSection}>
                   {dropdownOptions.map((item, index) =>
                     dropDownRow(item, index)
                   )}
@@ -1969,53 +1996,20 @@ export default function DrugDosageFinder(props) {
             >
               <label style={styles.label}>Regimen</label>
               <button
-                style={{
-                  width: "100%",
-                  border: "1px solid #ccc",
-                  borderRadius: 5,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  backgroundColor: "#fff",
-                  cursor: "pointer",
-                }}
+                style={styles.fieldButton}
                 onClick={() => setOpenRegimenOptions(!openRegimenOptions)}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: 16,
-                      color: "#595959",
-                      margin: "10px",
-                    }}
-                  >
+                <div style={styles.fieldSubContainer}>
+                  <p style={styles.fieldLabel}>
                     {regimenName ? regimenName : "Please Select"}
                   </p>
                 </div>
                 <div>
-                  <FaChevronDown size={14} color="#000" />
+                  <FaChevronDown className="slide-in" size={14} color="#000" />
                 </div>
               </button>
               {openRegimenOptions && (
-                <section
-                  style={{
-                    //border: "2px solid #ccc",
-                    position: "absolute",
-                    backgroundColor: "#fff",
-                    //marginTop: 15,
-                    zIndex: 50,
-                    width: "44%",
-                    //border: '1px solid #ccc',
-                    borderRadius: "8px",
-                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
+                <section style={styles.dropdownSection}>
                   {regArray.map((item, index) =>
                     dropdown_renderRegimen(item, index)
                   )}
@@ -2032,16 +2026,7 @@ export default function DrugDosageFinder(props) {
             >
               <label style={styles.label}>Select Drug</label>
               <button
-                style={{
-                  width: "100%",
-                  border: "1px solid #ccc",
-                  borderRadius: 5,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  backgroundColor: "#fff",
-                  cursor: "pointer",
-                }}
+                style={styles.fieldButton}
                 onClick={() => setShowDrugsModal(true)}
               >
                 {/* <div style={styles.modalDropdownLabelContainer}>
@@ -2073,16 +2058,7 @@ export default function DrugDosageFinder(props) {
             >
               <label style={styles.label}>Formulation</label>
               <button
-                style={{
-                  width: "100%",
-                  border: "1px solid #ccc",
-                  borderRadius: 5,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  backgroundColor: "#fff",
-                  cursor: "pointer",
-                }}
+                style={styles.fieldButton}
                 onClick={() => setShowDrugsDose(true)}
               >
                 <div
@@ -2144,7 +2120,7 @@ export default function DrugDosageFinder(props) {
                 border: "none",
                 padding: "10px",
               }}
-              onClick={() => onClickReset}
+              onClick={() => onClickReset()}
             >
               Reset
             </button>
@@ -2192,31 +2168,12 @@ export default function DrugDosageFinder(props) {
           </div>
         </div>
       </section>
-      <section style={{ marginLeft: "30px", width: "40%", marginTop: "38px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+      <section style={{ marginLeft: "30px", width: "40%", marginTop: "40px" }}>
+        <div style={styles.resultHeaderContainer}>
           <h3 style={{ ...styles.headerTitle, margin: 0 }}>Result</h3>
           {downloadOptions ? (
             <button
-              style={{
-                display: "flex",
-                borderRadius: "8px",
-                marginLeft: "5px",
-                fontSize: "14px",
-                justifyContent: "center",
-                cursor: "pointer",
-                alignItems: "center",
-                color: "#fff",
-                fontWeight: "500",
-                backgroundColor: "#0A2C59",
-                border: "none",
-                padding: "10px",
-              }}
+              style={styles.downloadButton}
               onClick={() => {
                 downloadFile({
                   result,
@@ -2239,13 +2196,7 @@ export default function DrugDosageFinder(props) {
         {(showResult && result) ||
         (showResult && typeof groupedData === "object") ? (
           <div style={styles.resultContainer}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
+            <div style={styles.resultTitleContainer}>
               <p style={styles.resultTitle}>
                 {getFinalTitle(
                   regimenLabel,
