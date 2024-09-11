@@ -6,6 +6,10 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import DrugDosageFinder from "./DrugDosageFinder";
 import "../Styles/styles.css";
+import { IoMdDownload } from "react-icons/io";
+import PdfComponent from "./PdfComponent";
+import { saveAs } from "file-saver";
+import { pdf } from "@react-pdf/renderer";
 
 const Calculator = () => {
   const [medicine, setMedicine] = useState("");
@@ -22,6 +26,7 @@ const Calculator = () => {
     default_tool: "tpt_finder",
   });
   const [showResult, setShowResult] = useState(false);
+  const [downloadOptions, setDownloadOptions] = useState(false);
 
   const onClickReset = () => {
     setMedicine("");
@@ -32,6 +37,7 @@ const Calculator = () => {
     setAgeName("");
     setWeightName("");
     setShowResult(false);
+    setDownloadOptions(false);
   };
 
   const selectMedicine = (selectedOption) => {
@@ -95,6 +101,21 @@ const Calculator = () => {
     ],
   };
 
+  const downloadFile = async (content) => {
+    const date = new Date();
+    const formattedDate = date
+      .toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replace(/\//g, "-");
+    const randomNum = Math.floor(Math.random() * 100);
+    const fileName = "Dosage_" + formattedDate + "_" + randomNum + ".pdf";
+    const blob = await pdf(<PdfComponent data={content} />).toBlob();
+    saveAs(blob, fileName);
+  };
+
   return (
     <div style={styles.container1}>
       <SwitchSelector
@@ -107,7 +128,10 @@ const Calculator = () => {
           <div style={styles.container}>
             <div style={{ padding: "20px" }}>
               <h3 style={styles.header}>TB Prevention</h3>
-              <div style={styles.fieldContainer} className="fade-in">
+              <div
+                style={{ ...styles.fieldContainer, position: "relative" }}
+                className="fade-in"
+              >
                 <label style={styles.label}>Medicine</label>
                 <button
                   style={styles.fieldButton}
@@ -161,7 +185,14 @@ const Calculator = () => {
                 )}
               </div>
               {medicine && (
-                <div style={styles.fieldContainer} className="fade-in">
+                <div
+                  style={{
+                    ...styles.fieldContainer,
+                    position: openMedicine ? null : "relative",
+                    zIndex: openMedicine ? 0 : 2,
+                  }}
+                  className={openMedicine ? null : "fade-in"}
+                >
                   <label style={styles.label}>Age</label>
                   <button
                     style={styles.fieldButton}
@@ -178,7 +209,7 @@ const Calculator = () => {
                     </div>
                     <div>
                       <FaChevronDown
-                        className="slide-in"
+                        className={openMedicine ? null : "slide-in"}
                         size={14}
                         color="#000"
                         style={{ marginRight: 10 }}
@@ -214,7 +245,14 @@ const Calculator = () => {
                 </div>
               )}
               {data?.prevention?.[medicine]?.isWeight && agedata && (
-                <div style={styles.fieldContainer} className="fade-in">
+                <div
+                  style={{
+                    ...styles.fieldContainer,
+                    position: openMedicine || openAge ? null : "relative",
+                    zIndex: openMedicine || openAge ? 0 : 2,
+                  }}
+                  className={openMedicine || openAge ? null : "fade-in"}
+                >
                   <label style={styles.label}>Weight</label>
                   <button
                     style={styles.fieldButton}
@@ -233,7 +271,7 @@ const Calculator = () => {
                     </div>
                     <div>
                       <FaChevronDown
-                        className="slide-in"
+                        className={openMedicine || openAge ? null : "slide-in"}
                         style={{ marginRight: 10 }}
                         size={14}
                         color="#000"
@@ -287,79 +325,48 @@ const Calculator = () => {
                     color: result ? "#0661c5" : "#000",
                     backgroundColor: result ? "#c4dcf6" : "#e7eaed",
                   }}
-                  onClick={() => setShowResult(true)}
+                  onClick={() => {
+                    setShowResult(true);
+                    setDownloadOptions(result === undefined ? false : true);
+                  }}
                 >
                   Result
                 </button>
               </div>
             </div>
           </div>
-          <div style={{ marginLeft: "30px", width: "40%", marginTop: "20px" }}>
-            <h3 style={styles.header}>Result</h3>
-            {regimen && result && showResult ? (
-              <div className="slide-down">
-                <div
-                  style={{
-                    marginTop: 30,
-                    marginRight: 10,
-                    borderWidth: 1,
-                    border: "1px solid #6baddf",
-                    borderColor: "#6baddf",
-                    borderTopWidth: 0,
+          <div style={styles.result}>
+            <div style={styles.resultHeaderContainer}>
+              <h3 style={styles.header}>Result</h3>
+              {downloadOptions ? (
+                <button
+                  style={styles.downloadButton}
+                  onClick={() => {
+                    downloadFile({
+                      result,
+                      regimen,
+                      defaultTool,
+                    });
                   }}
                 >
-                  <p
-                    style={{
-                      color: "white",
-                      fontSize: 16,
-                      backgroundColor: "#3aa5fb",
-                      padding: 5,
-                      //fontFamily: "AvenirNextCondensed-Bold",
-                      display: "flex",
-                      justifyContent: "flex-start",
-                    }}
-                  >
+                  <IoMdDownload size={20} />
+                  <p style={{ color: "#fff", margin: 0 }}> Download</p>
+                </button>
+              ) : null}
+            </div>
+            {regimen && result && showResult ? (
+              <div className="slide-down">
+                <div style={styles.doseResult}>
+                  <p style={styles.doseResultHeader}>
                     Dose by age and weight band
                   </p>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      borderWidth: 1,
-                      alignSelf: "center",
-                      borderColor: "#6baddf",
-                      borderTopWidth: 0,
-                      paddingInline: 5,
-                      paddingBottom: 10,
-                    }}
-                  >
+                  <div style={styles.doseResultContainer}>
                     <img
                       src={require("../assets/drug.png")}
-                      style={{
-                        width: 40,
-                        height: 40,
-                        marginRight: 5,
-                        marginLeft: 5,
-                        alignSelf: "center",
-                      }}
+                      style={styles.drugImg}
                       alt="drug"
                     />
-                    <p
-                      style={{
-                        //fontFamily: "AvenirNextCondensed-DemiBold",
-                        fontSize: 18,
-                        color: "#203c71",
-                        lineHeight: "20px",
-                        fontWeight: "700",
-                        display: "flex",
-                        flexWrap: "wrap",
-                        textAlign: "center",
-                        alignSelf: "center",
-                        marginRight: 20,
-                        width: "80%",
-                      }}
-                      numberOfLines={5}
-                    >
+                    <p style={styles.doseResultContent} numberOfLines={5}>
                       {result}{" "}
                     </p>
                   </div>
@@ -369,42 +376,9 @@ const Calculator = () => {
                     marginTop: 10,
                   }}
                 >
-                  <div
-                    style={{
-                      borderWidth: 1,
-                      border: "1px solid #6baddf",
-                      marginRight: 10,
-                      borderColor: "#6baddf",
-                      borderTopWidth: 0,
-                    }}
-                  >
-                    <p
-                      style={{
-                        color: "white",
-                        fontSize: 16,
-                        padding: 5,
-                        backgroundColor: "#3aa5fb",
-                        //fontFamily: "AvenirNextCondensed-Bold",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                      }}
-                    >
-                      Regimen
-                    </p>
-                    <p
-                      style={{
-                        //fontFamily: "AvenirNextCondensed-DemiBold",
-                        fontSize: 18,
-                        lineHeight: "20px",
-                        fontWeight: "700",
-                        color: "#203c71",
-                        padding: 10,
-                        display: "flex",
-                        justifyContent: "flex-start",
-                      }}
-                    >
-                      {regimen}{" "}
-                    </p>
+                  <div style={styles.regimenResultContainer}>
+                    <p style={styles.regimenResultHeader}>Regimen</p>
+                    <p style={styles.regimenResultContent}>{regimen} </p>
                   </div>
                 </div>
               </div>
@@ -418,7 +392,10 @@ const Calculator = () => {
           </div>
         </div>
       ) : (
-        <DrugDosageFinder treatment={data.treatment} />
+        <DrugDosageFinder
+          treatment={data.treatment}
+          defaultTool={defaultTool}
+        />
       )}
     </div>
   );
@@ -431,7 +408,6 @@ const styles = {
   },
   container: {
     backgroundColor: "#F8FAFC",
-    position: "relative",
     border: "1px solid #ccc",
     borderRadius: "12px",
     display: "flex",
@@ -478,8 +454,8 @@ const styles = {
   dropdownSection: {
     position: "absolute",
     backgroundColor: "#fff",
-    zIndex: 50,
-    width: "95%",
+    zIndex: 1000,
+    width: "100%",
     borderRadius: "8px",
     boxShadow: "2px 4px 8px 1px rgba(0, 0, 0, 0.1)",
   },
@@ -518,13 +494,97 @@ const styles = {
     border: "none",
     padding: "10px",
   },
-  icon: {
-    position: "absolute",
-    left: 700,
-    top: "31%",
-    transform: "translateY(-50%)",
-    pointerEvents: "none",
-    color: "#94A3B8",
+  result: { marginLeft: "30px", width: "40%", marginTop: "20px" },
+  doseResult: {
+    marginTop: 30,
+    marginRight: 10,
+    borderWidth: 1,
+    border: "1px solid #6baddf",
+    borderColor: "#6baddf",
+    borderTopWidth: 0,
+  },
+  doseResultHeader: {
+    color: "white",
+    fontSize: 16,
+    backgroundColor: "#3aa5fb",
+    padding: 5,
+    display: "flex",
+    justifyContent: "flex-start",
+  },
+  doseResultContainer: {
+    display: "flex",
+    flexDirection: "row",
+    borderWidth: 1,
+    alignSelf: "center",
+    borderColor: "#6baddf",
+    borderTopWidth: 0,
+    paddingInline: 5,
+    paddingBottom: 10,
+  },
+  drugImg: {
+    width: 40,
+    height: 40,
+    marginRight: 5,
+    marginLeft: 5,
+    alignSelf: "center",
+  },
+  doseResultContent: {
+    //fontFamily: "AvenirNextCondensed-DemiBold",
+    fontSize: 18,
+    color: "#203c71",
+    lineHeight: "20px",
+    fontWeight: "700",
+    display: "flex",
+    flexWrap: "wrap",
+    textAlign: "center",
+    alignSelf: "center",
+    marginRight: 20,
+    width: "80%",
+  },
+  regimenResultContainer: {
+    borderWidth: 1,
+    border: "1px solid #6baddf",
+    marginRight: 10,
+    borderColor: "#6baddf",
+    borderTopWidth: 0,
+  },
+  regimenResultHeader: {
+    color: "white",
+    fontSize: 16,
+    padding: 5,
+    backgroundColor: "#3aa5fb",
+    //fontFamily: "AvenirNextCondensed-Bold",
+    display: "flex",
+    justifyContent: "flex-start",
+  },
+  regimenResultContent: {
+    //fontFamily: "AvenirNextCondensed-DemiBold",
+    fontSize: 18,
+    lineHeight: "20px",
+    fontWeight: "700",
+    color: "#203c71",
+    padding: 10,
+    display: "flex",
+    justifyContent: "flex-start",
+  },
+  resultHeaderContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  downloadButton: {
+    display: "flex",
+    borderRadius: "8px",
+    marginLeft: "5px",
+    fontSize: "14px",
+    justifyContent: "center",
+    cursor: "pointer",
+    alignItems: "center",
+    color: "#fff",
+    fontWeight: "500",
+    backgroundColor: "#0A2C59",
+    border: "none",
+    padding: "10px",
   },
 };
 

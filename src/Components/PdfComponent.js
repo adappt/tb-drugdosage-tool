@@ -123,70 +123,47 @@ const styles = StyleSheet.create({
     verticalAlign: "middle",
     fontSize: 14,
   },
+  doseResult: {
+    marginTop: 30,
+    marginRight: 40,
+    borderWidth: 1,
+    border: "1px solid #6baddf",
+    borderColor: "#6baddf",
+    borderTopWidth: 0,
+  },
+  doseResultHeader: {
+    color: "white",
+    fontSize: 16,
+    backgroundColor: "#3aa5fb",
+    padding: 5,
+    display: "flex",
+    justifyContent: "flex-start",
+  },
+  doseResultContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    borderTopWidth: 0,
+    paddingInline: 5,
+  },
+  drugImg: {
+    width: 30,
+    height: 30,
+    marginRight: 5,
+    marginLeft: 5,
+    alignSelf: "center",
+  },
+  doseResultContent: {
+    fontSize: 18,
+    color: "#203c71",
+    display: "flex",
+    alignItems: "flex-start",
+    paddingVertical: 40,
+    fontWeight: "700",
+    marginLeft: 20,
+  },
 });
 
-const resultData = {
-  result: [
-    {
-      category: "Fixed-dose combinations",
-      items: [
-        {
-          dose: "HRZE",
-          formulation: "75/150/400/275 mg tab",
-          tabs: "5",
-        },
-        {
-          dose: "HRE",
-          formulation: "75/150/275 mg tab",
-          tabs: "5",
-        },
-        {
-          dose: "HR",
-          formulation: "75/150 mg tab",
-          tabs: "5",
-        },
-      ],
-    },
-    {
-      category: "Standalone formulations",
-      items: [
-        {
-          dose: "Isoniazid",
-          formulation: "300 mg tab",
-          tabs: "1.25",
-        },
-        {
-          dose: "Rifampicin",
-          formulation: "300 mg cap",
-          tabs: "2.5",
-        },
-        {
-          dose: "Ethambutol",
-          formulation: "400 mg tab",
-          tabs: "4",
-        },
-        {
-          dose: "Pyrazinamide",
-          formulation: "400 mg tab",
-          tabs: "5",
-        },
-        {
-          dose: "",
-          formulation: "500 mg tab",
-          tabs: "4",
-        },
-      ],
-      note: "• This table does not provide a complete treatment plan. For more information on a regimen (e.g., eligibility, duration, potential modifications, adverse events, monitoring), please refer to the relevant WHO Operational Handbook  (https://tbksp.org/en/implementation-books-solr)",
-    },
-  ],
-  age: "32",
-  months: "",
-  weight: "71",
-  header:
-    "Drug dosage for a person aged 32 years and weighing 71 kg on the 2HRZ(E)/4HR regimen for DS-TB",
-  longerRegimen: [],
-  remarks: null,
-};
 
 const PdfComponent = (data) => {
   console.log(data.data, "pdf data");
@@ -194,7 +171,35 @@ const PdfComponent = (data) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View>
-          <View style={{ backgroundColor: "#fff", margin: 20 }}>
+          {data?.data?.defaultTool.default_tool === "tpt_finder" ? (
+            <View>
+              <View style={styles.doseResult}>
+                  <Text style={styles.doseResultHeader}>
+                    Dose by age and weight band
+                  </Text>
+                  <View style={styles.doseResultContainer}>
+                    <Image
+                      src={require("../assets/drug.png")}
+                      style={styles.drugImg}
+                      alt="drug"
+                    />
+                    <Text style={styles.doseResultContent}>
+                      {data?.data?.result}{" "}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.doseResult}>
+                  <Text style={styles.doseResultHeader}>
+                   Regimen
+                  </Text>
+                    <Text style={styles.doseResultContent}>
+                      {data?.data?.regimen}{" "}
+                    </Text>
+                </View>
+            </View>
+          ) : (
+          <>
+            <View style={{ backgroundColor: "#fff", margin: 20 }}>
             <Text
               style={{ color: "black", fontSize: 16, fontFamily: "Calibri" }}
             >
@@ -732,6 +737,8 @@ const PdfComponent = (data) => {
                 {data?.data?.remarks}
               </Text>
             </View>
+          )}
+          </>
           )}
         </View>
       </Page>

@@ -77,7 +77,7 @@ export default function DrugDosageFinder(props) {
       position: "absolute",
       backgroundColor: "#fff",
       zIndex: 50,
-      width: "94%",
+      width: "100%",
       borderRadius: "8px",
       boxShadow: "2px 4px 8px 1px rgba(0, 0, 0, 0.1)",
     },
@@ -100,73 +100,91 @@ export default function DrugDosageFinder(props) {
       border: "none",
       padding: "10px",
     },
-    modalDropdownLabelContainer: { flexDirection: "row", paddingTop: 6 },
-    dropdownContainer: { flex: 1, paddingBottom: 20 },
-    dropdownLabelContainer: {
-      position: "absolute",
-      backgroundColor: "#fff",
-      top: 100,
-      left: 60,
-      paddingTop: 5,
-      paddingInline: 8,
-      zIndex: 50,
-    },
-    dropdownText: {
-      marginVertical: 10,
-      marginHorizontal: 6,
-      fontSize: 18,
-      //fontFamily: Theme.fonts.custFontNormal,
-      color: "red",
-      textAlignVertical: "center",
-      width: "90%",
-    },
-    modalDropdownLabel: { flex: 10 },
-    modalDropdownLabelText: {
-      fontSize: 16,
-      fontFamily: "AvenirNextCondensed-DemiBold",
-      marginTop: 3,
-    },
-    dropDown: {
-      //borderColor: Theme.customColor.primaryColor,
-      borderWidth: 1,
-      borderRadius: 5,
-      width: "92%",
-      alignSelf: "center",
-      height: 180,
-      marginTop: 15,
-    },
     textInput: {
       display: "flex",
-      //paddingInline: 15,
       outline: "none",
       border: "none",
       color: "#494949",
       backgroundColor: "#fbfcfd",
       fontSize: 16,
       width: "50%",
-      //fontFamily: "AvenirNextCondensed-DemiBold",
       marginInline: 10,
-    },
-    weightContainer: {
-      marginBottom: 20,
-      flex: 1,
     },
     modalContainer: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      //backgroundColor: 'blue',""
       alignItems: "center",
     },
     modalContent: {
-      //backgroundColor: 'blue',
       width: "85%",
       overflowY: "auto",
       backgroundColor: "white",
       borderRadius: 10,
     },
-    submenuItem: {
-      marginLeft: 20,
+    regimenModalContainer: {
+      backgroundColor: "white",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 10,
+    },
+    regimenModalItemBtn: {
+      display: "flex",
+      width: "100%",
+      flexDirection: "row",
+      borderBlockStart: "none",
+      borderInline: "none",
+      backgroundColor: "#fff",
+      paddingInline: 20,
+      borderBottomColor: "#ccc",
+      alignItems: "center",
+    },
+    regimenModalItemLabel: {
+      marginLeft: 8,
+      fontSize: 18,
+      textAlignVertical: "center",
+      color: "#777",
+    },
+    drugsModalContainer: {
+      padding: 10,
+      paddingInline: 20,
+      borderColor: "#ccc",
+    },
+    modalItemBtn: {
+      display: "flex",
+      width: "100%",
+      flexDirection: "row",
+      borderBlock: "none",
+      borderInline: "none",
+      backgroundColor: "#fff",
+      paddingInline: 20,
+      marginBottom: 10,
+      alignItems: "center",
+    },
+    drugsModalItemLabel: {
+      margin: 0,
+      fontSize: 18,
+      paddingInline: 10,
+      textAlignVertical: "center",
+      color: "#777",
+    },
+    drugDoseContainer: {
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+    },
+    drugDoseModalContainer: {
+      padding: 8,
+      borderColor: "#ccc",
+    },
+    drugsDoseModalItemLabel: {
+      margin: 0,
+      fontSize: 18,
+      textAlign: "left",
+      paddingLeft: "10px",
+      //fontFamily: Theme.fonts.custFontSemiBold,
+      color: "#777",
     },
     resultContainer: {
       width: "100%",
@@ -217,6 +235,12 @@ export default function DrugDosageFinder(props) {
       fontSize: 16,
       margin: "10px 0px 0px 10px",
     },
+    LRGRemarksContent: {
+      fontSize: 16,
+      color: "#000",
+      textAlign: "left",
+      margin: "20px 0px 0px 20px",
+    },
     regimenDropdownContainer: {
       display: "flex",
       width: "90%",
@@ -238,30 +262,14 @@ export default function DrugDosageFinder(props) {
       height: "1px",
       backgroundColor: "#ccc",
     },
-    flex: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-    },
     kgText: {
       color: "#abb4c4",
       fontSize: 16,
-      //fontFamily: "AvenirNextCondensed-DemiBold",
       margin: "0px 15px 0px",
-      //marginRight: 15,
-    },
-    header: {
-      width: "100%",
-      borderColor: "#ccc",
-      paddingBlock: 4,
-      backgroundColor: "#016ab6",
-      alignSelf: "center",
     },
     headerText: {
       color: "#000",
       margin: 0,
-      //textAlign: "left",
-      //fontFamily: "AvenirNextCondensed-DemiBold",
       fontSize: 15,
       fontWeight: "400",
       paddingLeft: 10,
@@ -275,36 +283,10 @@ export default function DrugDosageFinder(props) {
       justifyContent: "flex-start",
       alignItems: "center",
     },
-    cell: {
-      // borderWidth: 1,
-      // borderColor: "#fff",
-      // border: '1px solid "#fff',
-      backgroundColor: "#F5F5F5",
-      paddingBlock: 10,
-      display: "flex",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      margin: "0 5px 5px 0",
-      //fontFamily: Theme.fonts.custFontNormal,
-      fontSize: 14,
-      color: "#000",
-      width: "100%",
-    },
     row: {
       display: "flex",
-      //flexDirection: "row",
-      //justifyContent: "space-between",
-      //paddingInline: 30,
-      //borderColor: "#000",
     },
-    rowItem: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      padding: 10,
-      paddingInline: 5,
-      justifyContent: "center",
-    },
+    column: { display: "flex", flexDirection: "column" },
     label: {
       display: "flex",
       justifyContent: "flex-start",
@@ -313,47 +295,12 @@ export default function DrugDosageFinder(props) {
       color: "#000",
       marginBottom: "8px",
     },
-    buttonContainer: {
-      flex: 1,
-      flexDirection: "row-reverse",
-      justifyContent: "space-around",
-      alignItems: "center",
-      marginHorizontal: 10,
-    },
-    resultBtnText: {
-      //color: Theme.color.white,
-      fontFamily: "AvenirNextCondensed-DemiBold",
-      //fontSize: wp('4.3%'),
-    },
-    resultBtn: {
-      borderRadius: 5,
-      height: 45,
-      alignItems: "center",
-      justifyContent: "center",
-      //backgroundColor: Theme.customColor.primaryColor,
-    },
-    resetBtn: {
-      flex: 5,
-      borderRadius: 5,
-      height: 45,
-      alignItems: "center",
-      justifyContent: "center",
-      borderWidth: 1,
-      //backgroundColor: Theme.color.white,
-    },
-    resetBtnText: {
-      //fontFamily: "AvenirNextCondensed-DemiBold",
-      //fontSize: wp('4.3%'),
-      color: "#0661c5",
-      margin: 0,
-    },
     dropdown_Medicinerow_text: {
       marginHorizontal: 4,
       fontSize: 18,
       fontWeight: "600",
       margin: "8px",
       textAlignVertical: "center",
-      //fontFamily: Theme.fonts.custFontSemiBold,
       color: "#0A2C59",
     },
     modalText: {
@@ -361,11 +308,6 @@ export default function DrugDosageFinder(props) {
       flexDirection: "row",
       paddingInline: 10,
       alignItems: "center",
-    },
-    categoryText: {
-      color: "#A0A0A0",
-      //fontFamily: Theme.fonts.custFontSemiBold,
-      fontSize: 16,
     },
     closeButton: {
       backgroundColor: "#0A2C59",
@@ -377,23 +319,58 @@ export default function DrugDosageFinder(props) {
       justifyContent: "center",
       alignItems: "center",
     },
-    noteContainer: {
-      flex: 1,
-      flexDirection: "row",
-      marginTop: 20,
+    closeButtonText: {
+      textAlign: "center",
+      color: "#fff",
+      fontSize: 20,
+    },
+    resetResultButton: {
+      width: "50%",
+      borderRadius: "8px",
+      fontSize: "14px",
+      cursor: "pointer",
+      fontWeight: "500",
+      border: "none",
+      padding: "10px",
     },
     overlay: {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       borderRadius: 10,
-      //width: "100%",
     },
-    alertText: {
-      fontSize: 15,
-      marginBottom: 5,
-      textAlign: "left",
-      color: "red",
+    regimenDropdownOptions: {
+      display: "flex",
+      width: "90%",
+      flexDirection: "row",
+      border: "none",
+      backgroundColor: "#fff",
+      marginInline: "10px",
+      alignItems: "center",
+    },
+    regimenDropdownItemLabel: {
+      paddingInline: 10,
+      color: "#000",
+      margin: "8px",
+    },
+    modal: {
+      display: "flex",
+      alignSelf: "center",
+      justifyContent: "center",
+    },
+    medicationContainer: {
+      width: "100%",
+      backgroundColor: "#006ab6",
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      paddingBlock: 10,
+    },
+    medicationLRGContainer: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
     },
   };
   const [age, setAge] = useState("");
@@ -622,15 +599,7 @@ export default function DrugDosageFinder(props) {
               // Dropdown handling (hide) logic
             }
           }}
-          style={{
-            display: "flex",
-            width: "90%",
-            flexDirection: "row",
-            border: "none",
-            backgroundColor: "#fff",
-            marginInline: "10px",
-            alignItems: "center",
-          }}
+          style={styles.regimenDropdownOptions}
         >
           {rowData.label !== compareLabel["en"].DRTB && (
             <>
@@ -649,9 +618,7 @@ export default function DrugDosageFinder(props) {
           )}
           <p
             style={{
-              paddingInline: 10,
-              color: "#000",
-              margin: "8px",
+              ...styles.regimenDropdownItemLabel,
               fontSize: rowData.label === compareLabel["en"].DRTB ? 12 : 14,
               fontWeight:
                 rowData.label === compareLabel["en"].DRTB ? "600" : "400",
@@ -662,13 +629,7 @@ export default function DrugDosageFinder(props) {
           </p>
         </button>
         {index < dropdownOptions.length - 1 ? (
-          <div
-            style={{
-              width: "100%",
-              height: "1px",
-              backgroundColor: "#ccc",
-            }}
-          ></div>
+          <div style={styles.divider}></div>
         ) : null}
       </div>
     );
@@ -735,11 +696,7 @@ export default function DrugDosageFinder(props) {
       <Modal
         open={showModal}
         onClose={() => setShowModal(false)}
-        style={{
-          display: "flex",
-          alignSelf: "center",
-          justifyContent: "center",
-        }}
+        style={styles.modal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -747,31 +704,19 @@ export default function DrugDosageFinder(props) {
           <div style={styles.modalContainer}>
             <div
               style={{
-                backgroundColor: "white",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 10,
+                ...styles.regimenModalContainer,
                 height: filteredModalData.length * 50 + 50,
               }}
             >
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={styles.column}>
                 {filteredModalData.map((submenuItem, index) => (
                   <button
                     key={index}
                     onClick={() => handleItems(submenuItem, index)}
                     style={{
-                      display: "flex",
-                      width: "100%",
-                      flexDirection: "row",
-                      borderBlockStart: "none",
-                      borderInline: "none",
-                      backgroundColor: "#fff",
-                      paddingInline: 20,
+                      ...styles.regimenModalItemBtn,
                       borderBottomWidth:
                         index < filteredModalData.length - 1 ? "1px" : 0,
-                      borderBottomColor: "#ccc",
-                      alignItems: "center",
                     }}
                   >
                     {submenuItem.label === regimenLabel ? (
@@ -793,15 +738,7 @@ export default function DrugDosageFinder(props) {
                         }
                       />
                     )}
-                    <p
-                      style={{
-                        marginLeft: 8,
-                        fontSize: 18,
-                        textAlignVertical: "center",
-                        //fontFamily: Theme.fonts.custFontSemiBold,
-                        color: "#777",
-                      }}
-                    >
+                    <p style={styles.regimenModalItemLabel}>
                       {submenuItem.label}
                     </p>
                   </button>
@@ -1220,9 +1157,7 @@ export default function DrugDosageFinder(props) {
         open={showDrugsDose}
         onClose={() => setShowDrugsDose(false)}
         style={{
-          display: "flex",
-          alignSelf: "center",
-          justifyContent: "center",
+          ...styles.modal,
           height: "90%",
         }}
         aria-labelledby="modal-modal-title"
@@ -1234,9 +1169,8 @@ export default function DrugDosageFinder(props) {
               <div
                 key={index}
                 style={{
-                  padding: 8,
+                  ...styles.drugDoseModalContainer,
                   borderBottomWidth: item.length - 1 > index ? 0.5 : 0,
-                  borderColor: "#ccc",
                 }}
               >
                 {filteredData[item].map((medication, index) => {
@@ -1245,7 +1179,7 @@ export default function DrugDosageFinder(props) {
                       <p style={styles.dropdown_Medicinerow_text}>
                         {medication.name}
                       </p>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={styles.column}>
                         {medication.form.map((form, index) => {
                           const formName =
                             form.name.lastIndexOf(",") === form.name.length - 1
@@ -1254,17 +1188,7 @@ export default function DrugDosageFinder(props) {
                           return (
                             <button
                               key={index}
-                              style={{
-                                display: "flex",
-                                width: "100%",
-                                flexDirection: "row",
-                                borderBlock: "none",
-                                borderInline: "none",
-                                backgroundColor: "#fff",
-                                paddingInline: 20,
-                                marginBottom: 10,
-                                alignItems: "center",
-                              }}
+                              style={styles.modalItemBtn}
                               onClick={() =>
                                 selectDoseValue(
                                   item,
@@ -1302,16 +1226,7 @@ export default function DrugDosageFinder(props) {
                                     }
                                   />
                                 )}
-                                <p
-                                  style={{
-                                    margin: 0,
-                                    fontSize: 18,
-                                    textAlign: "left",
-                                    paddingLeft: "10px",
-                                    //fontFamily: Theme.fonts.custFontSemiBold,
-                                    color: "#777",
-                                  }}
-                                >
+                                <p style={styles.drugsDoseModalItemLabel}>
                                   {formName}
                                 </p>
                               </div>
@@ -1334,16 +1249,7 @@ export default function DrugDosageFinder(props) {
                 height: 45,
               }}
             >
-              <p
-                style={{
-                  textAlign: "center",
-                  color: "#fff",
-                  fontSize: 20,
-                  //fontFamily: Theme.fonts.custFontSemiBold,
-                }}
-              >
-                close
-              </p>
+              <p style={styles.closeButtonText}>close</p>
             </button>
           </div>
         </div>
@@ -1360,19 +1266,13 @@ export default function DrugDosageFinder(props) {
         open={showDrugsModal}
         onClose={() => setShowDrugsModal(false)}
         style={{
-          display: "flex",
-          alignSelf: "center",
-          justifyContent: "center",
+          ...styles.modal,
           height: "90%",
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div
-          style={{
-            ...styles.modalContainer,
-          }}
-        >
+        <div style={styles.modalContainer}>
           <div
             style={{
               ...styles.modalContent,
@@ -1385,29 +1285,17 @@ export default function DrugDosageFinder(props) {
               <div
                 key={index}
                 style={{
-                  padding: 10,
-                  paddingInline: 20,
+                  ...styles.drugsModalContainer,
                   borderBottomWidth: group.group.length - 1 > index ? 0.5 : 0,
-                  borderColor: "#ccc",
                 }}
               >
                 <p style={styles.dropdown_Medicinerow_text}>{rowData.name}</p>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={styles.column}>
                   {rowData.group.map((group, index) => {
                     return (
                       <button
                         key={index}
-                        style={{
-                          display: "flex",
-                          width: "100%",
-                          flexDirection: "row",
-                          borderBlock: "none",
-                          borderInline: "none",
-                          backgroundColor: "#fff",
-                          paddingInline: 20,
-                          marginBottom: 10,
-                          alignItems: "center",
-                        }}
+                        style={styles.modalItemBtn}
                         onClick={() =>
                           onSelectMeds(
                             rowData.name,
@@ -1426,18 +1314,7 @@ export default function DrugDosageFinder(props) {
                           ) : (
                             <FaRegCircle size={20} color="#DDDDDD" />
                           )}
-                          <p
-                            style={{
-                              margin: 0,
-                              fontSize: 18,
-                              paddingInline: 10,
-                              textAlignVertical: "center",
-                              //fontFamily: Theme.fonts.custFontSemiBold,
-                              color: "#777",
-                            }}
-                          >
-                            {group.name}
-                          </p>
+                          <p style={styles.drugsModalItemLabel}>{group.name}</p>
                         </div>
                       </button>
                     );
@@ -1451,16 +1328,7 @@ export default function DrugDosageFinder(props) {
                 onClick={() => closeModal()}
                 style={styles.closeButton}
               >
-                <p
-                  style={{
-                    textAlign: "center",
-                    color: "#fff",
-                    fontSize: 20,
-                    //fontFamily: Theme.fonts.custFontSemiBold,
-                  }}
-                >
-                  close
-                </p>
+                <p style={styles.closeButtonText}>close</p>
               </button>
             </div>
           </div>
@@ -1629,16 +1497,7 @@ export default function DrugDosageFinder(props) {
             renderedHeaders.add(item.group);
             return (
               <React.Fragment key={item.group}>
-                <div
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#006ab6",
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    paddingBlock: 10,
-                  }}
-                >
+                <div style={styles.medicationContainer}>
                   <p
                     style={{
                       ...styles.headerText,
@@ -1814,14 +1673,7 @@ export default function DrugDosageFinder(props) {
         })}
         {(regimenLabel || regimenItem) === compareLabel["en"].LRG ? (
           <div>
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
+            <div style={styles.medicationLRGContainer}>
               <h3
                 style={{
                   ...styles.headerTitle,
@@ -1842,17 +1694,7 @@ export default function DrugDosageFinder(props) {
                   );
                 }
                 return (
-                  <p
-                    key={index}
-                    style={{
-                      //lineHeight: 20,
-                      fontSize: 16,
-                      color: "#000",
-                      textAlign: "left",
-                      margin: "20px 0px 0px 20px",
-                      //fontFamily: Theme.fonts.custFontNormal,
-                    }}
-                  >
+                  <p key={index} style={styles.LRGRemarksContent}>
                     {remarks}
                   </p>
                 );
@@ -1888,9 +1730,9 @@ export default function DrugDosageFinder(props) {
     const blob = await pdf(<PdfComponent data={content} />).toBlob();
     saveAs(blob, fileName);
   };
-
+  const { defaultTool } = props;
   return (
-    <div style={{ display: "flex" }}>
+    <div style={styles.row}>
       <section div style={styles.container}>
         <div style={{ padding: "20px" }}>
           <h3 style={styles.headerTitle}>TB Treatment</h3>
@@ -1950,14 +1792,17 @@ export default function DrugDosageFinder(props) {
                 />
                 {weight > 0 && (
                   <p className="slide-in" style={styles.kgText}>
-                    kg
+                    by kg
                   </p>
                 )}
               </div>
             </div>
           ) : null}
           {weight ? (
-            <div style={{ marginTop: 20, width: "100%" }} className="fade-in">
+            <div
+              style={{ marginTop: 20, width: "100%", position: "relative" }}
+              className="fade-in"
+            >
               <label style={styles.label}>Regimen</label>
               <button
                 style={styles.fieldButton}
@@ -1989,8 +1834,9 @@ export default function DrugDosageFinder(props) {
               style={{
                 width: "100%",
                 marginTop: 20,
+                position: "relative",
               }}
-              className="fade-in"
+              className={openRegimen ? null : "fade-in"}
             >
               <label style={styles.label}>Regimen</label>
               <button
@@ -2021,15 +1867,13 @@ export default function DrugDosageFinder(props) {
                 width: "100%",
                 marginTop: 20,
               }}
-              className="fade-in"
+              className={openRegimen ? null : "fade-in"}
             >
               <label style={styles.label}>Select Drug</label>
               <button
                 style={styles.fieldButton}
                 onClick={() => setShowDrugsModal(true)}
               >
-                {/* <div style={styles.modalDropdownLabelContainer}>
-                  <div style={styles.modalDropdownLabel}> */}
                 <p
                   style={{
                     fontSize: 16,
@@ -2054,20 +1898,14 @@ export default function DrugDosageFinder(props) {
                 width: "100%",
                 marginTop: 20,
               }}
-              className="fade-in"
+              className={openRegimen ? null : "fade-in"}
             >
               <label style={styles.label}>Formulation</label>
               <button
                 style={styles.fieldButton}
                 onClick={() => setShowDrugsDose(true)}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
+                <div style={styles.drugDoseContainer}>
                   <p
                     style={{
                       fontSize: 16,
@@ -2091,22 +1929,12 @@ export default function DrugDosageFinder(props) {
           {renderDrugsDosingModal()}
         </div>
         <div>
-          <div
-            style={{
-              width: "100%",
-              height: "1px",
-              backgroundColor: "#ccc",
-            }}
-          ></div>
-          <div style={{ display: "flex", padding: "20px" }}>
+          <div style={styles.divider}></div>
+          <div style={{ ...styles.row, padding: "20px" }}>
             <button
               style={{
-                width: "50%",
-                borderRadius: "8px",
+                ...styles.resetResultButton,
                 marginRight: "5px",
-                fontSize: "14px",
-                cursor: "pointer",
-                fontWeight: "500",
                 backgroundColor:
                   ((regimenLabel || regimenItem || regimenName) &&
                     (result === undefined || result) &&
@@ -2118,8 +1946,6 @@ export default function DrugDosageFinder(props) {
                   isValid
                     ? "#d9dce1"
                     : "#e7eaed",
-                border: "none",
-                padding: "10px",
               }}
               onClick={() => onClickReset()}
             >
@@ -2139,11 +1965,8 @@ export default function DrugDosageFinder(props) {
                   : true
               }
               style={{
-                width: "50%",
-                borderRadius: "8px",
+                ...styles.resetResultButton,
                 marginLeft: "5px",
-                fontSize: "14px",
-                cursor: "pointer",
                 color:
                   ((regimenLabel || regimenItem || regimenName) &&
                     (result === undefined || result) &&
@@ -2155,7 +1978,6 @@ export default function DrugDosageFinder(props) {
                   isValid
                     ? "#0661c5"
                     : "#000",
-                fontWeight: "500",
                 backgroundColor:
                   ((regimenLabel || regimenItem || regimenName) &&
                     (result === undefined || result) &&
@@ -2167,8 +1989,6 @@ export default function DrugDosageFinder(props) {
                   isValid
                     ? "#c4dcf6"
                     : "#e7eaed",
-                border: "none",
-                padding: "10px",
               }}
               onClick={() => {
                 getGroupedData();
@@ -2198,11 +2018,12 @@ export default function DrugDosageFinder(props) {
                   longerRegimen,
                   regimenItem,
                   regimenLabel,
+                  defaultTool,
                   remarks,
                 });
               }}
             >
-              <IoMdDownload size={20} style={styles.icon} />
+              <IoMdDownload size={20} />
               <p style={{ color: "#fff", margin: 0 }}> Download</p>
             </button>
           ) : null}
@@ -2411,7 +2232,6 @@ export default function DrugDosageFinder(props) {
                                     style={{
                                       color: "#000",
                                       fontSize: 16,
-                                      //fontFamily: Theme.fonts.custFontNormal,
                                     }}
                                     key={rmkItm}
                                   >
@@ -2433,7 +2253,6 @@ export default function DrugDosageFinder(props) {
                                   color: "#0071c2",
                                 }}
                               >
-                                {/* {LANGUAGES[this.props.languageCode].remarks} */}{" "}
                                 Remarks
                               </h3>
                             </div>

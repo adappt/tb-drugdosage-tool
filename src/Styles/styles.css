@@ -3,7 +3,7 @@
   }
 
 .slide-in-2 {
-    animation: slideIn2 0.5s forwards;
+    animation: slideIn2 0.9s forwards;
 }
 
 .slide-down {
@@ -27,7 +27,7 @@
 
   @keyframes slideIn2 {
     from {
-      transform: translateX(15px);
+      transform: translateX(25px);
       opacity: 0;
     }
     to {
