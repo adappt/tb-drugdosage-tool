@@ -327,7 +327,7 @@ const Calculator = () => {
                   }}
                   onClick={() => {
                     setShowResult(true);
-                    setDownloadOptions(result === undefined ? false : true);
+                    setDownloadOptions(!result ? false : true);
                   }}
                 >
                   Result
