@@ -298,7 +298,7 @@ const Calculator = () => {
                             <p style={styles.dropdownLabel}>{item.label}</p>
                           </button>
                           {index < weightOptions.length - 1 ? (
-                            <div style={StyleSheet.divider}></div>
+                            <div style={styles.divider}></div>
                           ) : null}
                         </>
                       ))}
