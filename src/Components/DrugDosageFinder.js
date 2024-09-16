@@ -379,7 +379,6 @@ export default function DrugDosageFinder(props) {
   const [showDrugsModal, setShowDrugsModal] = useState(false);
   const [showDrugsDose, setShowDrugsDose] = useState(false);
   const [regimenOptions, setRegimenOptions] = useState([]);
-  const [isActive, setIsActive] = useState(true);
   const [regArray, setRegArray] = useState([]);
   const [regimenLabel, setRegimenLabel] = useState("");
   const [regimenName, setRegimenName] = useState("");
@@ -395,9 +394,6 @@ export default function DrugDosageFinder(props) {
   const [groupMedicineData, setGroupMedicineData] = useState({});
   const [medicineData, setMedicineData] = useState({});
   const [group, setGroup] = useState({});
-  const [selectedDose, setSelectedDose] = useState([]);
-  const [selectedMedicineData, setSelectedMedicineData] = useState([]);
-  const [longRegimen, setLongRegimen] = useState({});
   const [showResult, setShowResult] = useState(null);
   const [isGrouped, setIsGrouped] = useState(null);
   const [groupedData, setGroupedData] = useState({});
@@ -407,7 +403,6 @@ export default function DrugDosageFinder(props) {
   const [modalData, setModalData] = useState();
   const [isValidated, setIsValidated] = useState(false);
   const [selectedFormsArray, setSelectedFormsArray] = useState([]);
-  const [invalidRegimen, setInvalidRegimen] = useState(false);
   const [downloadOptions, setDownloadOptions] = useState(false);
   const [longerRegimen, setLongerRegimen] = useState({});
   const [regselected, setRegselected] = useState(false);
@@ -517,13 +512,6 @@ export default function DrugDosageFinder(props) {
             return result;
           }, []);
 
-          const mergedData2 = {
-            category: "",
-            items: mergedData
-              .reverse()
-              .reduce((acc, curr) => acc.concat(curr.items), []),
-          };
-
           setResult(mergedData.reverse());
           setGroupedData(null);
           setRegselected(true);
@@ -531,11 +519,6 @@ export default function DrugDosageFinder(props) {
       } else if (weight >= 25 && drRes) {
         const values = props.treatment.data[categoryName[1]][value]["65"];
         const hrTbKeys = Object.keys(drRes);
-        const isInputInRange = hrTbKeys.some((key) => {
-          const [start, end] = key.split("to").map(Number);
-          return weight >= start && weight <= end;
-        });
-
         const mergedData = hrTbKeys.reduce((result, key) => {
           const [start, end] = key.split("to").map(Number);
           if (weight >= start && weight <= end) {
@@ -760,7 +743,6 @@ export default function DrugDosageFinder(props) {
     setResult(results);
     setRegIdx(index);
     setIsGrouped(true);
-    setIsActive(false);
     setShowResult(false);
     setGroupedData(null);
     setRegimenItem("");
@@ -813,19 +795,14 @@ export default function DrugDosageFinder(props) {
     setRegimenName("");
     setItemIdx(null);
     setRegimenOptions([]);
-    setSelectedDose([]);
-    setSelectedMedicineData([]);
-    setLongRegimen({});
     setShowResult(null);
     setIsGrouped(null);
     setGroupedData({});
     setIsNewSet(false);
     setRegIdx(null);
-    setIsActive(true);
     setReorderedSelectedItems({});
     setIsValidated(false);
     setSelectedFormsArray([]);
-    setInvalidRegimen(false);
     setRegimenItem("");
     setRegselected(false);
     setDownloadOptions(false);
@@ -1353,19 +1330,14 @@ export default function DrugDosageFinder(props) {
       setRegimenName("");
       setItemIdx(null); // Assuming you have a corresponding state for itemIdx
       setRegimenOptions([]);
-      setSelectedDose([]);
-      setSelectedMedicineData([]);
-      setLongRegimen({});
       setShowResult(false);
       setIsGrouped(null);
       setGroupedData({});
       setIsNewSet(false);
       setRegIdx(null);
-      setIsActive(true);
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
-      setInvalidRegimen(false);
       setRegimenItem(""); // Assuming you have a corresponding state for regimenItem
       setRegselected(false); // Assuming you have a corresponding state for regselected
       setDownloadOptions(false);
@@ -1392,19 +1364,14 @@ export default function DrugDosageFinder(props) {
       setRegimenItem(""); // Assuming you have a corresponding state for regimenItem
       setItemIdx(null); // Assuming you have a corresponding state for itemIdx
       setRegimenOptions([]);
-      setSelectedDose([]);
-      setSelectedMedicineData([]);
-      setLongRegimen({});
       setShowResult(false);
       setIsGrouped(null);
       setGroupedData({});
       setIsNewSet(false);
       setRegIdx(null);
-      setIsActive(true);
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
-      setInvalidRegimen(false);
       setRegselected(false); // Assuming you have a corresponding state for regselected
       setDownloadOptions(false);
     }
@@ -1425,19 +1392,14 @@ export default function DrugDosageFinder(props) {
       setRegimenName("");
       setItemIdx(null); // Assuming you have a corresponding state for itemIdx
       setRegimenOptions([]);
-      setSelectedDose([]);
-      setSelectedMedicineData([]);
-      setLongRegimen({});
       setShowResult(false);
       setIsGrouped(null);
       setGroupedData({});
       setIsNewSet(false);
       setRegIdx(null);
-      setIsActive(true);
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
-      setInvalidRegimen(false);
       setRegimenItem(""); // Assuming you have a corresponding state for regimenItem
       setDownloadOptions(false);
     } else {
@@ -1993,7 +1955,6 @@ export default function DrugDosageFinder(props) {
               onClick={() => {
                 getGroupedData();
                 setShowResult(true);
-                setIsActive(false);
                 setDownloadOptions(result === undefined ? false : true);
               }}
             >

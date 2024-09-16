@@ -1,83 +1,83 @@
 export const titleTemplates = {
   en: {
     'Drug-Susceptible TB': (age, weight, months, regimenName) =>
-      `Drug dosage for a person aged ${age == 0 ? `${months} months` : `${age} years`
+      `Drug dosage for a person aged ${age === 0 ? `${months} months` : `${age} years`
       } and weighing ${weight} kg on the ${regimenName} regimen for DS-TB`,
     'Rifampicin-susceptible, Isoniazid-resistant TB (Hr-TB)': (
       age,
       weight,
       months,
     ) =>
-      `Drug dosage for a person aged ${age == 0 ? `${months} months` : `${age} years`
+      `Drug dosage for a person aged ${age === 0 ? `${months} months` : `${age} years`
       } and weighing ${weight} kg on a regimen for Rifampicin-susceptible, Isoniazid-resistant TB (Hr-TB)`,
     '9-month all-oral': (age, weight, months) =>
-      `Drug dosage for a person aged ${age == 0 ? `${months} months` : `${age} years`
+      `Drug dosage for a person aged ${age === 0 ? `${months} months` : `${age} years`
       } and weighing ${weight} kg on the 9-month all-oral regimen`,
     'BPaLM/BPaL': (age, weight, months) =>
-      `Drug dosage for a person aged ${age == 0 ? `${months} months` : `${age} years`
+      `Drug dosage for a person aged ${age === 0 ? `${months} months` : `${age} years`
       } and weighing ${weight} kg on BPaLM/BPaL`,
     'Longer individualized regimens': (age, weight, months) =>
-      `Drug dosage for a person aged ${age == 0 ? `${months} months` : `${age} years`
+      `Drug dosage for a person aged ${age === 0 ? `${months} months` : `${age} years`
       } and weighing ${weight} kg on a longer individualized regimen`,
   },
   fr: {
     'Tuberculose pharmacosensible': (age, weight, months, regimenName) =>
-      `Posologie du médicament pour une personne âgée de ${age == 0 ? `${months} mois` : `${age} ans`
+      `Posologie du médicament pour une personne âgée de ${age === 0 ? `${months} mois` : `${age} ans`
       } et pesant ${weight} kg sur le schéma thérapeutique ${regimenName} pour la TB sensible aux médicaments`,
     "Tuberculose sensible à la rifampicine et résistante à l'isoniazide (Hr-TB)":
       (age, weight, months) =>
-        `Posologie du médicament pour une personne âgée de ${age == 0 ? `${months} mois` : `${age} ans`
+        `Posologie du médicament pour une personne âgée de ${age === 0 ? `${months} mois` : `${age} ans`
         } et pesant ${weight} kg sous schéma thérapeutique Tuberculose sensible à la rifampicine et résistante à l'isoniazide (Hr-TB)`,
     'Schéma thérapeutique entièrement oral de 9 mois': (age, weight, months) =>
-      `Posologie du médicament pour une personne âgée de ${age == 0 ? `${months} mois` : `${age} ans`
+      `Posologie du médicament pour une personne âgée de ${age === 0 ? `${months} mois` : `${age} ans`
       } et pesant ${weight} kg  sous schéma thérapeutique entièrement oral de 9 mois`,
     'BPaLM/BPaL': (age, weight, months) =>
-      `Posologie du médicament pour une personne âgée de ${age == 0 ? `${months} mois` : `${age} ans`
+      `Posologie du médicament pour une personne âgée de ${age === 0 ? `${months} mois` : `${age} ans`
       } et pesant ${weight} kg sous schéma thérapeutique BPaLM/BPaL`,
     'Schémas thérapeutiques longs et individualisés': (age, weight, months) =>
-      `Posologie du médicament pour une personne âgée de ${age == 0 ? `${months} mois` : `${age} ans`
+      `Posologie du médicament pour une personne âgée de ${age === 0 ? `${months} mois` : `${age} ans`
       } et pesant ${weight} kg sous schéma thérapeutique individualisé plus long`,
   },
   ru: {
     'Drug-Susceptible TB': (age, weight, months, regimenName) =>
-      `Дозировка препарата для лица в возрасте ${age == 0 ? `${months} месяцев` : `${age} лет`
+      `Дозировка препарата для лица в возрасте ${age === 0 ? `${months} месяцев` : `${age} лет`
       } и весом ${weight} кг по схеме ${regimenName} для чувствительного к препаратам туберкулеза`,
     'Rifampicin-susceptible, Isoniazid-resistant TB (Hr-TB)': (
       age,
       weight,
       months,
     ) =>
-      `Дозировка препарата для лица в возрасте ${age == 0 ? `${months} месяцев` : `${age} лет`
+      `Дозировка препарата для лица в возрасте ${age === 0 ? `${months} месяцев` : `${age} лет`
       } и весом ${weight} кг по схеме для туберкулеза, устойчивого к рифампицину и резистентного к изониазиду (Hr-TB)`,
     '9-month all-oral': (age, weight, months) =>
-      `Дозировка препарата для лица в возрасте ${age == 0 ? `${months} месяцев` : `${age} лет`
+      `Дозировка препарата для лица в возрасте ${age === 0 ? `${months} месяцев` : `${age} лет`
       } и весом ${weight} кг по схеме перорального приема препаратов в течение 9 месяцев`,
     'BPaLM/BPaL': (age, weight, months) =>
-      `Дозировка препарата для лица в возрасте ${age == 0 ? `${months} месяцев` : `${age} лет`
+      `Дозировка препарата для лица в возрасте ${age === 0 ? `${months} месяцев` : `${age} лет`
       } и весом ${weight} кг по схеме BPaLM/BPaL`,
     'Longer individualized regimens': (age, weight, months) =>
-      `Дозировка препарата для лица в возрасте ${age == 0 ? `${months} месяцев` : `${age} лет`
+      `Дозировка препарата для лица в возрасте ${age === 0 ? `${months} месяцев` : `${age} лет`
       } и весом ${weight} кг по индивидуальной удлиненной схеме терапии`,
   },
   es: {
     'Drug-Susceptible TB': (age, weight, months, regimenName) =>
-      `Dosis del medicamento para una persona de ${age == 0 ? `${months} meses` : `${age} años`
+      `Dosis del medicamento para una persona de ${age === 0 ? `${months} meses` : `${age} años`
       } y peso ${weight} kg en el régimen ${regimenName} para TB sensible a fármacos`,
     'Rifampicin-susceptible, Isoniazid-resistant TB (Hr-TB)': (
       age,
       weight,
       months,
     ) =>
-      `Dosis del medicamento para una persona de ${age == 0 ? `${months} meses` : `${age} años`
+      `Dosis del medicamento para una persona de ${age === 0 ? `${months} meses` : `${age} años`
       } y peso ${weight} kg en un régimen para TB a rifampicina-sensible, isoniazida-resistente (Hr-TB)`,
     '9-month all-oral': (age, weight, months) =>
-      `Dosis del medicamento para una persona de ${age == 0 ? `${months} meses` : `${age} años`
+      `Dosis del medicamento para una persona de ${age === 0 ? `${months} meses` : `${age} años`
       } y peso ${weight} kg en el régimen oral de 9 meses`,
     'BPaLM/BPaL': (age, weight, months) =>
-      `Dosis del medicamento para una persona de ${age == 0 ? `${months} meses` : `${age} años`
+      `Dosis del medicamento para una persona de ${age === 0 ? `${months} meses` : `${age} años`
       } y peso ${weight} kg en el régimen BPaLM/BPaL`,
     'Longer individualized regimens': (age, weight, months) =>
-      `Dosis del medicamento para una persona de ${age == 0 ? `${months} meses` : `${age} años`
+      `Dosis del medicamento para una persona de ${age === 0 ? `${months} meses` : `${age} años`
       } y peso ${weight} kg en un régimen individualizado más prolongado`,
   },
 };

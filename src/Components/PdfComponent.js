@@ -25,94 +25,25 @@ const styles = StyleSheet.create({
   page: {
     margin: 20,
     padding: 10,
-    //fontFamily: 'Calibri',
   },
   container: {
-    padding: 20,
-    minHeight: "10%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  defaultToolHeader: { backgroundColor: "#fff", margin: 20 },
   header: {
     color: "black",
     fontSize: 16,
     fontWeight: "600",
     fontFamily: "Calibri",
   },
-  borderBox: {
-    borderStyle: "solid",
-    borderColor: "#016ab6",
-    borderWidth: 2,
-  },
-  groupContainer: {
-    backgroundColor: "#c1e1f7",
-    display: "flex",
-    flex: 1,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  groupText: {
-    padding: 20,
-    margin: 0,
-    fontSize: 12,
-    fontWeight: 600,
-  },
-  drugContainer: {
-    backgroundColor: "#daeaf5",
-    display: "flex",
-    flexDirection: "row",
-    flex: 1,
-  },
-  drugText: {
-    padding: 20,
-    flexBasis: "50%",
-    margin: 0,
-    fontSize: 12,
-    fontWeight: 600,
-  },
-  headerContainer: {
-    display: "flex",
-    flexDirection: "row",
-    backgroundColor: "#016ab6",
-    justifyContent: "space-between",
-  },
-  headerTextLeft: {
-    flexBasis: "40%",
-    color: "#fff",
-    paddingVertical: 5,
-    paddingLeft: 20,
-    alignItems: "center",
-    display: "flex",
-  },
-  headerTextRight: {
-    flexBasis: "60%",
-    color: "#fff",
-    paddingVertical: 5,
-    paddingLeft: 20,
-    borderLeftWidth: 1,
-    borderLeftStyle: "solid",
-    borderLeftColor: "#fff",
-    alignItems: "center",
-    display: "flex",
-  },
-  infoContainer: {
-    display: "flex",
-    marginTop: 20,
-  },
-  remarksText: {
-    margin: 0,
-    //marginLeft: 10,
-    fontSize: 12,
-    lineHeight: 28,
-    color: "#666",
-  },
-  image: {
-    height: 40,
-    width: 40,
-  },
   table: {
-    // display: 'flex',
-    // flexDirection: 'row',
-    // justifyContent: 'center',
     width: "100%",
     borderCollapse: "collapse",
     border: "1px solid #ddd",
@@ -165,6 +96,184 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginLeft: 20,
   },
+  longRegimenContainer: {
+    display: "flex",
+    alignSelf: "center",
+    borderStyle: "solid",
+    borderColor: "#016ab6",
+    marginRight: 30,
+    borderWidth: 1,
+  },
+  longRegimenHeader: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 10,
+    backgroundColor: "#c1e1f7",
+  },
+  longRegimenHeaderText: {
+    color: "#000",
+    fontSize: 16,
+    fontWeight: "600",
+    fontFamily: "Calibri",
+  },
+  longRegimenSubHeader: {
+    backgroundColor: "#daeaf5",
+    display: "flex",
+    flexDirection: "row",
+    paddingLeft: 10,
+    paddingVertical: 10,
+    justifyContent: "flex-start",
+  },
+  longRegimenSubHeaderText: {
+    color: "#000",
+    fontSize: 14,
+    fontWeight: "600",
+    fontFamily: "Calibri",
+  },
+  longRegimenTableHeader: {
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "#016ab6",
+    justifyContent: "space-between",
+  },
+  longRegimenTableHeaderCellLeft: {
+    flexBasis: "40%",
+    color: "#fff",
+    paddingVertical: 5,
+    paddingLeft: 20,
+    alignItems: "center",
+    display: "flex",
+  },
+  longRegimenTableHeaderCellRight: {
+    flexBasis: "60%",
+    color: "#fff",
+    paddingVertical: 5,
+    paddingLeft: 20,
+    borderLeftWidth: 1,
+    borderLeftStyle: "solid",
+    borderLeftColor: "#fff",
+    display: "flex",
+    alignItems: "center",
+  },
+  longRegimenTableHeaderText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+    fontFamily: "Calibri",
+  },
+  longRegimenTableRow: {
+    backgroundColor: "#daeaf5",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
+  longRegimenTableRowCellLeft: {
+    flexBasis: "40%",
+    paddingVertical: 5,
+    paddingLeft: 20,
+    alignItems: "center",
+    display: "flex",
+  },
+  longRegimenTableRowCellRight: {
+    flexBasis: "60%",
+    paddingVertical: 5,
+    paddingLeft: 20,
+    borderLeftWidth: 1,
+    borderLeftStyle: "solid",
+    borderLeftColor: "#fff",
+    display: "flex",
+    alignItems: "center",
+  },
+  longRegimenTableRowText: {
+    color: "#000",
+    fontSize: 14,
+    fontWeight: "600",
+    fontFamily: "Calibri",
+  },
+  nonLRGContainer: {
+    display: "flex",
+    alignSelf: "center",
+    borderStyle: "solid",
+    width: "100%",
+    borderColor: "#016ab6",
+    marginRight: 30,
+    borderWidth: 1,
+  },
+  headerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    borderCollapse: "collapse",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    backgroundColor: "#daeaf5",
+  },
+  headerCell: {
+    paddingVertical: 10,
+    display: "flex",
+    justifyContent: "center",
+  },
+  headerCellWithBorder: {
+    display: "flex",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingLeft: 20,
+    borderLeftWidth: 1,
+    borderLeftStyle: "solid",
+    borderLeftColor: "#fff",
+  },
+  headerText: {
+    color: "#000",
+    fontSize: 14,
+    fontWeight: "600",
+    fontFamily: "Calibri",
+  },
+  categoryContainer: {
+    backgroundColor: "#006ab6",
+    display: "flex",
+    flexDirection: "row",
+    paddingLeft: 10,
+    paddingVertical: 10,
+    justifyContent: "flex-start",
+  },
+  categoryText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
+    fontFamily: "Calibri",
+  },
+  remarksContainer: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: 20,
+  },
+  remarksHeader: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  remarksIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
+  remarksHeaderText: {
+    color: "#000",
+    fontSize: 14,
+    fontFamily: "Calibri",
+  },
+  remarksText: {
+    color: "#000",
+    fontSize: 14,
+    fontWeight: "200",
+    marginTop: 10,
+    textAlign: "left",
+    marginHorizontal: 30,
+    fontFamily: "Calibri",
+  },
 });
 
 const PdfComponent = (data) => {
@@ -174,7 +283,7 @@ const PdfComponent = (data) => {
         <View>
           {data?.data?.defaultTool.default_tool === "tpt_finder" ? (
             <View>
-              <View style={{ backgroundColor: "#fff", margin: 20 }}>
+              <View style={styles.defaultToolHeader}>
                 <Text style={styles.header}>TB Prevention</Text>
               </View>
               <View style={styles.doseResult}>
@@ -201,170 +310,52 @@ const PdfComponent = (data) => {
             </View>
           ) : (
             <>
-              <View style={{ backgroundColor: "#fff", margin: 20 }}>
+              <View style={styles.defaultToolHeader}>
                 <Text style={styles.header}>{data?.data?.header}</Text>
               </View>
 
               {data?.data?.longerRegimen.length > 0 ? (
-                <View
-                  style={{
-                    display: "flex",
-                    alignSelf: "center",
-                    borderStyle: "solid",
-                    borderColor: "#016ab6",
-                    marginRight: 30,
-                    borderWidth: 1,
-                  }}
-                >
+                <View style={styles.longRegimenContainer}>
                   {Object.values(data?.data?.longerRegimen).map(
                     (item, index) => (
                       <View key={index}>
-                        <View
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            paddingVertical: 10,
-                            backgroundColor: "#c1e1f7",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              color: "#000",
-                              fontSize: 16,
-                              fontWeight: 600,
-                              fontFamily: "Calibri",
-                            }}
-                          >
+                        <View style={styles.longRegimenHeader}>
+                          <Text style={styles.longRegimenHeaderText}>
                             {item.group}
                           </Text>
                         </View>
                         {Object.values(item.data).map((itm, itmIndex) => (
                           <View key={itmIndex}>
-                            <View
-                              style={{
-                                backgroundColor: "#daeaf5",
-                                display: "flex",
-                                flexDirection: "row",
-                                paddingLeft: 10,
-                                paddingVertical: 10,
-                                justifyContent: "flex-start",
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  color: "#000",
-                                  fontSize: 14,
-                                  fontWeight: 600,
-                                  fontFamily: "Calibri",
-                                }}
-                              >
+                            <View style={styles.longRegimenSubHeader}>
+                              <Text style={styles.longRegimenSubHeaderText}>
                                 DRUG : {itm.medicationName}
                               </Text>
                             </View>
-                            <View
-                              style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                backgroundColor: "#016ab6",
-                                justifyContent: "space-between",
-                              }}
-                            >
+                            <View style={styles.longRegimenTableHeader}>
                               <View
-                                style={{
-                                  flexBasis: "40%",
-                                  color: "#fff",
-                                  paddingVertical: 5,
-                                  paddingLeft: 20,
-                                  alignItems: "center",
-                                  display: "flex",
-                                }}
+                                style={styles.longRegimenTableHeaderCellLeft}
                               >
-                                <Text
-                                  style={{
-                                    color: "#fff",
-                                    fontSize: 14,
-                                    fontWeight: 600,
-                                    fontFamily: "Calibri",
-                                  }}
-                                >
+                                <Text style={styles.longRegimenTableHeaderText}>
                                   FORMULATION
                                 </Text>
                               </View>
                               <View
-                                style={{
-                                  flexBasis: "60%",
-                                  color: "#fff",
-                                  paddingVertical: 5,
-                                  paddingLeft: 20,
-                                  borderLeftWidth: 1,
-                                  borderLeftStyle: "solid",
-                                  display: "flex",
-                                  borderLeftColor: "#fff",
-                                  alignItems: "center",
-                                }}
+                                style={styles.longRegimenTableHeaderCellRight}
                               >
-                                <Text
-                                  style={{
-                                    color: "#fff",
-                                    fontSize: 14,
-                                    fontWeight: 600,
-                                    fontFamily: "Calibri",
-                                  }}
-                                >
+                                <Text style={styles.longRegimenTableHeaderText}>
                                   DAILY DOSE
                                 </Text>
                               </View>
                             </View>
-                            <View
-                              style={{
-                                backgroundColor: "#daeaf5",
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "flex-start",
-                              }}
-                            >
-                              <View
-                                style={{
-                                  flexBasis: "40%",
-                                  paddingVertical: 5,
-                                  paddingLeft: 20,
-                                  alignItems: "center",
-                                  display: "flex",
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    color: "#000",
-                                    fontSize: 14,
-                                    fontWeight: 600,
-                                    fontFamily: "Calibri",
-                                  }}
-                                >
+                            <View style={styles.longRegimenTableRow}>
+                              <View style={styles.longRegimenTableRowCellLeft}>
+                                <Text style={styles.longRegimenTableRowText}>
                                   {itm.formName}
                                   {itm.formDose}
                                 </Text>
                               </View>
-                              <View
-                                style={{
-                                  flexBasis: "60%",
-                                  paddingVertical: 5,
-                                  paddingLeft: 20,
-                                  borderLeftWidth: 1,
-                                  borderLeftStyle: "solid",
-                                  display: "flex",
-                                  borderLeftColor: "#fff",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    color: "#000",
-                                    fontSize: 14,
-                                    fontWeight: 600,
-                                    fontFamily: "Calibri",
-                                  }}
-                                >
+                              <View style={styles.longRegimenTableRowCellRight}>
+                                <Text style={styles.longRegimenTableRowText}>
                                   {itm.tabs}
                                 </Text>
                               </View>
@@ -376,90 +367,18 @@ const PdfComponent = (data) => {
                   )}
                 </View>
               ) : (
-                <View
-                  style={{
-                    display: "flex",
-                    alignSelf: "center",
-                    borderStyle: "solid",
-                    width: "100%",
-                    borderColor: "#016ab6",
-                    marginRight: 30,
-                    borderWidth: 1,
-                  }}
-                >
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      borderCollapse: "collapse",
-                      border: "1px solid #ddd",
-                      backgroundColor: "#daeaf5",
-                    }}
-                  >
-                    <View
-                      style={{
-                        paddingVertical: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: "#000",
-                          fontSize: 14,
-                          fontWeight: 600,
-                          fontFamily: "Calibri",
-                        }}
-                      >
-                        Dose
-                      </Text>
+                <View style={styles.nonLRGContainer}>
+                  <View style={styles.headerContainer}>
+                    <View style={styles.headerCell}>
+                      <Text style={styles.headerText}>Dose</Text>
                     </View>
-                    <View
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        paddingVertical: 10,
-                        paddingLeft: 20,
-                        borderLeftWidth: 1,
-                        borderLeftStyle: "solid",
-                        borderLeftColor: "#fff",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: "#000",
-                          fontSize: 14,
-                          fontWeight: 600,
-                          fontFamily: "Calibri",
-                        }}
-                      >
-                        Formulation
-                      </Text>
+                    <View style={styles.headerCellWithBorder}>
+                      <Text style={styles.headerText}>Formulation</Text>
                     </View>
-                    <View
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        paddingVertical: 10,
-                        paddingLeft: 20,
-                        borderLeftWidth: 1,
-                        borderLeftStyle: "solid",
-                        borderLeftColor: "#fff",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: "#000",
-                          fontSize: 14,
-                          fontWeight: 600,
-                          fontFamily: "Calibri",
-                        }}
-                      >
+                    <View style={styles.headerCellWithBorder}>
+                      <Text style={styles.headerText}>
                         Quantity
-                        <br />
+                        {"\n"}
                         (tabs, caps, mL)
                       </Text>
                     </View>
@@ -467,24 +386,8 @@ const PdfComponent = (data) => {
                   {Object.values(data?.data?.result).map((item, itemIndex) => (
                     <View key={itemIndex}>
                       {item.category && (
-                        <View
-                          style={{
-                            backgroundColor: "#006ab6",
-                            display: "flex",
-                            flexDirection: "row",
-                            paddingLeft: 10,
-                            paddingVertical: 10,
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              color: "#fff",
-                              fontSize: 14,
-                              fontWeight: 600,
-                              fontFamily: "Calibri",
-                            }}
-                          >
+                        <View style={styles.categoryContainer}>
+                          <Text style={styles.categoryText}>
                             {item.category}
                           </Text>
                         </View>
@@ -500,10 +403,7 @@ const PdfComponent = (data) => {
                                   (formulation, formluationIdx) => (
                                     <View
                                       key={formluationIdx}
-                                      style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                      }}
+                                      style={styles.row}
                                     >
                                       <Text
                                         style={[
@@ -538,14 +438,7 @@ const PdfComponent = (data) => {
                           {Object.values(item.items).map((itm, itmIndex) => (
                             <View key={itmIndex}>
                               <View style={styles.table}>
-                                <View
-                                  style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                  }}
-                                >
+                                <View style={styles.container}>
                                   {itm.dose && (
                                     <Text
                                       style={[
@@ -571,12 +464,7 @@ const PdfComponent = (data) => {
                                         (forVal, forIndex) => (
                                           <View
                                             key={forIndex}
-                                            style={{
-                                              display: "flex",
-                                              flexDirection: "row",
-                                              justifyContent: "space-between",
-                                              alignItems: "center",
-                                            }}
+                                            style={styles.container}
                                           >
                                             <Text style={styles.th}>
                                               {forIndex === 0 && itm.drug
@@ -608,93 +496,35 @@ const PdfComponent = (data) => {
                         </>
                       )}
                       {item.remarks && (
-                        <View
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            marginTop: 20,
-                          }}
-                        >
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
+                        <View style={styles.remarksContainer}>
+                          <View style={styles.remarksHeader}>
                             <Image
-                              src={iconInfo}
-                              style={{ width: 20, height: 20, marginRight: 5 }}
+                              source={iconInfo}
+                              style={styles.remarksIcon}
                             />
-                            <Text
-                              style={{
-                                color: "#000",
-                                fontSize: 14,
-                                fontFamily: "Calibri",
-                              }}
-                            >
+                            <Text style={styles.remarksHeaderText}>
                               Remarks
                             </Text>
                           </View>
                           {item.remarks.map((remark, remarkIndex) => (
-                            <Text
-                              key={remarkIndex}
-                              style={{
-                                color: "#000",
-                                fontSize: 14,
-                                fontWeight: 200,
-                                marginTop: 10,
-                                textAlign: "left",
-                                marginHorizontal: 30,
-                                fontFamily: "Calibri",
-                              }}
-                            >
+                            <Text key={remarkIndex} style={styles.remarksText}>
                               {remark}
                             </Text>
                           ))}
                         </View>
                       )}
                       {item.note && (
-                        <View
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            marginTop: 20,
-                          }}
-                        >
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
+                        <View style={styles.remarksContainer}>
+                          <View style={styles.remarksHeader}>
                             <Image
-                              src={iconInfo}
-                              style={{ width: 20, height: 20, marginRight: 5 }}
+                              source={iconInfo}
+                              style={styles.remarksIcon}
                             />
-                            <Text
-                              style={{
-                                color: "#000",
-                                fontSize: 14,
-                                fontFamily: "Calibri",
-                              }}
-                            >
+                            <Text style={styles.remarksHeaderText}>
                               Remarks
                             </Text>
                           </View>
-                          <Text
-                            key={itemIndex}
-                            style={{
-                              color: "#000",
-                              fontSize: 14,
-                              fontWeight: 200,
-                              marginTop: 10,
-                              textAlign: "left",
-                              marginHorizontal: 30,
-                              fontFamily: "Calibri",
-                            }}
-                          >
+                          <Text key={itemIndex} style={styles.remarksText}>
                             {item.note}
                           </Text>
                         </View>
@@ -705,38 +535,12 @@ const PdfComponent = (data) => {
               )}
 
               {data?.data?.remarks && (
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    marginTop: 20,
-                  }}
-                >
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Image
-                      src={iconInfo}
-                      style={{ width: 20, height: 20, marginRight: 5 }}
-                    />
-                    <Text style={{ fontFamily: "Calibri" }}>Remarks</Text>
+                <View style={styles.remarksContainer}>
+                  <View style={styles.remarksHeader}>
+                    <Image src={iconInfo} style={styles.remarksIcon} />
+                    <Text style={styles.remarksHeaderText}>Remarks</Text>
                   </View>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 200,
-                      marginTop: 10,
-                      textAlign: "left",
-                      marginHorizontal: 30,
-                      fontFamily: "Calibri",
-                    }}
-                  >
-                    {data?.data?.remarks}
-                  </Text>
+                  <Text style={styles.remarksText}>{data?.data?.remarks}</Text>
                 </View>
               )}
             </>
