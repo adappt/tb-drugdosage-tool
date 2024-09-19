@@ -1,68 +1,104 @@
-import React, { useState } from "react";
-import data from "../drugdose 16.json";
+import React, {useState} from "react";
+import data from "../drugdoseData.json";
 import SwitchSelector from "./SwitchSelector";
 import { FaRegCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
 import DrugDosageFinder from "./DrugDosageFinder";
-import "../Styles/styles.css";
+import "../styles/styles.css";
 import { IoMdDownload } from "react-icons/io";
 import PdfComponent from "./PdfComponent";
 import { saveAs } from "file-saver";
 import { pdf } from "@react-pdf/renderer";
+import { useForm, Controller } from "react-hook-form";
+import Select, {
+  components,
+} from "react-select";
 
 const Calculator = () => {
   const [medicine, setMedicine] = useState("");
   const [agedata, setAgedata] = useState("");
   const [regimen, setRegimen] = useState("");
   const [result, setResult] = useState("");
-  const [medicineName, setMedicineName] = useState("");
-  const [openMedicine, setOpenMedicine] = useState(false);
-  const [openAge, setOpenAge] = useState(false);
-  const [openWeight, setOpenWeight] = useState(false);
-  const [ageName, setAgeName] = useState("");
-  const [weightName, setWeightName] = useState("");
   const [defaultTool, setDefaultTool] = useState({
     default_tool: "tpt_finder",
   });
   const [showResult, setShowResult] = useState(false);
   const [downloadOptions, setDownloadOptions] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selections, setSelections] = useState({
+    medicine: null,
+    age: null,
+    weight: null,
+  });
+
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      select: {},
+      medicine: {value: "", label: "Select a medicine..."},
+      age: {value: "", label: "Select a age..."},
+      weight: {value: "", label: "Select a weight..."},
+    },
+  });
+  const Option = ({ children, ...props }) => {
+    const style = { cursor: "pointer", marginRight: 10 };
+    return (
+      <components.Option {...props}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          {props.isSelected ? (
+            <FaRegCheckCircle color="#0A2C59" size={15} style={style} />
+          ) : (
+            <FaRegCircle color="#DDDDDD" size={15} style={style} />
+          )}
+          {children}
+        </div>
+      </components.Option>
+    );
+  };
+
+  const onSubmit = (data) => {
+    setShowResult(true);
+    setDownloadOptions(true);
+  };
 
   const onClickReset = () => {
     setMedicine("");
     setAgedata("");
     setRegimen("");
     setResult("");
-    setMedicineName("");
-    setAgeName("");
-    setWeightName("");
+    setSelections({});
+    reset({
+      medicine: {value: "", label: "Select a medicine..."},
+      age: {value: "", label: "Select a age..."},
+      weight: {value: "", label: "Select a weight..."},
+    })
     setShowResult(false);
     setDownloadOptions(false);
   };
 
   const selectMedicine = (selectedOption) => {
-    const { value, label } = selectedOption;
+    const {value} = selectedOption;
     setMedicine(value);
-    setMedicineName(label);
     setAgedata("");
-    setAgeName("");
     setResult("");
     setRegimen(data.prevention[value] ? data.prevention[value].regimen : []);
   };
 
   const selectAge = (selectedOption) => {
-    const { value, label } = selectedOption;
+    const {value} = selectedOption;
     setAgedata(value);
-    setAgeName(label);
-    setWeightName("");
     setResult(data.prevention[medicine]?.isWeight ? "" : value);
     setShowResult(false);
   };
 
   const selectWeight = (selectedOption) => {
-    const { value, label } = selectedOption;
+    const {value} = selectedOption;
     setResult(value);
-    setWeightName(label);
   };
 
   const medicineOptions = data?.prevention?.medicines.map((item) => ({
@@ -116,224 +152,131 @@ const Calculator = () => {
     saveAs(blob, fileName);
   };
 
+  const dropdownList = [
+    {
+      label: "Medicine",
+      options: medicineOptions,
+      placeholder: "Select Medicine...",
+      key: "medicine",
+      onSelect: selectMedicine,
+    },
+    {
+      label: "Age",
+      options: ageOptions,
+      placeholder: "Select Age...",
+      key: "age",
+      onSelect: selectAge,
+    },
+    {
+      label: "Weight",
+      options: weightOptions,
+      placeholder: "Select Weight...",
+      key: "weight",
+      onSelect: selectWeight,
+    },
+  ];
+  const handleSelectChange = (selectedOption, item) => {
+    setSelections((prevState) => ({
+      ...prevState,
+      [item.key]: selectedOption,
+    }));
+    if (item.onSelect) {
+      item.onSelect(selectedOption);
+    }
+  };
+
   return (
-    <div style={styles.container1}>
+    <div style={styles.container}>
       <SwitchSelector
         setDefaultTool={setDefaultTool}
         defaultTool={defaultTool}
+        onReset={onClickReset}
         options={options["en"]}
       />
       {defaultTool.default_tool === "tpt_finder" ? (
         <div style={{ display: "flex" }}>
-          <div style={styles.container}>
-            <div style={{ padding: "20px" }}>
-              <h3 style={styles.header}>TB Prevention</h3>
-              <div
-                style={{ ...styles.fieldContainer, position: "relative" }}
-                className="fade-in"
-              >
-                <label style={styles.label}>Medicine</label>
-                <button
-                  style={styles.fieldButton}
-                  onClick={() => {
-                    setOpenMedicine(!openMedicine);
-                    setOpenAge(false);
-                    setOpenWeight(false);
-                  }}
-                >
-                  <div style={styles.fieldSubContainer}>
-                    <p style={styles.fieldLabel}>
-                      {medicineName
-                        ? medicineName.toUpperCase()
-                        : "Select Medicine..."}
-                    </p>
-                  </div>
-                  <div>
-                    <FaChevronDown
-                      className="slide-in"
-                      size={14}
-                      style={{ marginRight: 10 }}
-                      color="#000"
-                    />
-                  </div>
-                </button>
-                {openMedicine && (
-                  <section style={styles.dropdownSection}>
-                    {medicineOptions.map((item, index) => (
+          <div style={styles.subContainer}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              style={styles.formContainer}
+            >
+              <div style={{ padding: "20px" }}>
+                <h3 style={styles.header}>TB Prevention</h3>
+                {dropdownList.map((item, index) => (
+                  <React.Fragment key={item.key}>
+                    {index === 0 ||
+                    (index === 1 && selections[dropdownList[index - 1].key]) ||
+                    (item.key === "weight" &&
+                      data?.prevention?.[medicine]?.isWeight &&
+                      agedata) ? (
                       <>
-                        <button
-                          key={index}
-                          onClick={() => {
-                            selectMedicine(item);
-                            setOpenMedicine(false);
+                        <label style={styles.label}>{item.label}</label>
+                        <Controller 
+                         name={item.key}
+                         control={control}
+                         render={({ field }) => 
+                        <Select
+                          {...field}
+                          className="fade-in"
+                          styles={{
+                            option: (baseStyles, state) => ({
+                              ...baseStyles,
+                              ...styles.selectOption,
+                              borderBottom:
+                                state.data.label !==
+                                item.options[item.options.length - 1].label
+                                  ? "1px solid #ccc"
+                                  : "none",
+                            }),
+                            container: (baseStyles, state) => ({
+                              ...baseStyles,
+                              marginBottom: 20,
+                            }),
+                            dropdownIndicator: (baseStyles, state) => ({
+                              ...baseStyles,
+                              color: "#000",
+                            }),
+                            singleValue: (baseStyles, state) => ({
+                              ...baseStyles,
+                              display: "flex",
+                              alignItems: "flex-start",
+                            }),
                           }}
-                          style={styles.dropdownItem}
-                        >
-                          {medicineName === item.label ? (
-                            <FaRegCheckCircle color="#0A2C59" size={15} />
-                          ) : (
-                            <FaRegCircle color="#DDDDDD" size={15} />
-                          )}
-                          <p style={styles.dropdownLabel}>{item.label}</p>
-                        </button>
-                        {index < medicineOptions.length - 1 ? (
-                          <div style={styles.divider}></div>
-                        ) : null}
+                          components={{
+                            Option,
+                            IndicatorSeparator: () => null,
+                          }}
+                          isMenuOpen={() => setIsMenuOpen(true)}
+                          isMenuClose={() => setIsMenuOpen(false)}
+                          onChange={(selectedOption) =>
+                            field.onChange(e => handleSelectChange(selectedOption, item))
+                          }
+                          options={item.options}
+                        />
+                      }
+                      />
                       </>
-                    ))}
-                  </section>
-                )}
+                    ) : null}
+                  </React.Fragment>
+                ))}
               </div>
-              {medicine && (
-                <div
-                  style={{
-                    ...styles.fieldContainer,
-                    position: openMedicine ? null : "relative",
-                    zIndex: openMedicine ? 0 : 2,
-                  }}
-                  className={openMedicine ? null : "fade-in"}
-                >
-                  <label style={styles.label}>Age</label>
-                  <button
-                    style={styles.fieldButton}
-                    onClick={() => {
-                      setOpenAge(!openAge);
-                      setOpenWeight(false);
-                      setOpenMedicine(false);
-                    }}
-                  >
-                    <div style={styles.fieldSubContainer}>
-                      <p style={styles.fieldLabel}>
-                        {ageName ? ageName.toUpperCase() : "Select Age..."}
-                      </p>
-                    </div>
-                    <div>
-                      <FaChevronDown
-                        className={openMedicine ? null : "slide-in"}
-                        size={14}
-                        color="#000"
-                        style={{ marginRight: 10 }}
-                      />
-                    </div>
-                  </button>
-                  {openAge && (
-                    <section style={styles.dropdownSection}>
-                      {ageOptions.map((item, index) => (
-                        <>
-                          <button
-                            key={index}
-                            onClick={() => {
-                              selectAge(item);
-                              setOpenAge(false);
-                            }}
-                            style={styles.dropdownItem}
-                          >
-                            {ageName === item.label ? (
-                              <FaRegCheckCircle color="#0A2C59" size={15} />
-                            ) : (
-                              <FaRegCircle color="#DDDDDD" size={15} />
-                            )}
-                            <p style={styles.dropdownLabel}>{item.label}</p>
-                          </button>
-                          {index < ageOptions.length - 1 ? (
-                            <div style={styles.divider}></div>
-                          ) : null}
-                        </>
-                      ))}
-                    </section>
-                  )}
+              <div>
+                <div style={styles.divider}></div>
+                <div style={styles.buttonContainer}>
+                  <input
+                    type="reset"
+                    style={styles.resetReusltButton}
+                    onClick={() => onClickReset()}
+                  />
+                  <input
+                    type="submit"
+                    value="Result"
+                    disabled={result && regimen ? false : true}
+                    style={styles.resetReusltButton}
+                  />
                 </div>
-              )}
-              {data?.prevention?.[medicine]?.isWeight && agedata && (
-                <div
-                  style={{
-                    ...styles.fieldContainer,
-                    position: openMedicine || openAge ? null : "relative",
-                    zIndex: openMedicine || openAge ? 0 : 2,
-                  }}
-                  className={openMedicine || openAge ? null : "fade-in"}
-                >
-                  <label style={styles.label}>Weight</label>
-                  <button
-                    style={styles.fieldButton}
-                    onClick={() => {
-                      setOpenWeight(!openWeight);
-                      setOpenMedicine(false);
-                      setOpenAge(false);
-                    }}
-                  >
-                    <div style={styles.fieldSubContainer}>
-                      <p style={styles.fieldLabel}>
-                        {weightName
-                          ? weightName.toUpperCase()
-                          : "Select Weight..."}
-                      </p>
-                    </div>
-                    <div>
-                      <FaChevronDown
-                        className={openMedicine || openAge ? null : "slide-in"}
-                        style={{ marginRight: 10 }}
-                        size={14}
-                        color="#000"
-                      />
-                    </div>
-                  </button>
-                  {openWeight && (
-                    <section style={styles.dropdownSection}>
-                      {weightOptions.map((item, index) => (
-                        <>
-                          <button
-                            key={index}
-                            onClick={() => {
-                              selectWeight(item);
-                              setOpenWeight(false);
-                            }}
-                            style={styles.dropdownItem}
-                          >
-                            {weightName === item.label ? (
-                              <FaRegCheckCircle color="#0A2C59" size={15} />
-                            ) : (
-                              <FaRegCircle color="#DDDDDD" size={15} />
-                            )}
-                            <p style={styles.dropdownLabel}>{item.label}</p>
-                          </button>
-                          {index < weightOptions.length - 1 ? (
-                            <div style={styles.divider}></div>
-                          ) : null}
-                        </>
-                      ))}
-                    </section>
-                  )}
-                </div>
-              )}
-            </div>
-            <div>
-              <div style={styles.divider}></div>
-              <div style={styles.buttonContainer}>
-                <button
-                  style={{
-                    ...styles.resetReusltButton,
-                    backgroundColor: result ? "#d9dce1" : "#e7eaed",
-                  }}
-                  onClick={onClickReset}
-                >
-                  Reset
-                </button>
-                <button
-                  style={{
-                    ...styles.resetReusltButton,
-                    color: result ? "#0661c5" : "#000",
-                    backgroundColor: result ? "#c4dcf6" : "#e7eaed",
-                  }}
-                  onClick={() => {
-                    setShowResult(true);
-                    setDownloadOptions(!result ? false : true);
-                  }}
-                >
-                  Result
-                </button>
               </div>
-            </div>
+            </form>
           </div>
           <div style={styles.result}>
             <div style={styles.resultHeaderContainer}>
@@ -402,11 +345,11 @@ const Calculator = () => {
 };
 
 const styles = {
-  container1: {
+  container: {
     paddingBlock: "20px",
     paddingInline: "50px",
   },
-  container: {
+  subContainer: {
     backgroundColor: "#F8FAFC",
     border: "1px solid #ccc",
     borderRadius: "12px",
@@ -416,6 +359,18 @@ const styles = {
     width: "50%",
     height: "650px",
   },
+  formContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: "650px",
+  },
+  selectOption: {
+    backgroundColor: "#fff",
+    color: "black",
+    cursor: "pointer",
+    textAlign: "center",
+  },
   header: {
     display: "flex",
     justifyContent: "flex-start",
@@ -424,25 +379,6 @@ const styles = {
     color: "#334155",
     marginBottom: "20px",
   },
-  fieldContainer: {
-    marginBottom: "20px",
-  },
-  fieldButton: {
-    width: "100%",
-    border: "1px solid #ccc",
-    borderRadius: 5,
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#fbfcfd",
-    cursor: "pointer",
-  },
-  fieldSubContainer: {
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-  fieldLabel: { fontSize: 16, color: "#595959", margin: "10px" },
   label: {
     display: "flex",
     justifyContent: "flex-start",
@@ -450,30 +386,6 @@ const styles = {
     fontWeight: "600",
     color: "#000",
     marginBottom: "8px",
-  },
-  dropdownSection: {
-    position: "absolute",
-    backgroundColor: "#fff",
-    zIndex: 1000,
-    width: "100%",
-    borderRadius: "8px",
-    boxShadow: "2px 4px 8px 1px rgba(0, 0, 0, 0.1)",
-  },
-  dropdownItem: {
-    display: "flex",
-    width: "90%",
-    flexDirection: "row",
-    border: "none",
-    backgroundColor: "#fff",
-    marginInline: "10px",
-    alignItems: "center",
-  },
-  dropdownLabel: {
-    paddingInline: 10,
-    color: "#000",
-    margin: "10px",
-    fontSize: 14,
-    fontWeight: "400",
   },
   divider: {
     width: "100%",
@@ -494,10 +406,10 @@ const styles = {
     border: "none",
     padding: "10px",
   },
-  result: { marginLeft: "30px", width: "40%", marginTop: "20px" },
+  result: { marginLeft: "30px", width: "50%", marginTop: "20px" },
   doseResult: {
     marginTop: 30,
-    marginRight: 10,
+    //marginRight: 10,
     borderWidth: 1,
     border: "1px solid #6baddf",
     borderColor: "#6baddf",
@@ -544,7 +456,7 @@ const styles = {
   regimenResultContainer: {
     borderWidth: 1,
     border: "1px solid #6baddf",
-    marginRight: 10,
+    //marginRight: 10,
     borderColor: "#6baddf",
     borderTopWidth: 0,
   },

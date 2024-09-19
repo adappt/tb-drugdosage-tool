@@ -12,12 +12,12 @@ import iconInfo from "../assets/icon-info-base64";
 
 Font.register({
   family: "Calibri",
-  src: require("../assets/Fonts/calibri.ttf"),
+  src: require("../assets/fonts/calibri.ttf"),
 });
 
 Font.register({
   family: "Calibri",
-  src: require("../assets/Fonts/calibrib.ttf"),
+  src: require("../assets/fonts/calibrib.ttf"),
   fontWeight: "bold",
 });
 
@@ -439,7 +439,6 @@ const PdfComponent = (data) => {
                             <View key={itmIndex}>
                               <View style={styles.table}>
                                 <View style={styles.container}>
-                                  {itm.dose && (
                                     <Text
                                       style={[
                                         styles.th,
@@ -453,7 +452,6 @@ const PdfComponent = (data) => {
                                     >
                                       {itm.dose || ""}
                                     </Text>
-                                  )}
                                   {!Array.isArray(itm.formulation)
                                     ? itm.formulation && (
                                         <Text style={styles.th}>

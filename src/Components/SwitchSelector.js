@@ -1,13 +1,16 @@
 import React from 'react';
 
 const SwitchSelector = (props) => {
-  const {defaultTool, setDefaultTool, options} = props;
+  const {defaultTool, setDefaultTool, onReset, options} = props;
 
   return (
     <div style={styles.container}>
      {options.map(item => (
           <button
-          onClick={() => setDefaultTool({default_tool: item.value})}
+          onClick={() => {
+            setDefaultTool({default_tool: item.value})
+            onReset();
+          }}
           style={{
             ...styles.button,
             backgroundColor: defaultTool.default_tool === item.value ? '#0A2C59' : 'white',
