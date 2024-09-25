@@ -217,7 +217,7 @@ const Calculator = () => {
                          render={({ field }) => 
                         <Select
                           {...field}
-                          className="fade-in"
+                          className={!isMenuOpen ? 'fade-in' : ''}
                           styles={{
                             option: (baseStyles, state) => ({
                               ...baseStyles,
@@ -246,8 +246,11 @@ const Calculator = () => {
                             Option,
                             IndicatorSeparator: () => null,
                           }}
-                          isMenuOpen={() => setIsMenuOpen(true)}
-                          isMenuClose={() => setIsMenuOpen(false)}
+                          isOptionSelected={(option, selectValues) => 
+                            selectValues.some(selected => selected.label === option.label)
+                          }
+                          onMenuOpen={() => setIsMenuOpen(true)}
+                          onMenuClose={() => setIsMenuOpen(false)}
                           onChange={(selectedOption) =>
                             field.onChange(e => handleSelectChange(selectedOption, item))
                           }

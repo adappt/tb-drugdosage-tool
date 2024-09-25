@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaChevronDown, FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
+import {FaRegCheckCircle, FaRegCircle} from "react-icons/fa";
 import {
   compareLabel,
   titleTemplates,
@@ -7,13 +7,14 @@ import {
   weightJson,
   weightRange,
 } from "./utils/drugtooltitle";
-import { IoMdRadioButtonOff } from "react-icons/io";
-import { IoMdRadioButtonOn, IoMdDownload } from "react-icons/io";
+import { IoMdDownload } from "react-icons/io";
 import { Modal } from "@mui/material";
 import { saveAs } from "file-saver";
 import { pdf } from "@react-pdf/renderer";
 import PdfComponent from "./PdfComponent";
-import "../Styles/styles.css";
+import "../styles/styles.css";
+import Select, { components } from "react-select";
+import { useForm, Controller } from "react-hook-form";
 
 export default function DrugDosageFinder(props) {
   const styles = {
@@ -41,45 +42,17 @@ export default function DrugDosageFinder(props) {
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      //marginTop: 40,
-    },
-    dropdown: {
-      //height: 50,
-      //borderWidth: 1,
-      borderRadius: 5,
-      border: "1px solid #C4C4C4",
-      backgroundColor: "#fbfcfd",
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
     },
     fieldButton: {
       width: "100%",
       border: "1px solid #ccc",
       borderRadius: 5,
+      height: "38px",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       backgroundColor: "#fbfcfd",
       cursor: "pointer",
-    },
-    fieldSubContainer: {
-      display: "flex",
-      justifyContent: "flex-start",
-      alignItems: "center",
-    },
-    fieldLabel: {
-      fontSize: 16,
-      color: "#595959",
-      margin: "10px",
-    },
-    dropdownSection: {
-      position: "absolute",
-      backgroundColor: "#fff",
-      zIndex: 50,
-      width: "100%",
-      borderRadius: "8px",
-      boxShadow: "2px 4px 8px 1px rgba(0, 0, 0, 0.1)",
     },
     resultHeaderContainer: {
       display: "flex",
@@ -102,13 +75,15 @@ export default function DrugDosageFinder(props) {
     },
     textInput: {
       display: "flex",
-      outline: "none",
-      border: "none",
-      color: "#494949",
       backgroundColor: "#fbfcfd",
       fontSize: 16,
-      width: "50%",
-      marginInline: 10,
+      width: "100%",
+    },
+    selectOption: {
+      backgroundColor: "#fff",
+      color: "black",
+      cursor: "pointer",
+      textAlign: "center",
     },
     modalContainer: {
       display: "flex",
@@ -183,7 +158,6 @@ export default function DrugDosageFinder(props) {
       fontSize: 18,
       textAlign: "left",
       paddingLeft: "10px",
-      //fontFamily: Theme.fonts.custFontSemiBold,
       color: "#777",
     },
     resultContainer: {
@@ -382,12 +356,9 @@ export default function DrugDosageFinder(props) {
   const [regArray, setRegArray] = useState([]);
   const [regimenLabel, setRegimenLabel] = useState("");
   const [regimenName, setRegimenName] = useState("");
-  const [openRegimen, setOpenRegimen] = useState(false);
-  const [openRegimenOptions, setOpenRegimenOptions] = useState(false);
   const [regimenItem, setRegimenItem] = useState("");
   const [weight, setWeight] = useState("");
   const [result, setResult] = useState([]);
-  const [regIdx, setRegIdx] = useState(null);
   const [selectedMedicines, setSelectedMedicines] = useState({});
   const [selectedForms, setSelectedForms] = useState([]);
   const [medicineLabel, setMedicineLabel] = useState([]);
@@ -410,7 +381,13 @@ export default function DrugDosageFinder(props) {
   const [remarks, setRemarks] = useState(null);
   const [meds, setMeds] = useState(null);
   const [isValid, setIsValid] = useState(false);
-
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      age: "",
+      select: { value: "", label: "Select a value.." },
+      regimen: { value: "", label: "Select a regimen" },
+    },
+  });
   useEffect(() => {
     const dropdownOptions = Object.keys(props.treatment.data)
       .map((category) => {
@@ -454,71 +431,55 @@ export default function DrugDosageFinder(props) {
     return "Not found";
   };
 
-  const dropDownRow = (rowData, index) => {
-    const getValueBasedOnLabel = (data, selectedLabel) => {
-      for (const item of data) {
-        if (item.label === selectedLabel) {
-          return item.value;
-        }
+  const getValueBasedOnLabel = (data, selectedLabel) => {
+    for (const item of data) {
+      if (item.label === selectedLabel) {
+        return item.value;
       }
-      return null;
-    };
+    }
+    return null;
+  };
 
-    const getForm = (age, months, weight) => {
-      let s = props.treatment.data[categoryName[0]].form;
-      if ((months < 3 && months) || weight < 3) {
-        // <3months or <3kg
-        return s["3less"];
-      } else if ((months >= 3 && age < 12) || (age && age < 12)) {
-        // 3 months to <12yrs
-        return s["3to12"];
-      } else if (age >= 12 && age <= 16) {
-        // 12 to <16yrs
-        return s["12to16"];
-      } else {
-        return s?.[">16"];
-      }
-    };
+  const getForm = (age, months, weight) => {
+    let s = props.treatment.data[categoryName[0]].form;
+    if ((months < 3 && months) || weight < 3) {
+      // <3months or <3kg
+      return s["3less"];
+    } else if ((months >= 3 && age < 12) || (age && age < 12)) {
+      // 3 months to <12yrs
+      return s["3to12"];
+    } else if (age >= 12 && age <= 16) {
+      // 12 to <16yrs
+      return s["12to16"];
+    } else {
+      return s?.[">16"];
+    }
+  };
 
-    const toggleSelection = () => {
-      const updatedRowData = { ...rowData };
-      updatedRowData.selected = !updatedRowData.selected;
-      let s = props.treatment.data[categoryName[1]].subOptions;
-      const value = getValueBasedOnLabel(s, updatedRowData.label);
-      const drRes = props.treatment.data[categoryName[1]][value];
+  const toggleSelection = (rowData, field) => {
+    const updatedRowData = { ...rowData };
+    updatedRowData.selected = !updatedRowData.selected;
+    let s = props.treatment.data[categoryName[1]].subOptions;
+    const value = getValueBasedOnLabel(s, updatedRowData.label);
+    const drRes = props.treatment.data[categoryName[1]][value];
 
-      setRegimenLabel(updatedRowData.label);
+    setRegimenLabel(updatedRowData.label);
 
-      if (value === "hr-tb" && weight < 4) {
-        window.alert("No Regimen");
-        setRegimenLabel(null);
-        setResult(null);
-        setShowResult(null);
-        setIsGrouped(null);
-        setLongerRegimen({});
-      } else if (weight < 25 && drRes) {
-        const hrTbKeys = Object.keys(drRes);
-        const isInputInRange = hrTbKeys.some((key) => {
-          const [start, end] = key.split("to").map(Number);
-          return weight >= start && weight <= end;
-        });
+    if (value === "hr-tb" && weight < 4) {
+      window.alert("No Regimen");
+      setRegimenLabel(null);
+      setResult(null);
+      setShowResult(null);
+      setIsGrouped(null);
+      setLongerRegimen({});
+    } else if (weight < 25 && drRes) {
+      const hrTbKeys = Object.keys(drRes);
+      const isInputInRange = hrTbKeys.some((key) => {
+        const [start, end] = key.split("to").map(Number);
+        return weight >= start && weight <= end;
+      });
 
-        if (isInputInRange) {
-          const mergedData = hrTbKeys.reduce((result, key) => {
-            const [start, end] = key.split("to").map(Number);
-            if (weight >= start && weight <= end) {
-              result.push(...drRes[key]);
-            }
-            return result;
-          }, []);
-
-          setResult(mergedData.reverse());
-          setGroupedData(null);
-          setRegselected(true);
-        }
-      } else if (weight >= 25 && drRes) {
-        const values = props.treatment.data[categoryName[1]][value]["65"];
-        const hrTbKeys = Object.keys(drRes);
+      if (isInputInRange) {
         const mergedData = hrTbKeys.reduce((result, key) => {
           const [start, end] = key.split("to").map(Number);
           if (weight >= start && weight <= end) {
@@ -527,95 +488,60 @@ export default function DrugDosageFinder(props) {
           return result;
         }, []);
 
-        setShowResult(true);
-        setResult(weight >= 65 ? values : mergedData);
+        setResult(mergedData.reverse());
+        setGroupedData(null);
         setRegselected(true);
-        setRegimenName(null);
-        setDownloadOptions(false);
-      } else if (rowData.subMenu) {
-        setShowModal(true);
-        setModalData(rowData.subMenu);
       }
+    } else if (weight >= 25 && drRes) {
+      const values = props.treatment.data[categoryName[1]][value]["65"];
+      const hrTbKeys = Object.keys(drRes);
+      const mergedData = hrTbKeys.reduce((result, key) => {
+        const [start, end] = key.split("to").map(Number);
+        if (weight >= start && weight <= end) {
+          result.push(...drRes[key]);
+        }
+        return result;
+      }, []);
 
-      const regimenDSTB = getForm(age, months, weight);
-      setRegimenLabel(
-        updatedRowData.label === compareLabel["en"].DRTB ||
-          updatedRowData.label === compareLabel["en"].MDRTB
-          ? regimenItem
-          : updatedRowData.label
-      );
-
-      setRegimenOptions(
-        updatedRowData.label === compareLabel["en"].DRTB
-          ? regimenItem
-          : updatedRowData.regimen
-      );
-
-      setRegArray(regimenDSTB);
+      //setShowResult(true);
+      setResult(weight >= 65 ? values : mergedData);
+      setRegselected(true);
       setRegimenName(null);
-      setShowResult(false);
-      setIsNewSet(false);
-      setMedicineLabel([]);
-      setGroupedData(null);
-      setItemIdx(null);
-      setRegimenItem(null);
-      setRegselected(updatedRowData.label !== compareLabel["en"].DSTB);
-      setSelectedFormsArray([]);
-      setMedicineData({});
-      setSelectedMedicines({});
-      setSelectedForms([]);
-      setGroupMedicineData({});
       setDownloadOptions(false);
-      setOpenRegimen(false);
-    };
+    } else if (rowData.subMenu) {
+      setShowModal(true);
+      setModalData(rowData.subMenu);
+    }
 
-    const isSelected =
-      rowData.label === regimenLabel ||
-      rowData?.subMenu?.map((item) => item.label).includes(regimenLabel);
-    return (
-      <div>
-        <button
-          disabled={rowData.label === compareLabel["en"].DRTB ? true : false}
-          onClick={() => {
-            toggleSelection(index);
-            if (index !== 1) {
-              // Dropdown handling (hide) logic
-            }
-          }}
-          style={styles.regimenDropdownOptions}
-        >
-          {rowData.label !== compareLabel["en"].DRTB && (
-            <>
-              {isSelected ? (
-                <IoMdRadioButtonOn
-                  size={18}
-                  color={isSelected ? "#016ab6" : "#dddd"}
-                />
-              ) : (
-                <IoMdRadioButtonOff
-                  size={18}
-                  color={isSelected ? "#016ab6" : "#dddd"}
-                />
-              )}
-            </>
-          )}
-          <p
-            style={{
-              ...styles.regimenDropdownItemLabel,
-              fontSize: rowData.label === compareLabel["en"].DRTB ? 12 : 14,
-              fontWeight:
-                rowData.label === compareLabel["en"].DRTB ? "600" : "400",
-              marginRight: rowData.label === compareLabel["en"].DRTB ? 32 : 0,
-            }}
-          >
-            {rowData.label}
-          </p>
-        </button>
-        {index < dropdownOptions.length - 1 ? (
-          <div style={styles.divider}></div>
-        ) : null}
-      </div>
+    const regimenDSTB = getForm(age, months, weight);
+    setRegimenLabel(
+      updatedRowData.label === compareLabel["en"].DRTB ||
+        updatedRowData.label === compareLabel["en"].MDRTB
+        ? regimenItem
+        : updatedRowData.label
     );
+
+    setRegimenOptions(
+      updatedRowData.label === compareLabel["en"].DRTB
+        ? regimenItem
+        : updatedRowData.regimen
+    );
+
+    setRegArray(regimenDSTB);
+    setRegimenName(null);
+    setShowResult(false);
+    setIsNewSet(false);
+    setMedicineLabel([]);
+    setGroupedData(null);
+    setItemIdx(null);
+    setRegimenItem(null);
+    setRegselected(updatedRowData.label !== compareLabel["en"].DSTB);
+    setSelectedFormsArray([]);
+    setMedicineData({});
+    setSelectedMedicines({});
+    setSelectedForms([]);
+    setGroupMedicineData({});
+    setDownloadOptions(false);
   };
 
   const validateInputs = (weight) => {
@@ -642,8 +568,6 @@ export default function DrugDosageFinder(props) {
     }
     setRegimenLabel(label);
     setRegimenItem(label);
-    setShowModal(false);
-    setOpenRegimen(false);
     setResult(
       value === "longerregimen"
         ? false
@@ -660,6 +584,7 @@ export default function DrugDosageFinder(props) {
     setDownloadOptions(false);
     setItemIdx(idx);
     setIsValidated(value === "longerregimen" ? validateInputs(weight) : null);
+    setShowModal(false);
   };
 
   const renderModal = () => {
@@ -739,46 +664,13 @@ export default function DrugDosageFinder(props) {
     let results =
       props.treatment.data[compareLabel["en"].DSTB][row.value][weightValue];
     setRegimenName(row.name);
-    setOpenRegimen(true);
     setResult(results);
-    setRegIdx(index);
     setIsGrouped(true);
     setShowResult(false);
     setGroupedData(null);
     setRegimenItem("");
     setRegselected(true);
     setDownloadOptions(false);
-  };
-
-  const dropdown_renderRegimen = (rowData, index) => {
-    return (
-      <>
-        <button
-          style={styles.regimenDropdownContainer}
-          onClick={() => {
-            onSelectRegimen(rowData, index);
-            setOpenRegimenOptions(false);
-            setOpenRegimen(false);
-          }}
-        >
-          {regIdx === index ? (
-            <IoMdRadioButtonOn
-              size={18}
-              color={regIdx === index ? "#016ab6" : "#dddd"}
-            />
-          ) : (
-            <IoMdRadioButtonOff
-              size={18}
-              color={regIdx === index ? "#016ab6" : "#dddd"}
-            />
-          )}
-          <p style={styles.regimenDropdownItem}>{rowData.name}</p>
-        </button>
-        {index < regArray.length - 1 ? (
-          <div style={styles.divider}></div>
-        ) : null}
-      </>
-    );
   };
 
   const onClickReset = () => {
@@ -796,10 +688,12 @@ export default function DrugDosageFinder(props) {
     setItemIdx(null);
     setRegimenOptions([]);
     setShowResult(null);
+    reset({
+      select: { value: "", label: "Select a value.." },
+    });
     setIsGrouped(null);
     setGroupedData({});
     setIsNewSet(false);
-    setRegIdx(null);
     setReorderedSelectedItems({});
     setIsValidated(false);
     setSelectedFormsArray([]);
@@ -1333,8 +1227,6 @@ export default function DrugDosageFinder(props) {
       setShowResult(false);
       setIsGrouped(null);
       setGroupedData({});
-      setIsNewSet(false);
-      setRegIdx(null);
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
@@ -1368,7 +1260,6 @@ export default function DrugDosageFinder(props) {
       setIsGrouped(null);
       setGroupedData({});
       setIsNewSet(false);
-      setRegIdx(null);
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
@@ -1396,7 +1287,6 @@ export default function DrugDosageFinder(props) {
       setIsGrouped(null);
       setGroupedData({});
       setIsNewSet(false);
-      setRegIdx(null);
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
@@ -1422,6 +1312,14 @@ export default function DrugDosageFinder(props) {
       return option;
     })
     .flat();
+
+  const modifiedOptions = dropdownOptions.map((option) => {
+    return {
+      ...option,
+      isDisabled: option.label === compareLabel.en.DRTB,
+      value: option.label,
+    };
+  });
 
   const getFinalTitle = (
     regimenLabel,
@@ -1693,277 +1591,363 @@ export default function DrugDosageFinder(props) {
     saveAs(blob, fileName);
   };
   const { defaultTool } = props;
+
+  const Option = ({ children, ...props }) => {
+    const style = { cursor: "pointer", marginRight: 10 };
+    return (
+      <components.Option {...props}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          {children !== compareLabel.en.DRTB ? (
+            <>
+              {props.isSelected ? (
+                <FaRegCheckCircle color="#0A2C59" size={15} style={style} />
+              ) : (
+                <FaRegCircle color="#DDDDDD" size={15} style={style} />
+              )}
+            </>
+          ) : null}
+          {props.data.name ? props.data.name : children}
+        </div>
+      </components.Option>
+    );
+  };
+
+  const showResultCondition =
+    ((regimenLabel || regimenItem || regimenName) &&
+      (result === undefined || result) &&
+      (regselected || itemIdx)) ||
+    ((regimenLabel || regimenItem) &&
+      isGrouped &&
+      medicineLabel.length > 0 &&
+      selectedFormsArray.length > 0) ||
+    isValid
+      ? true
+      : false;
+
+  const onSubmit = (data) => {
+    showResultCondition && getGroupedData();
+    setShowResult(showResultCondition ? true : false);
+    setDownloadOptions(showResultCondition ? true : false);
+  };
+
   return (
     <div style={styles.row}>
       <section div style={styles.container}>
-        <div style={{ padding: "20px" }}>
-          <h3 style={styles.headerTitle}>TB Treatment</h3>
-          <div style={styles.ageContainer} className="fade-in">
-            <div
-              style={{
-                flex: 1,
-                width: "100%",
-                marginRight: age === "0" ? 20 : null,
-              }}
-            >
-              <label style={styles.label}>Age</label>
-              <div style={styles.dropdown}>
-                <input
-                  type="text"
-                  value={age}
-                  onChange={(e) => ageHandler(e.target.value)}
-                  style={styles.textInput}
-                  placeholder={"Enter the age"}
-                  maxLength={2}
-                />
-                <p
-                  className="slide-in-2"
-                  style={{ margin: "10px", color: "#abb4c4" }}
-                >
-                  by Years
-                </p>
-              </div>
-            </div>
-            {age === "0" ? (
-              <div style={{ flex: 2, width: "100%" }} className="fade-in">
-                <label style={styles.label}>Months</label>
-                <div style={styles.dropdown}>
-                  <input
-                    type="text"
-                    value={months}
-                    onChange={(e) => monthsHandler(e.target.value)}
-                    style={{ ...styles.textInput, margin: "10px" }}
-                    maxLength={2}
-                    placeholder="Enter the months"
-                  />
-                </div>
-              </div>
-            ) : null}
-          </div>
-          {age > 0 || months ? (
-            <div style={{ marginTop: 20, width: "100%" }} className="fade-in">
-              <label style={styles.label}>Weight</label>
-              <div style={styles.dropdown}>
-                <input
-                  type="text"
-                  value={weight}
-                  onChange={(e) => weightHandler(e.target.value)}
-                  style={{ ...styles.textInput, margin: "10px" }}
-                  placeholder={"Enter weight in kg"}
-                  maxLength={3}
-                />
-                {weight > 0 && (
-                  <p className="slide-in" style={styles.kgText}>
-                    by kg
-                  </p>
-                )}
-              </div>
-            </div>
-          ) : null}
-          {weight ? (
-            <div
-              style={{ marginTop: 20, width: "100%", position: "relative" }}
-              className="fade-in"
-            >
-              <label style={styles.label}>Regimen</label>
-              <button
-                style={styles.fieldButton}
-                onClick={() => {
-                  setOpenRegimen(!openRegimen);
-                  setRegimenOptions(false);
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "650px",
+          }}
+        >
+          <div style={{ padding: "20px" }}>
+            <h3 style={styles.headerTitle}>TB Treatment</h3>
+            <div style={styles.ageContainer}>
+              <div
+                style={{
+                  flex: 1,
+                  width: "100%",
+                  marginRight: age === "0" ? 20 : null,
                 }}
               >
-                <div style={styles.fieldSubContainer}>
-                  <p style={styles.fieldLabel}>
-                    {regimenLabel ? regimenLabel : "Select Regimen..."}
-                  </p>
-                </div>
-                <div>
-                  <FaChevronDown className="slide-in" size={14} color="#000" />
-                </div>
-              </button>
-              {openRegimen && (
-                <section style={styles.dropdownSection}>
-                  {dropdownOptions.map((item, index) =>
-                    dropDownRow(item, index)
+                <label style={styles.label}>Age</label>
+                <Controller
+                  name="age"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <input
+                        {...field}
+                        type="number"
+                        style={styles.textInput}
+                        placeholder="Enter the age..."
+                        onInput={(e) => ageHandler(e.target.value)}
+                      />
+                      <span
+                        style={{
+                          position: "absolute",
+                          right: "25px",
+                          top: "20%",
+                          transform: "translateY(-50%)",
+                          fontSize: "14px",
+                          color: "#666",
+                          pointerEvents: "none",
+                        }}
+                      >
+                       by years
+                      </span>
+                    </>
                   )}
-                </section>
-              )}
+                />
+              </div>
+              {age === "0" ? (
+                <div style={{ flex: 2, width: "100%" }} className="fade-in">
+                  <label style={styles.label}>Months</label>
+                  <Controller
+                    name="months"
+                    control={control}
+                    render={({ field }) => (
+                    <>
+                      <input
+                        {...field}
+                        type="number"
+                        style={styles.textInput}
+                        placeholder="Enter the months..."
+                        onInput={(e) => monthsHandler(e.target.value)}
+                      />
+                      <span
+                        style={{
+                          position: "absolute",
+                          right: "25px",
+                          top: "20%",
+                          transform: "translateY(-50%)",
+                          fontSize: "14px",
+                          color: "#666",
+                          pointerEvents: "none",
+                        }}
+                      >
+                       by months
+                      </span>
+                    </>
+                    )}
+                  />
+                </div>
+              ) : null}
             </div>
-          ) : null}
-          {Array.isArray(regimenOptions) && regimenOptions.length > 0 ? (
-            <div
-              style={{
-                width: "100%",
-                marginTop: 20,
-                position: "relative",
-              }}
-              className={openRegimen ? null : "fade-in"}
-            >
-              <label style={styles.label}>Regimen</label>
-              <button
-                style={styles.fieldButton}
-                onClick={() => setOpenRegimenOptions(!openRegimenOptions)}
-              >
-                <div style={styles.fieldSubContainer}>
-                  <p style={styles.fieldLabel}>
-                    {regimenName ? regimenName : "Please Select"}
-                  </p>
-                </div>
-                <div>
-                  <FaChevronDown className="slide-in" size={14} color="#000" />
-                </div>
-              </button>
-              {openRegimenOptions && (
-                <section style={styles.dropdownSection}>
-                  {regArray.map((item, index) =>
-                    dropdown_renderRegimen(item, index)
+            {age > 0 || months ? (
+              <>
+                <label style={styles.label}>Weight</label>
+                <Controller
+                  name="weight"
+                  control={control}
+                  render={({ field }) => (
+                  <>
+                    <input
+                      {...field}
+                      type="number"
+                      style={styles.textInput}
+                      placeholder="Enter the weight..."
+                      onInput={(e) => weightHandler(e.target.value)}
+                    />
+                    <span
+                    style={{
+                      position: "absolute",
+                      right: "25px",
+                      top: "32%",
+                      transform: "translateY(-50%)",
+                      fontSize: "14px",
+                      color: "#666",
+                      pointerEvents: "none",
+                    }}
+                  >
+                   by kg
+                  </span>
+                </>
                   )}
-                </section>
-              )}
-            </div>
-          ) : null}
-          {isNewSet && isValidated ? (
-            <div
-              style={{
-                width: "100%",
-                marginTop: 20,
-              }}
-              className={openRegimen ? null : "fade-in"}
-            >
-              <label style={styles.label}>Select Drug</label>
-              <button
-                style={styles.fieldButton}
-                onClick={() => setShowDrugsModal(true)}
+                />
+              </>
+            ) : null}
+            {weight && (
+              <>
+                <label style={styles.label}>Regimen</label>
+                <Controller
+                  name="select"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      styles={{
+                        option: (baseStyles, state) => ({
+                          ...baseStyles,
+                          ...styles.selectOption,
+                          borderBottom:
+                            state.data.label !==
+                            dropdownOptions[dropdownOptions.length - 1].label
+                              ? "1px solid #ccc"
+                              : "none",
+                        }),
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          backgroundColor: "#fbfcfd",
+                        }),
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+                          marginBottom: 20,
+                        }),
+                        dropdownIndicator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "#000",
+                        }),
+                        singleValue: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "flex",
+                          alignItems: "flex-start",
+                        }),
+                      }}
+                      components={{
+                        Option,
+                        IndicatorSeparator: () => null,
+                      }}
+                      value={
+                        regimenLabel
+                          ? { label: regimenLabel, value: regimenLabel }
+                          : field.value
+                      }
+                      onChange={(selectedOption) =>
+                        field.onChange((e) =>
+                          toggleSelection(selectedOption, field)
+                        )
+                      }
+                      options={modifiedOptions}
+                    />
+                  )}
+                />
+              </>
+            )}
+            {Array.isArray(regimenOptions) && regimenOptions.length > 0 ? (
+              <>
+                <label style={styles.label}>Regimen</label>
+                <Controller
+                  name="regimen"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      styles={{
+                        option: (baseStyles, state) => ({
+                          ...baseStyles,
+                          ...styles.selectOption,
+                          borderBottom:
+                            state.data.name !==
+                            regArray[regArray.length - 1].name
+                              ? "1px solid #ccc"
+                              : "none",
+                        }),
+                        container: (baseStyles, state) => ({
+                          ...baseStyles,
+                          marginBottom: 20,
+                        }),
+                        dropdownIndicator: (baseStyles, state) => ({
+                          ...baseStyles,
+                          color: "#000",
+                        }),
+                        singleValue: (baseStyles, state) => ({
+                          ...baseStyles,
+                          display: "flex",
+                          alignItems: "flex-start",
+                        }),
+                      }}
+                      components={{
+                        Option,
+                        IndicatorSeparator: () => null,
+                      }}
+                      onChange={(selectedOption) =>
+                        field.onChange((e) => {
+                          onSelectRegimen(selectedOption);
+                        })
+                      }
+                      value={
+                        regimenName
+                          ? { name: regimenName, label: regimenName }
+                          : field.value
+                      }
+                      isOptionSelected={(option, selectValues) => 
+                        selectValues.some(selected => selected.name === option.name)
+                      }
+                      options={regArray}
+                    />
+                  )}
+                />
+              </>
+            ) : null}
+            {isNewSet && isValidated ? (
+              <div
+                style={{
+                  width: "100%",
+                  marginTop: 20,
+                }}
+                className={ "fade-in"}
               >
-                <p
-                  style={{
-                    fontSize: 16,
-                    color: medicineLabel.length > 0 ? "#696969" : "#B8B8B8",
-                    margin: "12px",
-                  }}
+                <label style={styles.label}>Select Drug</label>
+                <button
+                  style={styles.fieldButton}
+                  onClick={() => setShowDrugsModal(true)}
                 >
-                  {medicineLabel.length === 0
-                    ? "Select Drug"
-                    : medicineLabel.length > 40
-                    ? `${medicineLabel.slice(0, 39)}...`
-                    : medicineLabel}
-                </p>
-                {/* </div>
-                </div> */}
-              </button>
-            </div>
-          ) : null}
-          {medicineLabel.length > 0 ? (
-            <div
-              style={{
-                width: "100%",
-                marginTop: 20,
-              }}
-              className={openRegimen ? null : "fade-in"}
-            >
-              <label style={styles.label}>Formulation</label>
-              <button
-                style={styles.fieldButton}
-                onClick={() => setShowDrugsDose(true)}
-              >
-                <div style={styles.drugDoseContainer}>
                   <p
                     style={{
                       fontSize: 16,
+                      color: medicineLabel.length > 0 ? "#696969" : "#B8B8B8",
                       margin: "12px",
-                      color:
-                        selectedFormsArray.length > 0 ? "#696969" : "#B8B8B8",
                     }}
                   >
-                    {selectedFormsArray.length > 0
-                      ? selectedFormsArray.length === 1
-                        ? `1 formulation selected`
-                        : `${selectedFormsArray.length} formulations selected`
-                      : "Select Formulation"}
+                    {medicineLabel.length === 0
+                      ? "Select Drug"
+                      : medicineLabel.length > 40
+                      ? `${medicineLabel.slice(0, 39)}...`
+                      : medicineLabel}
                   </p>
-                </div>
-              </button>
+                </button>
+              </div>
+            ) : null}
+            {medicineLabel.length > 0 ? (
+              <div
+                style={{
+                  width: "100%",
+                  marginTop: 20,
+                }}
+                className={"fade-in"}
+              >
+                <label style={styles.label}>Formulation</label>
+                <button
+                  style={styles.fieldButton}
+                  onClick={() => setShowDrugsDose(true)}
+                >
+                  <div style={styles.drugDoseContainer}>
+                    <p
+                      style={{
+                        fontSize: 16,
+                        margin: "12px",
+                        color:
+                          selectedFormsArray.length > 0 ? "#696969" : "#B8B8B8",
+                      }}
+                    >
+                      {selectedFormsArray.length > 0
+                        ? selectedFormsArray.length === 1
+                          ? `1 formulation selected`
+                          : `${selectedFormsArray.length} formulations selected`
+                        : "Select Formulation"}
+                    </p>
+                  </div>
+                </button>
+              </div>
+            ) : null}
+          </div>
+          <div>
+            <div style={styles.divider}></div>
+            <div style={{ display: "flex", padding: "20px" }}>
+              <input type="reset" onClick={() => onClickReset()} style={styles.resetResultButton} />
+              <input
+                type="submit"
+                value="Result"
+                style={{...styles.resetResultButton, marginLeft: 10}}
+                disabled={showResultCondition ? false : true}
+              />
             </div>
-          ) : null}
+          </div>
           {renderModal()}
           {renderDrugsModal()}
           {renderDrugsDosingModal()}
-        </div>
-        <div>
-          <div style={styles.divider}></div>
-          <div style={{ ...styles.row, padding: "20px" }}>
-            <button
-              style={{
-                ...styles.resetResultButton,
-                marginRight: "5px",
-                backgroundColor:
-                  ((regimenLabel || regimenItem || regimenName) &&
-                    (result === undefined || result) &&
-                    (regselected || itemIdx)) ||
-                  ((regimenLabel || regimenItem) &&
-                    isGrouped &&
-                    medicineLabel.length > 0 &&
-                    selectedFormsArray.length > 0) ||
-                  isValid
-                    ? "#d9dce1"
-                    : "#e7eaed",
-              }}
-              onClick={() => onClickReset()}
-            >
-              Reset
-            </button>
-            <button
-              disabled={
-                ((regimenLabel || regimenItem || regimenName) &&
-                  (result === undefined || result) &&
-                  (regselected || itemIdx)) ||
-                ((regimenLabel || regimenItem) &&
-                  isGrouped &&
-                  medicineLabel.length > 0 &&
-                  selectedFormsArray.length > 0) ||
-                isValid
-                  ? false
-                  : true
-              }
-              style={{
-                ...styles.resetResultButton,
-                marginLeft: "5px",
-                color:
-                  ((regimenLabel || regimenItem || regimenName) &&
-                    (result === undefined || result) &&
-                    (regselected || itemIdx)) ||
-                  ((regimenLabel || regimenItem) &&
-                    isGrouped &&
-                    medicineLabel.length > 0 &&
-                    selectedFormsArray.length > 0) ||
-                  isValid
-                    ? "#0661c5"
-                    : "#000",
-                backgroundColor:
-                  ((regimenLabel || regimenItem || regimenName) &&
-                    (result === undefined || result) &&
-                    (regselected || itemIdx)) ||
-                  ((regimenLabel || regimenItem) &&
-                    isGrouped &&
-                    medicineLabel.length > 0 &&
-                    selectedFormsArray.length > 0) ||
-                  isValid
-                    ? "#c4dcf6"
-                    : "#e7eaed",
-              }}
-              onClick={() => {
-                getGroupedData();
-                setShowResult(true);
-                setDownloadOptions(result === undefined ? false : true);
-              }}
-            >
-              Result
-            </button>
-          </div>
-        </div>
+        </form>
       </section>
-      <section style={{ marginLeft: "30px", width: "40%", marginTop: "40px" }}>
+      <section style={{ marginLeft: "30px", width: "50%", marginTop: "40px" }}>
         <div style={styles.resultHeaderContainer}>
           <h3 style={{ ...styles.headerTitle, margin: 0 }}>Result</h3>
           {downloadOptions ? (
