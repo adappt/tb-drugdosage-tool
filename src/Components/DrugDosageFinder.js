@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {FaRegCheckCircle, FaRegCircle} from "react-icons/fa";
+import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
 import {
   compareLabel,
   titleTemplates,
@@ -264,7 +264,7 @@ export default function DrugDosageFinder(props) {
     label: {
       display: "flex",
       justifyContent: "flex-start",
-      fontSize: "14px",
+      fontSize: "16px",
       fontWeight: "600",
       color: "#000",
       marginBottom: "8px",
@@ -1682,7 +1682,7 @@ export default function DrugDosageFinder(props) {
                           pointerEvents: "none",
                         }}
                       >
-                       by years
+                        by years
                       </span>
                     </>
                   )}
@@ -1695,28 +1695,28 @@ export default function DrugDosageFinder(props) {
                     name="months"
                     control={control}
                     render={({ field }) => (
-                    <>
-                      <input
-                        {...field}
-                        type="number"
-                        style={styles.textInput}
-                        placeholder="Enter the months..."
-                        onInput={(e) => monthsHandler(e.target.value)}
-                      />
-                      <span
-                        style={{
-                          position: "absolute",
-                          right: "25px",
-                          top: "20%",
-                          transform: "translateY(-50%)",
-                          fontSize: "14px",
-                          color: "#666",
-                          pointerEvents: "none",
-                        }}
-                      >
-                       by months
-                      </span>
-                    </>
+                      <>
+                        <input
+                          {...field}
+                          type="number"
+                          style={styles.textInput}
+                          placeholder="Enter the months..."
+                          onInput={(e) => monthsHandler(e.target.value)}
+                        />
+                        <span
+                          style={{
+                            position: "absolute",
+                            right: "25px",
+                            top: "20%",
+                            transform: "translateY(-50%)",
+                            fontSize: "14px",
+                            color: "#666",
+                            pointerEvents: "none",
+                          }}
+                        >
+                          by months
+                        </span>
+                      </>
                     )}
                   />
                 </div>
@@ -1729,28 +1729,28 @@ export default function DrugDosageFinder(props) {
                   name="weight"
                   control={control}
                   render={({ field }) => (
-                  <>
-                    <input
-                      {...field}
-                      type="number"
-                      style={styles.textInput}
-                      placeholder="Enter the weight..."
-                      onInput={(e) => weightHandler(e.target.value)}
-                    />
-                    <span
-                    style={{
-                      position: "absolute",
-                      right: "25px",
-                      top: "32%",
-                      transform: "translateY(-50%)",
-                      fontSize: "14px",
-                      color: "#666",
-                      pointerEvents: "none",
-                    }}
-                  >
-                   by kg
-                  </span>
-                </>
+                    <>
+                      <input
+                        {...field}
+                        type="number"
+                        style={styles.textInput}
+                        placeholder="Enter the weight..."
+                        onInput={(e) => weightHandler(e.target.value)}
+                      />
+                      <span
+                        style={{
+                          position: "absolute",
+                          right: "25px",
+                          top: "32%",
+                          transform: "translateY(-50%)",
+                          fontSize: "14px",
+                          color: "#666",
+                          pointerEvents: "none",
+                        }}
+                      >
+                        by kg
+                      </span>
+                    </>
                   )}
                 />
               </>
@@ -1859,8 +1859,10 @@ export default function DrugDosageFinder(props) {
                           ? { name: regimenName, label: regimenName }
                           : field.value
                       }
-                      isOptionSelected={(option, selectValues) => 
-                        selectValues.some(selected => selected.name === option.name)
+                      isOptionSelected={(option, selectValues) =>
+                        selectValues.some(
+                          (selected) => selected.name === option.name
+                        )
                       }
                       options={regArray}
                     />
@@ -1874,7 +1876,7 @@ export default function DrugDosageFinder(props) {
                   width: "100%",
                   marginTop: 20,
                 }}
-                className={ "fade-in"}
+                className={"fade-in"}
               >
                 <label style={styles.label}>Select Drug</label>
                 <button
@@ -1933,11 +1935,15 @@ export default function DrugDosageFinder(props) {
           <div>
             <div style={styles.divider}></div>
             <div style={{ display: "flex", padding: "20px" }}>
-              <input type="reset" onClick={() => onClickReset()} style={styles.resetResultButton} />
+              <input
+                type="reset"
+                onClick={() => onClickReset()}
+                style={styles.resetResultButton}
+              />
               <input
                 type="submit"
                 value="Result"
-                style={{...styles.resetResultButton, marginLeft: 10}}
+                style={{ ...styles.resetResultButton, marginLeft: 10 }}
                 disabled={showResultCondition ? false : true}
               />
             </div>
@@ -2266,7 +2272,7 @@ export default function DrugDosageFinder(props) {
             ) : null}
           </div>
         ) : (
-          <div style={{ marginTop: 150 }}>
+          <div style={{ marginTop: 170 }}>
             <p style={styles.emptyResultLabel}>
               Fill the fields to see the result
             </p>

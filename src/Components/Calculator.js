@@ -385,7 +385,7 @@ const styles = {
   label: {
     display: "flex",
     justifyContent: "flex-start",
-    fontSize: "14px",
+    fontSize: "16px",
     fontWeight: "600",
     color: "#000",
     marginBottom: "8px",
