@@ -6,13 +6,13 @@ import {
   translations,
   weightJson,
   weightRange,
-} from "./utils/drugtooltitle";
+} from "../utils/drugtooltitle";
 import { IoMdDownload } from "react-icons/io";
 import { Modal } from "@mui/material";
 import { saveAs } from "file-saver";
 import { pdf } from "@react-pdf/renderer";
-import PdfComponent from "./PdfComponent";
-import "../styles/styles.css";
+import PdfComponent from "./components/PdfComponent";
+import "./styles/styles.css";
 import Select, { components } from "react-select";
 import { useForm, Controller } from "react-hook-form";
 

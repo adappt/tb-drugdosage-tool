@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import data from "../drugdoseData.json";
-import SwitchSelector from "./SwitchSelector";
+import SwitchSelector from "./components/SwitchSelector";
 import { FaRegCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import DrugDosageFinder from "./DrugDosageFinder";
-import "../styles/styles.css";
+import "./styles/styles.css";
 import { IoMdDownload } from "react-icons/io";
-import PdfComponent from "./PdfComponent";
+import PdfComponent from "./components/PdfComponent";
 import { saveAs } from "file-saver";
 import { pdf } from "@react-pdf/renderer";
 import { useForm, Controller } from "react-hook-form";

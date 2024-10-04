@@ -8,16 +8,16 @@ import {
   Image,
   Font,
 } from "@react-pdf/renderer";
-import iconInfo from "../assets/icon-info-base64";
+import iconInfo from "../../assets/icon-info-base64";
 
 Font.register({
   family: "Calibri",
-  src: require("../assets/fonts/calibri.ttf"),
+  src: require("../../assets/pdfFonts/calibri.ttf"),
 });
 
 Font.register({
   family: "Calibri",
-  src: require("../assets/fonts/calibrib.ttf"),
+  src: require("../../assets/pdfFonts/calibrib.ttf"),
   fontWeight: "bold",
 });
 
@@ -292,7 +292,7 @@ const PdfComponent = (data) => {
                 </Text>
                 <View style={styles.doseResultContainer}>
                   <Image
-                    src={require("../assets/drug.png")}
+                    src={require("../../assets/drug.png")}
                     style={styles.drugImg}
                     alt="drug"
                   />
