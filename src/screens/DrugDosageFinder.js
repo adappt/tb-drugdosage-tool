@@ -1934,11 +1934,20 @@ export default function DrugDosageFinder(props) {
           </div>
           <div>
             <div style={styles.divider}></div>
-            <div style={{ display: "flex", padding: "20px", justifyContent: "space-between" }}>
+            <div
+              style={{
+                display: "flex",
+                padding: "20px",
+                justifyContent: "space-between",
+              }}
+            >
               <input
                 type="reset"
                 onClick={() => onClickReset()}
-                style={{...styles.resetResultButton, backgroundColor: '#D3D3D3'}}
+                style={{
+                  ...styles.resetResultButton,
+                  backgroundColor: "#D3D3D3",
+                }}
               />
               <input
                 type="submit"

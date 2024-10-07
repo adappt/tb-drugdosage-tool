@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import data from "../drugdoseData.json";
 import SwitchSelector from "./components/SwitchSelector";
 import { FaRegCircle } from "react-icons/fa";
@@ -10,9 +10,7 @@ import PdfComponent from "./components/PdfComponent";
 import { saveAs } from "file-saver";
 import { pdf } from "@react-pdf/renderer";
 import { useForm, Controller } from "react-hook-form";
-import Select, {
-  components,
-} from "react-select";
+import Select, { components } from "react-select";
 
 const Calculator = () => {
   const [medicine, setMedicine] = useState("");
@@ -34,9 +32,9 @@ const Calculator = () => {
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       select: {},
-      medicine: {value: "", label: "Select a medicine..."},
-      age: {value: "", label: "Select a age..."},
-      weight: {value: "", label: "Select a weight..."},
+      medicine: { value: "", label: "Select a medicine..." },
+      age: { value: "", label: "Select a age..." },
+      weight: { value: "", label: "Select a weight..." },
     },
   });
   const Option = ({ children, ...props }) => {
@@ -73,16 +71,16 @@ const Calculator = () => {
     setResult("");
     setSelections({});
     reset({
-      medicine: {value: "", label: "Select a medicine..."},
-      age: {value: "", label: "Select a age..."},
-      weight: {value: "", label: "Select a weight..."},
-    })
+      medicine: { value: "", label: "Select a medicine..." },
+      age: { value: "", label: "Select a age..." },
+      weight: { value: "", label: "Select a weight..." },
+    });
     setShowResult(false);
     setDownloadOptions(false);
   };
 
   const selectMedicine = (selectedOption) => {
-    const {value} = selectedOption;
+    const { value } = selectedOption;
     setMedicine(value);
     setAgedata("");
     setResult("");
@@ -90,14 +88,14 @@ const Calculator = () => {
   };
 
   const selectAge = (selectedOption) => {
-    const {value} = selectedOption;
+    const { value } = selectedOption;
     setAgedata(value);
     setResult(data.prevention[medicine]?.isWeight ? "" : value);
     setShowResult(false);
   };
 
   const selectWeight = (selectedOption) => {
-    const {value} = selectedOption;
+    const { value } = selectedOption;
     setResult(value);
   };
 
@@ -211,53 +209,57 @@ const Calculator = () => {
                       agedata) ? (
                       <>
                         <label style={styles.label}>{item.label}</label>
-                        <Controller 
-                         name={item.key}
-                         control={control}
-                         render={({ field }) => 
-                        <Select
-                          {...field}
-                          className={!isMenuOpen ? 'fade-in' : ''}
-                          styles={{
-                            option: (baseStyles, state) => ({
-                              ...baseStyles,
-                              ...styles.selectOption,
-                              borderBottom:
-                                state.data.label !==
-                                item.options[item.options.length - 1].label
-                                  ? "1px solid #ccc"
-                                  : "none",
-                            }),
-                            container: (baseStyles, state) => ({
-                              ...baseStyles,
-                              marginBottom: 20,
-                            }),
-                            dropdownIndicator: (baseStyles, state) => ({
-                              ...baseStyles,
-                              color: "#000",
-                            }),
-                            singleValue: (baseStyles, state) => ({
-                              ...baseStyles,
-                              display: "flex",
-                              alignItems: "flex-start",
-                            }),
-                          }}
-                          components={{
-                            Option,
-                            IndicatorSeparator: () => null,
-                          }}
-                          isOptionSelected={(option, selectValues) => 
-                            selectValues.some(selected => selected.label === option.label)
-                          }
-                          onMenuOpen={() => setIsMenuOpen(true)}
-                          onMenuClose={() => setIsMenuOpen(false)}
-                          onChange={(selectedOption) =>
-                            field.onChange(e => handleSelectChange(selectedOption, item))
-                          }
-                          options={item.options}
+                        <Controller
+                          name={item.key}
+                          control={control}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className={!isMenuOpen ? "fade-in" : ""}
+                              styles={{
+                                option: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  ...styles.selectOption,
+                                  borderBottom:
+                                    state.data.label !==
+                                    item.options[item.options.length - 1].label
+                                      ? "1px solid #ccc"
+                                      : "none",
+                                }),
+                                container: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  marginBottom: 20,
+                                }),
+                                dropdownIndicator: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  color: "#000",
+                                }),
+                                singleValue: (baseStyles, state) => ({
+                                  ...baseStyles,
+                                  display: "flex",
+                                  alignItems: "flex-start",
+                                }),
+                              }}
+                              components={{
+                                Option,
+                                IndicatorSeparator: () => null,
+                              }}
+                              isOptionSelected={(option, selectValues) =>
+                                selectValues.some(
+                                  (selected) => selected.label === option.label
+                                )
+                              }
+                              onMenuOpen={() => setIsMenuOpen(true)}
+                              onMenuClose={() => setIsMenuOpen(false)}
+                              onChange={(selectedOption) =>
+                                field.onChange((e) =>
+                                  handleSelectChange(selectedOption, item)
+                                )
+                              }
+                              options={item.options}
+                            />
+                          )}
                         />
-                      }
-                      />
                       </>
                     ) : null}
                   </React.Fragment>
@@ -268,14 +270,24 @@ const Calculator = () => {
                 <div style={styles.buttonContainer}>
                   <input
                     type="reset"
-                    style={{...styles.resetReusltButton, backgroundColor: "#D3D3D3", marginRight: "5px"}}
+                    style={{
+                      ...styles.resetReusltButton,
+                      backgroundColor: "#D3D3D3",
+                      marginRight: "5px",
+                    }}
                     onClick={() => onClickReset()}
                   />
                   <input
                     type="submit"
                     value="Result"
                     disabled={result && regimen ? false : true}
-                    style={{...styles.resetReusltButton, marginLeft: "5px", backgroundColor: result && regimen ? '#0A2C59' : "#D3D3D3", color:result && regimen ? '#fff' : ""  }}
+                    style={{
+                      ...styles.resetReusltButton,
+                      marginLeft: "5px",
+                      backgroundColor:
+                        result && regimen ? "#0A2C59" : "#D3D3D3",
+                      color: result && regimen ? "#fff" : "",
+                    }}
                   />
                 </div>
               </div>

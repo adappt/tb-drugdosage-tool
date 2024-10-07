@@ -439,19 +439,19 @@ const PdfComponent = (data) => {
                             <View key={itmIndex}>
                               <View style={styles.table}>
                                 <View style={styles.container}>
-                                    <Text
-                                      style={[
-                                        styles.th,
-                                        {
-                                          border:
-                                            itm.dose === " "
-                                              ? "none"
-                                              : "1px solid #ccc",
-                                        },
-                                      ]}
-                                    >
-                                      {itm.dose || ""}
-                                    </Text>
+                                  <Text
+                                    style={[
+                                      styles.th,
+                                      {
+                                        border:
+                                          itm.dose === " "
+                                            ? "none"
+                                            : "1px solid #ccc",
+                                      },
+                                    ]}
+                                  >
+                                    {itm.dose || ""}
+                                  </Text>
                                   {!Array.isArray(itm.formulation)
                                     ? itm.formulation && (
                                         <Text style={styles.th}>
