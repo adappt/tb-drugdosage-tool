@@ -268,14 +268,14 @@ const Calculator = () => {
                 <div style={styles.buttonContainer}>
                   <input
                     type="reset"
-                    style={styles.resetReusltButton}
+                    style={{...styles.resetReusltButton, backgroundColor: "#D3D3D3", marginRight: "5px"}}
                     onClick={() => onClickReset()}
                   />
                   <input
                     type="submit"
                     value="Result"
                     disabled={result && regimen ? false : true}
-                    style={styles.resetReusltButton}
+                    style={{...styles.resetReusltButton, marginLeft: "5px", backgroundColor: result && regimen ? '#0A2C59' : "#D3D3D3", color:result && regimen ? '#fff' : ""  }}
                   />
                 </div>
               </div>
@@ -402,7 +402,6 @@ const styles = {
   resetReusltButton: {
     width: "50%",
     borderRadius: "8px",
-    marginRight: "5px",
     fontSize: "14px",
     fontWeight: "500",
     cursor: "pointer",
