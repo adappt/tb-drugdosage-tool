@@ -1624,7 +1624,6 @@ export default function DrugDosageFinder(props) {
     const blob = await pdf(<PdfComponent data={content} />).toBlob();
     saveAs(blob, fileName);
   };
-  const { defaultTool } = props;
 
   const Option = ({ children, ...props }) => {
     const style = { cursor: "pointer", marginRight: 10 };
@@ -2011,9 +2010,9 @@ export default function DrugDosageFinder(props) {
             <button
               style={{
                 ...styles.downloadButton,
-                backgroundColor: result ? "#0A2C59" : "#D3D3D3",
+                backgroundColor: result === undefined ? "#D3D3D3" : "#0A2C59",
               }}
-              disabled={result ? false : true}
+              disabled={result === undefined ? true : false}
               onClick={() => {
                 downloadFile({
                   result,
@@ -2024,7 +2023,6 @@ export default function DrugDosageFinder(props) {
                   longerRegimen,
                   regimenItem,
                   regimenLabel,
-                  defaultTool,
                   remarks,
                 });
               }}
@@ -2333,13 +2331,14 @@ export default function DrugDosageFinder(props) {
                   </div>
                 ) : null}
               </>
-            ) : (
+            ) : null}
+            {result === undefined && showResult ? (
               <div style={styles.noRegimenContent}>
                 <p style={{ fontSize: 16 }}>
                   No regimen proposed for these ranges
                 </p>
               </div>
-            )}
+            ) : null}
           </div>
         ) : (
           <div style={{ marginTop: 170 }}>

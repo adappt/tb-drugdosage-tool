@@ -281,35 +281,6 @@ const PdfComponent = (data) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View>
-          {data?.data?.defaultTool.default_tool === "tpt_finder" ? (
-            <View>
-              <View style={styles.defaultToolHeader}>
-                <Text style={styles.header}>TB Prevention</Text>
-              </View>
-              <View style={styles.doseResult}>
-                <Text style={styles.doseResultHeader}>
-                  Dose by age and weight band
-                </Text>
-                <View style={styles.doseResultContainer}>
-                  <Image
-                    src={require("../../assets/drug.png")}
-                    style={styles.drugImg}
-                    alt="drug"
-                  />
-                  <Text style={styles.doseResultContent}>
-                    {data?.data?.result}{" "}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.doseResult}>
-                <Text style={styles.doseResultHeader}>Regimen</Text>
-                <Text style={styles.doseResultContent}>
-                  {data?.data?.regimen}{" "}
-                </Text>
-              </View>
-            </View>
-          ) : (
-            <>
               <View style={styles.defaultToolHeader}>
                 <Text style={styles.header}>{data?.data?.header}</Text>
               </View>
@@ -541,8 +512,6 @@ const PdfComponent = (data) => {
                   <Text style={styles.remarksText}>{data?.data?.remarks}</Text>
                 </View>
               )}
-            </>
-          )}
         </View>
       </Page>
     </Document>

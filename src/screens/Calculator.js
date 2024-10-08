@@ -5,10 +5,6 @@ import { FaRegCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import DrugDosageFinder from "./DrugDosageFinder";
 import "./styles/styles.css";
-import { IoMdDownload } from "react-icons/io";
-import PdfComponent from "./components/PdfComponent";
-import { saveAs } from "file-saver";
-import { pdf } from "@react-pdf/renderer";
 import { useForm, Controller } from "react-hook-form";
 import Select, { components } from "react-select";
 
@@ -21,7 +17,6 @@ const Calculator = () => {
     default_tool: "tpt_finder",
   });
   const [showResult, setShowResult] = useState(false);
-  const [downloadOptions, setDownloadOptions] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selections, setSelections] = useState({
     medicine: null,
@@ -61,7 +56,6 @@ const Calculator = () => {
 
   const onSubmit = (data) => {
     setShowResult(true);
-    setDownloadOptions(true);
   };
 
   const onClickReset = () => {
@@ -76,7 +70,6 @@ const Calculator = () => {
       weight: { value: "", label: "Select a weight..." },
     });
     setShowResult(false);
-    setDownloadOptions(false);
   };
 
   const selectMedicine = (selectedOption) => {
@@ -133,21 +126,6 @@ const Calculator = () => {
       { label: "Профилактика туберкулеза", value: "tpt_finder" },
       { label: "Лечение туберкулеза", value: "dosage_finder" },
     ],
-  };
-
-  const downloadFile = async (content) => {
-    const date = new Date();
-    const formattedDate = date
-      .toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      })
-      .replace(/\//g, "-");
-    const randomNum = Math.floor(Math.random() * 100);
-    const fileName = "Dosage_" + formattedDate + "_" + randomNum + ".pdf";
-    const blob = await pdf(<PdfComponent data={content} />).toBlob();
-    saveAs(blob, fileName);
   };
 
   const dropdownList = [
@@ -305,21 +283,6 @@ const Calculator = () => {
           <div style={styles.result}>
             <div style={styles.resultHeaderContainer}>
               <h3 style={styles.header}>Result</h3>
-              {downloadOptions ? (
-                <button
-                  style={styles.downloadButton}
-                  onClick={() => {
-                    downloadFile({
-                      result,
-                      regimen,
-                      defaultTool,
-                    });
-                  }}
-                >
-                  <IoMdDownload size={20} />
-                  <p style={{ color: "#fff", margin: 0 }}> Download</p>
-                </button>
-              ) : null}
             </div>
             {regimen && result && showResult ? (
               <div className="slide-down">
@@ -368,7 +331,6 @@ const Calculator = () => {
       ) : (
         <DrugDosageFinder
           treatment={data.treatment}
-          defaultTool={defaultTool}
         />
       )}
     </div>
@@ -510,20 +472,6 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  downloadButton: {
-    display: "flex",
-    borderRadius: "8px",
-    marginLeft: "5px",
-    fontSize: "14px",
-    justifyContent: "center",
-    cursor: "pointer",
-    alignItems: "center",
-    color: "#fff",
-    fontWeight: "500",
-    backgroundColor: "#0A2C59",
-    border: "none",
-    padding: "10px",
   },
 };
 
