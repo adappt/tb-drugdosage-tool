@@ -69,7 +69,6 @@ export default function DrugDosageFinder(props) {
       alignItems: "center",
       color: "#fff",
       fontWeight: "500",
-      backgroundColor: "#0A2C59",
       border: "none",
       padding: "10px",
     },
@@ -159,6 +158,13 @@ export default function DrugDosageFinder(props) {
       textAlign: "left",
       paddingLeft: "10px",
       color: "#777",
+    },
+    noRegimenContent: {
+      marginTop: "80px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#D3D3D3",
     },
     resultContainer: {
       width: "100%",
@@ -1972,7 +1978,8 @@ export default function DrugDosageFinder(props) {
           <h3 style={{ ...styles.headerTitle, margin: 0 }}>Result</h3>
           {downloadOptions ? (
             <button
-              style={styles.downloadButton}
+              style={{...styles.downloadButton, backgroundColor:result ? "#0A2C59" : "#D3D3D3",}}
+              disabled={result ? false : true}
               onClick={() => {
                 downloadFile({
                   result,
@@ -2283,7 +2290,13 @@ export default function DrugDosageFinder(props) {
                   </div>
                 ) : null}
               </>
-            ) : null}
+            ) : (
+              <div style={styles.noRegimenContent}>
+                <p style={{ fontSize: 16 }}>
+                  No regimen proposed for these ranges
+                </p>
+              </div>
+            )}
           </div>
         ) : (
           <div style={{ marginTop: 170 }}>
