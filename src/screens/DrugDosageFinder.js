@@ -1260,6 +1260,9 @@ export default function DrugDosageFinder(props) {
     if (numreg.test(monthsValue) && parseInt(monthsValue) <= 11) {
       setMonths(monthsValue);
       e.target.value = monthsValue;
+    } else {
+      setMonths("");
+      e.target.value = "";
       setWeight("");
       setSelectedMedicines({});
       setSelectedForms([]);
@@ -1281,9 +1284,6 @@ export default function DrugDosageFinder(props) {
       setSelectedFormsArray([]);
       setRegselected(false);
       setDownloadOptions(false);
-    } else {
-      setMonths("");
-      e.target.value = "";
       reset({
         age: age,
         weight: "",
@@ -2149,42 +2149,50 @@ export default function DrugDosageFinder(props) {
                           } else {
                             return (
                               <div style={styles.row} key={index}>
-                                <div
-                                  style={{
-                                    ...styles.headerCell,
-                                    backgroundColor: "#fff",
-                                    border: "2px solid #F5F5F5",
-                                    margin: "2px 2px 0.5px 0px",
-                                  }}
-                                >
-                                  <p style={styles.headerText}>{item.dose}</p>
-                                </div>
-                                <div
-                                  style={{
-                                    ...styles.headerCell,
-                                    backgroundColor: "#fff",
-                                    border: "2px solid #F5F5F5",
-                                    margin: "2px 2px 0.5px 0px",
-                                  }}
-                                >
-                                  {item.formulation && (
-                                    <p style={styles.headerText}>
-                                      {item.formulation}
-                                    </p>
-                                  )}
-                                </div>
-                                <div
-                                  style={{
-                                    ...styles.headerCell,
-                                    backgroundColor: "#fff",
-                                    border: "2px solid #F5F5F5",
-                                    margin: "2px 2px 0.5px 0px",
-                                  }}
-                                >
-                                  {item.tabs && (
-                                    <p style={styles.headerText}>{item.tabs}</p>
-                                  )}
-                                </div>
+                                {item?.dose || item.formulation ? (
+                                  <div
+                                    style={{
+                                      ...styles.headerCell,
+                                      backgroundColor: "#fff",
+                                      border: "2px solid #F5F5F5",
+                                      margin: "2px 2px 0.5px 0px",
+                                    }}
+                                  >
+                                    <p style={styles.headerText}>{item.dose}</p>
+                                  </div>
+                                ) : null}
+                                {item?.formulation ? (
+                                  <div
+                                    style={{
+                                      ...styles.headerCell,
+                                      backgroundColor: "#fff",
+                                      border: "2px solid #F5F5F5",
+                                      margin: "2px 2px 0.5px 0px",
+                                    }}
+                                  >
+                                    {item.formulation && (
+                                      <p style={styles.headerText}>
+                                        {item.formulation}
+                                      </p>
+                                    )}
+                                  </div>
+                                ) : null}
+                                {item?.tabs ? (
+                                  <div
+                                    style={{
+                                      ...styles.headerCell,
+                                      backgroundColor: "#fff",
+                                      border: "2px solid #F5F5F5",
+                                      margin: "2px 2px 0.5px 0px",
+                                    }}
+                                  >
+                                    {item.tabs && (
+                                      <p style={styles.headerText}>
+                                        {item.tabs}
+                                      </p>
+                                    )}
+                                  </div>
+                                ) : null}
                               </div>
                             );
                           }
