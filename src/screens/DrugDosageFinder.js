@@ -140,7 +140,7 @@ export default function DrugDosageFinder(props) {
       margin: 0,
       fontSize: 18,
       paddingInline: 10,
-      textAlignVertical: "center",
+      textAlign: "start",
       color: "#777",
     },
     drugDoseContainer: {
@@ -2238,6 +2238,7 @@ export default function DrugDosageFinder(props) {
                                     style={{
                                       color: "#000",
                                       fontSize: 16,
+                                      textAlign: "start",
                                     }}
                                     key={rmkItm}
                                   >
