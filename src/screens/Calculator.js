@@ -29,7 +29,7 @@ const Calculator = () => {
     weight: null,
   });
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, getValues, resetField } = useForm({
     defaultValues: {
       select: {},
       medicine: { value: "", label: "Select a medicine..." },
@@ -174,10 +174,19 @@ const Calculator = () => {
     },
   ];
   const handleSelectChange = (selectedOption, item) => {
+    const currentSelections = getValues();
     setSelections((prevState) => ({
       ...prevState,
       [item.key]: selectedOption,
     }));
+    if(selectedOption.value !== currentSelections[item.key]?.value) {
+      if (item.key === "medicine") {
+        resetField('age');
+        resetField('weight');
+      } else if (item.key === "age") {
+        resetField('weight');
+      }
+    }
     if (item.onSelect) {
       item.onSelect(selectedOption);
     }
