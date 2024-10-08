@@ -213,13 +213,13 @@ export default function DrugDosageFinder(props) {
       color: "#000",
       textAlign: "left",
       fontSize: 16,
-      margin: "10px 0px 0px 10px",
+      margin: "5px 0px 0px 10px",
     },
     LRGRemarksContent: {
       fontSize: 16,
       color: "#000",
       textAlign: "left",
-      margin: "20px 0px 0px 20px",
+      margin: "5px 0px 0px 10px",
     },
     regimenDropdownContainer: {
       display: "flex",
@@ -1589,7 +1589,14 @@ export default function DrugDosageFinder(props) {
                 }
                 return (
                   <p key={index} style={styles.LRGRemarksContent}>
-                    {remarks}
+                    {remarks.split("\n").map((line, index) => (
+                        <span
+                          key={index}
+                          style={{ display: "block", marginTop: "5px" }}
+                        >
+                          {line}
+                        </span>
+                      ))}
                   </p>
                 );
               })}
@@ -2284,7 +2291,14 @@ export default function DrugDosageFinder(props) {
                                 }
                                 return (
                                   <p key={index} style={styles.remarksContent}>
-                                    {remarks}
+                                    {remarks.split("\n").map((line, index) => (
+                                      <span
+                                        key={index}
+                                        style={{ display: "block", marginTop: 5 }}
+                                      >
+                                        {line}
+                                      </span>
+                                    ))}
                                   </p>
                                 );
                               })}
@@ -2323,7 +2337,14 @@ export default function DrugDosageFinder(props) {
                         }
                         return (
                           <p key={index} style={styles.remarksContent}>
-                            {remarks}
+                            {remarks.split("\n").map((line, index) => (
+                              <span
+                                key={index}
+                                style={{ display: "block", marginTop: 5 }}
+                              >
+                                {line}
+                              </span>
+                            ))}
                           </p>
                         );
                       })}
