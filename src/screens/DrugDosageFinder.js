@@ -390,8 +390,10 @@ export default function DrugDosageFinder(props) {
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       age: "",
-      select: { value: "", label: "Select a value.." },
-      regimen: { value: "", label: "Select a regimen" },
+      months: "",
+      weight: "",
+      select: { value: "", label: "Select a value..." },
+      regimen: { value: "", label: "Select a regimen..." },
     },
   });
   useEffect(() => {
@@ -1214,42 +1216,16 @@ export default function DrugDosageFinder(props) {
     );
   };
 
-  const ageHandler = (age) => {
+  const ageHandler = (e) => {
+    let ageValue = e.target.value;
     const numreg = /^[0-9]+$/;
-    if (numreg.test(age)) {
-      setAge(age);
-      setMonths("");
-      setWeight("");
-      setSelectedMedicines({});
-      setSelectedForms([]);
-      setMedicineLabel([]);
-      setGroupMedicineData({});
-      setMedicineData({});
-      setGroup({});
-      setRegimenLabel("");
-      setRegimenName("");
-      setItemIdx(null); // Assuming you have a corresponding state for itemIdx
-      setRegimenOptions([]);
-      setShowResult(false);
-      setIsGrouped(null);
-      setGroupedData({});
-      setReorderedSelectedItems({});
-      setIsValidated(false);
-      setSelectedFormsArray([]);
-      setRegimenItem(""); // Assuming you have a corresponding state for regimenItem
-      setRegselected(false); // Assuming you have a corresponding state for regselected
-      setDownloadOptions(false);
+    if (numreg.test(ageValue) && parseInt(ageValue) <= 99) {
+      setAge(ageValue);
+      e.target.value = ageValue;
     } else {
       setAge("");
-    }
-  };
-
-  const monthsHandler = (months) => {
-    const numreg = /^[0-9]+$/;
-    if (!numreg.test(months) || +months === 0 || +months > 11) {
+      e.target.value = "";
       setMonths("");
-    } else {
-      setMonths(months);
       setWeight("");
       setSelectedMedicines({});
       setSelectedForms([]);
@@ -1259,26 +1235,32 @@ export default function DrugDosageFinder(props) {
       setGroup({});
       setRegimenLabel("");
       setRegimenName("");
-      setRegimenItem(""); // Assuming you have a corresponding state for regimenItem
-      setItemIdx(null); // Assuming you have a corresponding state for itemIdx
+      setItemIdx(null);
       setRegimenOptions([]);
       setShowResult(false);
       setIsGrouped(null);
       setGroupedData({});
-      setIsNewSet(false);
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
-      setRegselected(false); // Assuming you have a corresponding state for regselected
+      setRegimenItem("");
+      setRegselected(false);
       setDownloadOptions(false);
+      reset({
+        weight: "",
+        select: { value: "", label: "Select a value..." },
+        regimen: { value: "", label: "Select a regimen..." },
+      });
     }
   };
 
-  const weightHandler = (weight) => {
+  const monthsHandler = (e) => {
+    let monthsValue = e.target.value;
     const numreg = /^[0-9]+$/;
-    if (numreg.test(weight)) {
-      setWeight(weight);
-      setRegselected(false); // Assuming you have a corresponding state for regselected
+    if (numreg.test(monthsValue) && parseInt(monthsValue) <= 11) {
+      setMonths(monthsValue);
+      e.target.value = monthsValue;
+      setWeight("");
       setSelectedMedicines({});
       setSelectedForms([]);
       setMedicineLabel([]);
@@ -1287,7 +1269,8 @@ export default function DrugDosageFinder(props) {
       setGroup({});
       setRegimenLabel("");
       setRegimenName("");
-      setItemIdx(null); // Assuming you have a corresponding state for itemIdx
+      setRegimenItem("");
+      setItemIdx(null);
       setRegimenOptions([]);
       setShowResult(false);
       setIsGrouped(null);
@@ -1296,10 +1279,55 @@ export default function DrugDosageFinder(props) {
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
-      setRegimenItem(""); // Assuming you have a corresponding state for regimenItem
+      setRegselected(false);
       setDownloadOptions(false);
     } else {
+      setMonths("");
+      e.target.value = "";
+      reset({
+        age: age,
+        weight: "",
+        select: { value: "", label: "Select a value..." },
+        regimen: { value: "", label: "Select a regimen..." },
+      });
+    }
+  };
+
+  const weightHandler = (e) => {
+    const numreg = /^[0-9]+$/;
+    let weightValue = e.target.value;
+    if (numreg.test(weightValue) && parseInt(weightValue) <= 999) {
+      setWeight(weightValue);
+      e.target.value = weightValue;
+    } else {
       setWeight("");
+      e.target.value = "";
+      setRegselected(false);
+      setSelectedMedicines({});
+      setSelectedForms([]);
+      setMedicineLabel([]);
+      setGroupMedicineData({});
+      setMedicineData({});
+      setGroup({});
+      setRegimenLabel("");
+      setRegimenName("");
+      setItemIdx(null);
+      setRegimenOptions([]);
+      setShowResult(false);
+      setIsGrouped(null);
+      setGroupedData({});
+      setIsNewSet(false);
+      setReorderedSelectedItems({});
+      setIsValidated(false);
+      setSelectedFormsArray([]);
+      setRegimenItem("");
+      setDownloadOptions(false);
+      reset({
+        age: age,
+        months: months,
+        select: { value: "", label: "Select a value..." },
+        regimen: { value: "", label: "Select a regimen..." },
+      });
     }
   };
 
@@ -1337,7 +1365,7 @@ export default function DrugDosageFinder(props) {
   ) => {
     const template = titleTemplates[language]?.[regimenLabel];
     if (template) {
-      return template(age, weight, months, regimenName);
+      return template(parseInt(age), weight, months, regimenName);
     } else {
       return `Title not available for ${language} or ${regimenLabel}`;
     }
@@ -1674,8 +1702,9 @@ export default function DrugDosageFinder(props) {
                         {...field}
                         type="number"
                         style={styles.textInput}
+                        value={field.value}
                         placeholder="Enter the age..."
-                        onInput={(e) => ageHandler(e.target.value)}
+                        onInput={(e) => ageHandler(e)}
                       />
                       <span
                         style={{
@@ -1706,8 +1735,9 @@ export default function DrugDosageFinder(props) {
                           {...field}
                           type="number"
                           style={styles.textInput}
+                          value={field.value}
                           placeholder="Enter the months..."
-                          onInput={(e) => monthsHandler(e.target.value)}
+                          onInput={(e) => monthsHandler(e)}
                         />
                         <span
                           style={{
@@ -1741,7 +1771,8 @@ export default function DrugDosageFinder(props) {
                         type="number"
                         style={styles.textInput}
                         placeholder="Enter the weight..."
-                        onInput={(e) => weightHandler(e.target.value)}
+                        value={field.value}
+                        onInput={(e) => weightHandler(e)}
                       />
                       <span
                         style={{
@@ -1805,7 +1836,7 @@ export default function DrugDosageFinder(props) {
                       value={
                         regimenLabel
                           ? { label: regimenLabel, value: regimenLabel }
-                          : field.value
+                          : { value: "", label: "Select a value..." }
                       }
                       onChange={(selectedOption) =>
                         field.onChange((e) =>
@@ -1822,7 +1853,7 @@ export default function DrugDosageFinder(props) {
               <>
                 <label style={styles.label}>Regimen</label>
                 <Controller
-                  name="regimen"
+                  name="select"
                   control={control}
                   render={({ field }) => (
                     <Select
@@ -1863,7 +1894,7 @@ export default function DrugDosageFinder(props) {
                       value={
                         regimenName
                           ? { name: regimenName, label: regimenName }
-                          : field.value
+                          : { value: "", label: "Select a regimen..." }
                       }
                       isOptionSelected={(option, selectValues) =>
                         selectValues.some(
@@ -1978,7 +2009,10 @@ export default function DrugDosageFinder(props) {
           <h3 style={{ ...styles.headerTitle, margin: 0 }}>Result</h3>
           {downloadOptions ? (
             <button
-              style={{...styles.downloadButton, backgroundColor:result ? "#0A2C59" : "#D3D3D3",}}
+              style={{
+                ...styles.downloadButton,
+                backgroundColor: result ? "#0A2C59" : "#D3D3D3",
+              }}
               disabled={result ? false : true}
               onClick={() => {
                 downloadFile({
