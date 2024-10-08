@@ -324,8 +324,15 @@ const Calculator = () => {
                       style={styles.drugImg}
                       alt="drug"
                     />
-                    <p style={styles.doseResultContent} numberOfLines={5}>
-                      {result}{" "}
+                    <p style={styles.doseResultContent}>
+                      {result.split("\n").map((line, index) => (
+                        <span
+                          key={index}
+                          style={{ display: "block", margin: 5 }}
+                        >
+                          {line}
+                        </span>
+                      ))}
                     </p>
                   </div>
                 </div>
@@ -455,16 +462,13 @@ const styles = {
     alignSelf: "center",
   },
   doseResultContent: {
-    //fontFamily: "AvenirNextCondensed-DemiBold",
     fontSize: 18,
     color: "#203c71",
     lineHeight: "20px",
     fontWeight: "700",
-    display: "flex",
-    flexWrap: "wrap",
-    textAlign: "center",
-    alignSelf: "center",
-    marginRight: 20,
+    display: "block",
+    textAlign: "start",
+    marginLeft: 20,
     width: "80%",
   },
   regimenResultContainer: {
