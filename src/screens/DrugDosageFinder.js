@@ -1582,21 +1582,29 @@ export default function DrugDosageFinder(props) {
               {parts.map((remarks, index) => {
                 if (remarks.match(urlRegex)) {
                   return (
-                    <a key={index} href={remarks} style={styles.remarksLink}>
-                      {remarks}
+                    <a
+                      key={index}
+                      href={remarks
+                        ?.trim()
+                        .replace(/^[\.\(\)]+|[\.\(\)]+$/g, "")}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={styles.remarksLink}
+                    >
+                      {remarks?.trim().replace(/\s+/g, " ")}
                     </a>
                   );
                 }
                 return (
                   <p key={index} style={styles.LRGRemarksContent}>
                     {remarks.split("\n").map((line, index) => (
-                        <span
-                          key={index}
-                          style={{ display: "block", marginTop: "5px" }}
-                        >
-                          {line}
-                        </span>
-                      ))}
+                      <span
+                        key={index}
+                        style={{ display: "block", marginTop: "5px" }}
+                      >
+                        {line}
+                      </span>
+                    ))}
                   </p>
                 );
               })}
@@ -2225,10 +2233,17 @@ export default function DrugDosageFinder(props) {
                                         return (
                                           <a
                                             key={index}
-                                            href={remarks}
+                                            href={remarks
+                                              ?.trim()
+                                              .replace(
+                                                /^[\.\(\)]+|[\.\(\)]+$/g,
+                                                ""
+                                              )}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             style={styles.remarksLink}
                                           >
-                                            {part}
+                                            {part?.trim().replace(/\s+/g, " ")}
                                           </a>
                                         );
                                       } else {
@@ -2263,50 +2278,59 @@ export default function DrugDosageFinder(props) {
                             })}
                           </div>
                         ) : null}
-                        {item?.note ? (
-                          <div>
-                            <div style={styles.remarksHeaderContainer}>
-                              <h3
-                                style={{
-                                  ...styles.headerTitle,
-                                  margin: "20px 0px 0px 0px",
-                                  color: "#0071c2",
-                                }}
-                              >
-                                Remarks
-                              </h3>
-                            </div>
-                            <p style={{ margin: 0, textAlign: "left" }}>
-                              {parts.map((remarks, index) => {
-                                if (remarks.match(urlRegex)) {
-                                  return (
-                                    <a
-                                      key={index}
-                                      href={remarks}
-                                      style={styles.remarksLink}
-                                    >
-                                      {remarks}
-                                    </a>
-                                  );
-                                }
-                                return (
-                                  <p key={index} style={styles.remarksContent}>
-                                    {remarks.split("\n").map((line, index) => (
-                                      <span
-                                        key={index}
-                                        style={{ display: "block", marginTop: 5 }}
-                                      >
-                                        {line}
-                                      </span>
-                                    ))}
-                                  </p>
-                                );
-                              })}
-                            </p>
-                          </div>
-                        ) : null}
                       </div>
                     );
+                  })}
+                {result &&
+                  result?.map((item, index) => {
+                    const urlRegex = /(https?:\/\/[^\s]+)/g;
+                    const parts = item?.note?.split(urlRegex);
+                    return item?.note ? (
+                      <div key={index}>
+                        <div style={styles.remarksHeaderContainer}>
+                          <h3
+                            style={{
+                              ...styles.headerTitle,
+                              margin: "20px 0px 0px 0px",
+                              color: "#0071c2",
+                            }}
+                          >
+                            Remarks
+                          </h3>
+                        </div>
+                        <p style={{ margin: 0, textAlign: "left" }}>
+                          {parts.map((remarks, index) => {
+                            if (remarks.match(urlRegex)) {
+                              return (
+                                <a
+                                  key={index}
+                                  href={remarks
+                                    ?.trim()
+                                    .replace(/^[\.\(\)]+|[\.\(\)]+$/g, "")}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  style={styles.remarksLink}
+                                >
+                                  {remarks?.trim().replace(/\s+/g, " ")}
+                                </a>
+                              );
+                            }
+                            return (
+                              <p key={index} style={styles.remarksContent}>
+                                {remarks.split("\n").map((line, index) => (
+                                  <span
+                                    key={index}
+                                    style={{ display: "block", marginTop: 5 }}
+                                  >
+                                    {line}
+                                  </span>
+                                ))}
+                              </p>
+                            );
+                          })}
+                        </p>
+                      </div>
+                    ) : null;
                   })}
                 ;
                 {regimenItem === compareLabel["en"].nmonthoral && remarks ? (
@@ -2328,10 +2352,14 @@ export default function DrugDosageFinder(props) {
                           return (
                             <a
                               key={index}
-                              href={remarks}
+                              href={remarks
+                                ?.trim()
+                                .replace(/^[\.\(\)]+|[\.\(\)]+$/g, "")}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               style={styles.remarksLink}
                             >
-                              {remarks}
+                              {remarks?.trim().replace(/\s+/g, " ")}
                             </a>
                           );
                         }
