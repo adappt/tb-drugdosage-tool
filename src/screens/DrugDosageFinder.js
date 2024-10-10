@@ -1586,7 +1586,7 @@ export default function DrugDosageFinder(props) {
                       key={index}
                       href={remarks
                         ?.trim()
-                        .replace(/^[\.\(\)]+|[\.\(\)]+$/g, "")}
+                        .replace(/^[.()]+|[.()]+$/g, "")}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={styles.remarksLink}
@@ -2233,10 +2233,10 @@ export default function DrugDosageFinder(props) {
                                         return (
                                           <a
                                             key={index}
-                                            href={remarks
+                                            href={part
                                               ?.trim()
                                               .replace(
-                                                /^[\.\(\)]+|[\.\(\)]+$/g,
+                                                /^[.()]+|[.()]+$/g,
                                                 ""
                                               )}
                                             target="_blank"
@@ -2306,7 +2306,7 @@ export default function DrugDosageFinder(props) {
                                   key={index}
                                   href={remarks
                                     ?.trim()
-                                    .replace(/^[\.\(\)]+|[\.\(\)]+$/g, "")}
+                                    .replace(/^[.()]+|[.()]+$/g, "")}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   style={styles.remarksLink}
@@ -2354,7 +2354,7 @@ export default function DrugDosageFinder(props) {
                               key={index}
                               href={remarks
                                 ?.trim()
-                                .replace(/^[\.\(\)]+|[\.\(\)]+$/g, "")}
+                                .replace(/^[.()]+|[.()]+$/g, "")}
                               target="_blank"
                               rel="noopener noreferrer"
                               style={styles.remarksLink}
