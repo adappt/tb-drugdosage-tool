@@ -252,6 +252,7 @@ export default function DrugDosageFinder(props) {
       margin: 0,
       fontSize: 15,
       fontWeight: "400",
+      textAlign: "start",
       paddingLeft: 10,
     },
     headerCell: {
@@ -2207,7 +2208,7 @@ export default function DrugDosageFinder(props) {
                                   </div>
                                 ) : null}
                               </div>
-                            );
+                            )
                           }
                         })}
                         {item.remarks && item.remarks.length > 0 ? (
@@ -2274,12 +2275,12 @@ export default function DrugDosageFinder(props) {
                                   </p>
                                   {index < item.remarks.length - 1 && <p> </p>}
                                 </>
-                              );
+                              )
                             })}
                           </div>
                         ) : null}
                       </div>
-                    );
+                    )
                   })}
                 {result &&
                   result?.map((item, index) => {
@@ -2330,9 +2331,8 @@ export default function DrugDosageFinder(props) {
                           })}
                         </p>
                       </div>
-                    ) : null;
+                    ) : null
                   })}
-                ;
                 {regimenItem === compareLabel["en"].nmonthoral && remarks ? (
                   <div style={{ padding: 10 }}>
                     <div style={styles.remarksHeaderContainer}>

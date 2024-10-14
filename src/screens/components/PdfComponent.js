@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     border: "1px solid #ccc",
     padding: 10,
     width: "100%",
+    height: '100%',
     textAlign: "center",
     verticalAlign: "middle",
     fontSize: 14,
