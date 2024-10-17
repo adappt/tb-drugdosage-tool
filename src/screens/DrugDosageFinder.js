@@ -374,7 +374,7 @@ export default function DrugDosageFinder(props) {
   const [group, setGroup] = useState({});
   const [showResult, setShowResult] = useState(null);
   const [isGrouped, setIsGrouped] = useState(null);
-  const [groupedData, setGroupedData] = useState({});
+  const [groupedData, setGroupedData] = useState([]);
   const [reorderedSelectedItems, setReorderedSelectedItems] = useState({});
   const [isNewSet, setIsNewSet] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -701,7 +701,7 @@ export default function DrugDosageFinder(props) {
       select: { value: "", label: "Select a value.." },
     });
     setIsGrouped(null);
-    setGroupedData({});
+    setGroupedData([]);
     setIsNewSet(false);
     setReorderedSelectedItems({});
     setIsValidated(false);
@@ -780,7 +780,7 @@ export default function DrugDosageFinder(props) {
       }
       const filteredData = groupedData?.filter(
         (item) =>
-          !(item.group === groupName && item.medicationName === medicineName)
+          !(item.groupName === groupName && item.medicationName === medicineName)
       );
       const news = selectedFormsArray.filter(
         (item) => item.medicationName !== medicineName
@@ -793,6 +793,7 @@ export default function DrugDosageFinder(props) {
   };
 
   const onSelectMeds = (groupName, medicineName, form, group1) => {
+    setShowResult(false);
     const updatedSelectedMedicines = { ...selectedMedicines };
     const isSelected =
       updatedSelectedMedicines[groupName] &&
@@ -803,24 +804,23 @@ export default function DrugDosageFinder(props) {
       updatedSelectedMedicines[groupName] = updatedSelectedMedicines[
         groupName
       ].filter((medicine) => medicine.name !== medicineName);
-
       removeItemFromGroupMedicineData(groupName, medicineName);
       if (groupedData && groupedData.length > 0 && reorderedSelectedItems) {
-        const newGroupedData = groupedData.filter(
+        const newgroupedData = groupedData?.filter(
           (item) =>
-            item.group !== groupName && item.medicineName !== medicineName
+            !(item.groupName === groupName && item.medicationName === medicineName)
         );
         const newReorderedSelectedItems = reorderedSelectedItems[
           groupName
         ].filter(
           (item) =>
-            item.group !== groupName && item.medicineName !== medicineName
+            item.name !== medicineName
         );
-        setGroupedData(newGroupedData);
+        setGroupedData(newgroupedData);
         setReorderedSelectedItems(newReorderedSelectedItems);
       }
 
-      const newMedicineData = {};
+      let newMedicineData = {};
       for (const key in medicineData) {
         const item = medicineData[key];
         if (
@@ -831,15 +831,12 @@ export default function DrugDosageFinder(props) {
           newMedicineData[key] = medicineData[key];
         }
       }
-
-      const newSelectedForms = {};
-      for (const key in selectedForms) {
-        const data = key.split("_");
-        if (data[0] !== groupName && data[1] !== medicineName) {
-          newSelectedForms[key] = selectedForms[key];
-        }
-      }
-
+      const newSelectedForms = Object.keys(selectedForms)
+        .filter((key) => key in newMedicineData)
+        .reduce((item, key) => {
+          item[key] = selectedForms[key];
+          return item;
+        }, {});
       setMedicineData(newMedicineData);
       setSelectedForms(newSelectedForms);
     } else {
@@ -957,6 +954,7 @@ export default function DrugDosageFinder(props) {
     formName,
     formDose
   ) => {
+    setShowResult(false);
     const itemKey = `${groupName}_${medicationName}_${formValue}`;
     const newselectedForms = { ...selectedForms };
     const selectedItems = [];
@@ -1240,7 +1238,7 @@ export default function DrugDosageFinder(props) {
       setRegimenOptions([]);
       setShowResult(false);
       setIsGrouped(null);
-      setGroupedData({});
+      setGroupedData([]);
       setReorderedSelectedItems({});
       setIsValidated(false);
       setSelectedFormsArray([]);
@@ -1278,7 +1276,7 @@ export default function DrugDosageFinder(props) {
       setRegimenOptions([]);
       setShowResult(false);
       setIsGrouped(null);
-      setGroupedData({});
+      setGroupedData([]);
       setIsNewSet(false);
       setReorderedSelectedItems({});
       setIsValidated(false);
@@ -1316,7 +1314,7 @@ export default function DrugDosageFinder(props) {
       setRegimenOptions([]);
       setShowResult(false);
       setIsGrouped(null);
-      setGroupedData({});
+      setGroupedData([]);
       setIsNewSet(false);
       setReorderedSelectedItems({});
       setIsValidated(false);
@@ -1483,9 +1481,11 @@ export default function DrugDosageFinder(props) {
                             }}
                           >
                             <p style={styles.headerText}>
-                              {filteredItem.tabs.split("/n").map((line, i) => (
-                                <span key={i}>{line.trim()}</span>
-                              ))}
+                              {filteredItem?.tabs
+                                ?.split("/n")
+                                .map((line, i) => (
+                                  <span key={i}>{line.trim()}</span>
+                                ))}
                             </p>
                           </div>
                         </div>
@@ -1585,9 +1585,7 @@ export default function DrugDosageFinder(props) {
                   return (
                     <a
                       key={index}
-                      href={remarks
-                        ?.trim()
-                        .replace(/^[.()]+|[.()]+$/g, "")}
+                      href={remarks?.trim().replace(/^[.()]+|[.()]+$/g, "")}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={styles.remarksLink}
@@ -2208,7 +2206,7 @@ export default function DrugDosageFinder(props) {
                                   </div>
                                 ) : null}
                               </div>
-                            )
+                            );
                           }
                         })}
                         {item.remarks && item.remarks.length > 0 ? (
@@ -2236,10 +2234,7 @@ export default function DrugDosageFinder(props) {
                                             key={index}
                                             href={part
                                               ?.trim()
-                                              .replace(
-                                                /^[.()]+|[.()]+$/g,
-                                                ""
-                                              )}
+                                              .replace(/^[.()]+|[.()]+$/g, "")}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             style={styles.remarksLink}
@@ -2275,12 +2270,12 @@ export default function DrugDosageFinder(props) {
                                   </p>
                                   {index < item.remarks.length - 1 && <p> </p>}
                                 </>
-                              )
+                              );
                             })}
                           </div>
                         ) : null}
                       </div>
-                    )
+                    );
                   })}
                 {result &&
                   result?.map((item, index) => {
@@ -2331,7 +2326,7 @@ export default function DrugDosageFinder(props) {
                           })}
                         </p>
                       </div>
-                    ) : null
+                    ) : null;
                   })}
                 {regimenItem === compareLabel["en"].nmonthoral && remarks ? (
                   <div style={{ padding: 10 }}>
