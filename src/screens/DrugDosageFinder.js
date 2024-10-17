@@ -213,7 +213,7 @@ export default function DrugDosageFinder(props) {
       color: "#000",
       textAlign: "left",
       fontSize: 16,
-      margin: "5px 0px 0px 10px",
+      //margin: "5px 0px 0px 10px",
     },
     LRGRemarksContent: {
       fontSize: 16,
@@ -497,7 +497,7 @@ export default function DrugDosageFinder(props) {
           return result;
         }, []);
 
-        setResult(mergedData.reverse());
+        setResult(mergedData);
         setGroupedData(null);
         setRegselected(true);
       }
@@ -1682,7 +1682,7 @@ export default function DrugDosageFinder(props) {
     setShowResult(showResultCondition ? true : false);
     setDownloadOptions(showResultCondition ? true : false);
   };
-
+ console.log(result, 'result');
   return (
     <div style={styles.row}>
       <section div style={styles.container}>
@@ -1814,6 +1814,7 @@ export default function DrugDosageFinder(props) {
                   render={({ field }) => (
                     <Select
                       {...field}
+                      isSearchable={false} 
                       styles={{
                         option: (baseStyles, state) => ({
                           ...baseStyles,
@@ -1871,6 +1872,7 @@ export default function DrugDosageFinder(props) {
                   render={({ field }) => (
                     <Select
                       {...field}
+                      isSearchable={false} 
                       styles={{
                         option: (baseStyles, state) => ({
                           ...baseStyles,

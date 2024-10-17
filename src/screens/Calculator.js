@@ -202,6 +202,7 @@ const Calculator = () => {
                           render={({ field }) => (
                             <Select
                               {...field}
+                              isSearchable={false} 
                               className={!isMenuOpen ? "fade-in" : ""}
                               styles={{
                                 option: (baseStyles, state) => ({
