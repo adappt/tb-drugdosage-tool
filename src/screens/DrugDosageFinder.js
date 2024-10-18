@@ -1670,7 +1670,7 @@ export default function DrugDosageFinder(props) {
                 <FaRegCircle color="#DDDDDD" size={15} style={style} />
               )}
             </>
-          ) : null}
+          ) : <div style={{width: 25, height: 25}}></div>}
           {props.data.name ? props.data.name : children}
         </div>
       </components.Option>
@@ -1831,6 +1831,7 @@ export default function DrugDosageFinder(props) {
                         option: (baseStyles, state) => ({
                           ...baseStyles,
                           ...styles.selectOption,
+                          fontWeight:  state.data.label === compareLabel.en.DRTB? "600" : null,
                           borderBottom:
                             state.data.label !==
                             dropdownOptions[dropdownOptions.length - 1].label
