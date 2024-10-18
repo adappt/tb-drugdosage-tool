@@ -179,6 +179,7 @@ export default function DrugDosageFinder(props) {
       color: "#000",
       margin: 0,
       fontSize: 20,
+      fontWeight: "600",
       marginBottom: 20,
       textAlign: "left",
     },
@@ -248,6 +249,14 @@ export default function DrugDosageFinder(props) {
       margin: "0px 15px 0px",
     },
     headerText: {
+      color: "#000",
+      margin: 0,
+      fontSize: 15,
+      fontWeight: "600",
+      textAlign: "start",
+      paddingLeft: 10,
+    },
+    value: {
       color: "#000",
       margin: 0,
       fontSize: 15,
@@ -393,8 +402,8 @@ export default function DrugDosageFinder(props) {
       age: "",
       months: "",
       weight: "",
-      select: { value: "", label: "Select a value..." },
-      regimen: { value: "", label: "Select a regimen..." },
+      select: { value: "", label: "Please select regimen" },
+      regimen: { value: "", label: "Please select regimen" },
     },
   });
   useEffect(() => {
@@ -1280,8 +1289,8 @@ export default function DrugDosageFinder(props) {
       resetInputState('age');
       reset({
         weight: "",
-        select: { value: "", label: "Select a value..." },
-        regimen: { value: "", label: "Select a regimen..." },
+        select: { value: "", label: "Please select regimen" },
+        regimen: { value: "", label: "Please select regimen" },
       });
     }
   };
@@ -1296,8 +1305,8 @@ export default function DrugDosageFinder(props) {
       reset({
         age: age,
         weight: "",
-        select: { value: "", label: "Select a value..." },
-        regimen: { value: "", label: "Select a regimen..." },
+        select: { value: "", label: "Please select regimen" },
+        regimen: { value: "", label: "Please select regimen" },
       });
     }
   
@@ -1311,8 +1320,8 @@ export default function DrugDosageFinder(props) {
       reset({
         age: age,
         weight: "",
-        select: { value: "", label: "Select a value..." },
-        regimen: { value: "", label: "Select a regimen..." },
+        select: { value: "", label: "Please select regimen"},
+        regimen: { value: "", label: "Please select regimen" },
       });
     }
   };
@@ -1336,8 +1345,8 @@ export default function DrugDosageFinder(props) {
       reset({
         age: age,
         months: months,
-        select: { value: "", label: "Select a value..." },
-        regimen: { value: "", label: "Select a regimen..." },
+        select: { value: "", label: "Please select regimen" },
+        regimen: { value: "", label: "Please select regimen" },
       });
     }
   };
@@ -1451,7 +1460,7 @@ export default function DrugDosageFinder(props) {
                               margin: "2px 2px 0.5px 0px",
                             }}
                           >
-                            <p style={styles.headerText}>
+                            <p style={styles.value}>
                               {index === 0
                                 ? filteredItem.medicationName ===
                                     translations["en"][
@@ -1478,7 +1487,7 @@ export default function DrugDosageFinder(props) {
                               margin: "2px 2px 0.5px 0px",
                             }}
                           >
-                            <p style={styles.headerText}>
+                            <p style={styles.value}>
                               {filteredItem.formName.concat(
                                 filteredItem.formDose
                               )}
@@ -1492,7 +1501,7 @@ export default function DrugDosageFinder(props) {
                               margin: "2px 2px 0.5px 0px",
                             }}
                           >
-                            <p style={styles.headerText}>
+                            <p style={styles.value}>
                               {filteredItem?.tabs
                                 ?.split("/n")
                                 .map((line, i) => (
@@ -1524,7 +1533,7 @@ export default function DrugDosageFinder(props) {
                             margin: "2px 2px 0.5px 0px",
                           }}
                         >
-                          <p style={styles.headerText}>
+                          <p style={styles.value}>
                             {index === 0
                               ? filteredItem.medicationName ===
                                   translations["en"][
@@ -1551,7 +1560,7 @@ export default function DrugDosageFinder(props) {
                             margin: "2px 2px 0.5px 0px",
                           }}
                         >
-                          <p style={styles.headerText}>
+                          <p style={styles.value}>
                             {filteredItem.formName.concat(
                               filteredItem.formDose
                             )}
@@ -1565,7 +1574,7 @@ export default function DrugDosageFinder(props) {
                             margin: "2px 2px 0.5px 0px",
                           }}
                         >
-                          <p style={styles.headerText}>
+                          <p style={styles.value}>
                             {filteredItem.tabs.split("/n").map((line, i) => (
                               <span key={i}>{line.trim()}</span>
                             ))}
@@ -1717,7 +1726,7 @@ export default function DrugDosageFinder(props) {
                   marginRight: age === "0" ? 20 : null,
                 }}
               >
-                <label style={styles.label}>Age</label>
+                <label style={styles.label}>AGE-YEAR</label>
                 <Controller
                   name="age"
                   control={control}
@@ -1728,9 +1737,10 @@ export default function DrugDosageFinder(props) {
                         type="number"
                         style={styles.textInput}
                         value={field.value}
-                        placeholder="Enter the age..."
+                        placeholder="Enter age in Years; Enter 0 if less than 1 year"
                         onInput={(e) => ageHandler(e)}
                       />
+                    {age &&
                       <span
                         style={{
                           position: "absolute",
@@ -1742,15 +1752,16 @@ export default function DrugDosageFinder(props) {
                           pointerEvents: "none",
                         }}
                       >
-                        by years
+                        years
                       </span>
+                  }
                     </>
                   )}
                 />
               </div>
               {age === "0" ? (
                 <div style={{ flex: 2, width: "100%" }} className="fade-in">
-                  <label style={styles.label}>Months</label>
+                  <label style={styles.label}>MONTHS</label>
                   <Controller
                     name="months"
                     control={control}
@@ -1761,9 +1772,10 @@ export default function DrugDosageFinder(props) {
                           type="number"
                           style={styles.textInput}
                           value={field.value}
-                          placeholder="Enter the months..."
+                          placeholder="Enter age in months (1-11)"
                           onInput={(e) => monthsHandler(e)}
                         />
+                      {months &&
                         <span
                           style={{
                             position: "absolute",
@@ -1775,8 +1787,9 @@ export default function DrugDosageFinder(props) {
                             pointerEvents: "none",
                           }}
                         >
-                          by months
+                          months
                         </span>
+                    }
                       </>
                     )}
                   />
@@ -1785,7 +1798,7 @@ export default function DrugDosageFinder(props) {
             </div>
             {age > 0 || months ? (
               <>
-                <label style={styles.label}>Weight</label>
+                <label style={styles.label}>WEIGHT</label>
                 <Controller
                   name="weight"
                   control={control}
@@ -1795,10 +1808,11 @@ export default function DrugDosageFinder(props) {
                         {...field}
                         type="number"
                         style={styles.textInput}
-                        placeholder="Enter the weight..."
+                        placeholder="Enter weight in Kg"
                         value={field.value}
                         onInput={(e) => weightHandler(e)}
                       />
+                    {weight &&
                       <span
                         style={{
                           position: "absolute",
@@ -1810,8 +1824,9 @@ export default function DrugDosageFinder(props) {
                           pointerEvents: "none",
                         }}
                       >
-                        by kg
+                        kg
                       </span>
+                  }
                     </>
                   )}
                 />
@@ -1819,7 +1834,7 @@ export default function DrugDosageFinder(props) {
             ) : null}
             {weight && (
               <>
-                <label style={styles.label}>Regimen</label>
+                <label style={styles.label}>REGIMEN</label>
                 <Controller
                   name="select"
                   control={control}
@@ -1863,7 +1878,7 @@ export default function DrugDosageFinder(props) {
                       value={
                         regimenLabel
                           ? { label: regimenLabel, value: regimenLabel }
-                          : { value: "", label: "Select a value..." }
+                          : { value: "", label: "Please select regimen" }
                       }
                       onChange={(selectedOption) =>
                         field.onChange((e) =>
@@ -1878,7 +1893,7 @@ export default function DrugDosageFinder(props) {
             )}
             {Array.isArray(regimenOptions) && regimenOptions.length > 0 ? (
               <>
-                <label style={styles.label}>Regimen</label>
+                <label style={styles.label}>RGEIMEN</label>
                 <Controller
                   name="select"
                   control={control}
@@ -1922,7 +1937,7 @@ export default function DrugDosageFinder(props) {
                       value={
                         regimenName
                           ? { name: regimenName, label: regimenName }
-                          : { value: "", label: "Select a regimen..." }
+                          : { value: "", label: "Please select regimen" }
                       }
                       isOptionSelected={(option, selectValues) =>
                         selectValues.some(
@@ -2137,7 +2152,7 @@ export default function DrugDosageFinder(props) {
                                           }}
                                         >
                                           {medIndex === 0 ? (
-                                            <p style={styles.headerText}>
+                                            <p style={styles.value}>
                                               {item?.drug}
                                             </p>
                                           ) : (
@@ -2152,7 +2167,7 @@ export default function DrugDosageFinder(props) {
                                             margin: "2px 2px 0.5px 0px",
                                           }}
                                         >
-                                          <p style={styles.headerText}>
+                                          <p style={styles.value}>
                                             {medication.dose}
                                           </p>
                                         </div>
@@ -2164,7 +2179,7 @@ export default function DrugDosageFinder(props) {
                                             margin: "2px 2px 0.5px 0px",
                                           }}
                                         >
-                                          <p style={styles.headerText}>
+                                          <p style={styles.value}>
                                             {medication.tabs}
                                           </p>
                                         </div>
@@ -2185,7 +2200,7 @@ export default function DrugDosageFinder(props) {
                                       margin: "2px 2px 0.5px 0px",
                                     }}
                                   >
-                                    <p style={styles.headerText}>{item.dose}</p>
+                                    <p style={styles.value}>{item.dose}</p>
                                   </div>
                                 ) : null}
                                 {item?.formulation ? (
@@ -2198,7 +2213,7 @@ export default function DrugDosageFinder(props) {
                                     }}
                                   >
                                     {item.formulation && (
-                                      <p style={styles.headerText}>
+                                      <p style={styles.value}>
                                         {item.formulation}
                                       </p>
                                     )}
@@ -2214,7 +2229,7 @@ export default function DrugDosageFinder(props) {
                                     }}
                                   >
                                     {item.tabs && (
-                                      <p style={styles.headerText}>
+                                      <p style={styles.value}>
                                         {item.tabs}
                                       </p>
                                     )}
