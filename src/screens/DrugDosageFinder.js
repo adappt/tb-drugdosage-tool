@@ -388,7 +388,7 @@ export default function DrugDosageFinder(props) {
   const [remarks, setRemarks] = useState(null);
   const [meds, setMeds] = useState(null);
   const [isValid, setIsValid] = useState(false);
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, resetField } = useForm({
     defaultValues: {
       age: "",
       months: "",
@@ -1215,36 +1215,69 @@ export default function DrugDosageFinder(props) {
     );
   };
 
+  const resetFields = () => {
+    setSelectedMedicines({});
+    setSelectedForms([]);
+    setMedicineLabel([]);
+    setGroupMedicineData({});
+    setMedicineData({});
+    setGroup({});
+    setRegimenLabel("");
+    setRegimenName("");
+    setItemIdx(null);
+    setRegimenOptions([]);
+    setShowResult(false);
+    setIsGrouped(null);
+    setGroupedData([]);
+    setIsNewSet(false);
+    setReorderedSelectedItems({});
+    setIsValidated(false);
+    setSelectedFormsArray([]);
+    setRegimenItem("");
+    setRegselected(false);
+    setDownloadOptions(false);
+  };
+  
+  const validateInput = (value, regex, max) => {
+    return regex.test(value) && parseInt(value) <= max;
+  };
+
+  const resetInputState = (type) => {
+    switch (type) {
+      case 'age':
+        setMonths("");
+        setWeight("");
+        break;
+      case 'months':
+        setWeight("");
+        break;
+      case 'weight':
+        break;
+      default:
+        break;
+    }
+    resetFields();
+  };
+  
   const ageHandler = (e) => {
     let ageValue = e.target.value;
     const numreg = /^[0-9]+$/;
-    if (numreg.test(ageValue) && parseInt(ageValue) <= 99) {
+  
+    if (age !== ageValue) {
+      setAge(ageValue);
+      resetInputState('age');
+      resetField("weight");
+      resetField("select");
+      resetField("regimen");
+    }
+  
+    if (validateInput(ageValue, numreg, 99)) {
       setAge(ageValue);
       e.target.value = ageValue;
     } else {
       setAge("");
       e.target.value = "";
-      setMonths("");
-      setWeight("");
-      setSelectedMedicines({});
-      setSelectedForms([]);
-      setMedicineLabel([]);
-      setGroupMedicineData({});
-      setMedicineData({});
-      setGroup({});
-      setRegimenLabel("");
-      setRegimenName("");
-      setItemIdx(null);
-      setRegimenOptions([]);
-      setShowResult(false);
-      setIsGrouped(null);
-      setGroupedData([]);
-      setReorderedSelectedItems({});
-      setIsValidated(false);
-      setSelectedFormsArray([]);
-      setRegimenItem("");
-      setRegselected(false);
-      setDownloadOptions(false);
+      resetInputState('age');
       reset({
         weight: "",
         select: { value: "", label: "Select a value..." },
@@ -1252,37 +1285,29 @@ export default function DrugDosageFinder(props) {
       });
     }
   };
-
+  
   const monthsHandler = (e) => {
     let monthsValue = e.target.value;
     const numreg = /^[0-9]+$/;
-    if (numreg.test(monthsValue) && parseInt(monthsValue) <= 11) {
+  
+    if (months !== monthsValue) {
+      setMonths(monthsValue);
+      resetInputState('months');
+      reset({
+        age: age,
+        weight: "",
+        select: { value: "", label: "Select a value..." },
+        regimen: { value: "", label: "Select a regimen..." },
+      });
+    }
+  
+    if (validateInput(monthsValue, numreg, 11)) {
       setMonths(monthsValue);
       e.target.value = monthsValue;
     } else {
       setMonths("");
       e.target.value = "";
-      setWeight("");
-      setSelectedMedicines({});
-      setSelectedForms([]);
-      setMedicineLabel([]);
-      setGroupMedicineData({});
-      setMedicineData({});
-      setGroup({});
-      setRegimenLabel("");
-      setRegimenName("");
-      setRegimenItem("");
-      setItemIdx(null);
-      setRegimenOptions([]);
-      setShowResult(false);
-      setIsGrouped(null);
-      setGroupedData([]);
-      setIsNewSet(false);
-      setReorderedSelectedItems({});
-      setIsValidated(false);
-      setSelectedFormsArray([]);
-      setRegselected(false);
-      setDownloadOptions(false);
+      resetInputState('months');
       reset({
         age: age,
         weight: "",
@@ -1291,36 +1316,23 @@ export default function DrugDosageFinder(props) {
       });
     }
   };
-
+  
   const weightHandler = (e) => {
-    const numreg = /^[0-9]+$/;
     let weightValue = e.target.value;
-    if (numreg.test(weightValue) && parseInt(weightValue) <= 999) {
+    const numreg = /^[0-9]+$/;
+  
+    if (weight !== weightValue) {
+      setWeight(weightValue);
+      resetInputState('weight');
+    }
+  
+    if (validateInput(weightValue, numreg, 999)) {
       setWeight(weightValue);
       e.target.value = weightValue;
     } else {
       setWeight("");
       e.target.value = "";
-      setRegselected(false);
-      setSelectedMedicines({});
-      setSelectedForms([]);
-      setMedicineLabel([]);
-      setGroupMedicineData({});
-      setMedicineData({});
-      setGroup({});
-      setRegimenLabel("");
-      setRegimenName("");
-      setItemIdx(null);
-      setRegimenOptions([]);
-      setShowResult(false);
-      setIsGrouped(null);
-      setGroupedData([]);
-      setIsNewSet(false);
-      setReorderedSelectedItems({});
-      setIsValidated(false);
-      setSelectedFormsArray([]);
-      setRegimenItem("");
-      setDownloadOptions(false);
+      resetInputState('weight');
       reset({
         age: age,
         months: months,
@@ -1682,7 +1694,7 @@ export default function DrugDosageFinder(props) {
     setShowResult(showResultCondition ? true : false);
     setDownloadOptions(showResultCondition ? true : false);
   };
- console.log(result, 'result');
+
   return (
     <div style={styles.row}>
       <section div style={styles.container}>
