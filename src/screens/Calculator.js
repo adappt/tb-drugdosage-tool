@@ -10,7 +10,7 @@ import Select, { components } from "react-select";
 
 const Calculator = () => {
   const [medicine, setMedicine] = useState("");
-  const [agedata, setAgedata] = useState("");
+  const [weightData, setWeightData] = useState("");
   const [regimen, setRegimen] = useState("");
   const [result, setResult] = useState("");
   const [defaultTool, setDefaultTool] = useState({
@@ -60,7 +60,7 @@ const Calculator = () => {
 
   const onClickReset = () => {
     setMedicine("");
-    setAgedata("");
+    setWeightData("");
     setRegimen("");
     setResult("");
     setSelections({});
@@ -75,21 +75,26 @@ const Calculator = () => {
   const selectMedicine = (selectedOption) => {
     const { value } = selectedOption;
     setMedicine(value);
-    setAgedata("");
+    setWeightData("");
     setResult("");
     setRegimen(data.prevention[value] ? data.prevention[value].regimen : []);
   };
 
   const selectAge = (selectedOption) => {
     const { value } = selectedOption;
-    setAgedata(value);
-    setResult(data.prevention[medicine]?.isWeight ? "" : value);
+    setResult(value);
     setShowResult(false);
   };
 
   const selectWeight = (selectedOption) => {
     const { value } = selectedOption;
-    setResult(value);
+    setWeightData(value);
+    setResult(
+      data.prevention[medicine]?.isAge && data.prevention[medicine]?.[value]
+        ? ""
+        : value
+    );
+    setShowResult(false);
   };
 
   const medicineOptions = data?.prevention?.medicines.map((item) => ({
@@ -97,17 +102,17 @@ const Calculator = () => {
     label: item.name,
   }));
 
-  const ageOptions = data?.prevention?.[medicine]?.age.map((item) => ({
-    value: item.value,
-    label: item.name,
-  }));
-
-  const weightOptions = data?.prevention?.[medicine]?.[agedata]?.map(
+  const ageOptions = data?.prevention?.[medicine]?.[weightData]?.map(
     (item) => ({
       value: item.value,
       label: item.name,
     })
   );
+
+  const weightOptions = data?.prevention?.[medicine]?.weight?.map((item) => ({
+    value: item.value,
+    label: item.name,
+  }));
 
   const options = {
     en: [
@@ -137,18 +142,18 @@ const Calculator = () => {
       onSelect: selectMedicine,
     },
     {
-      label: "Age",
-      options: ageOptions,
-      placeholder: "Select Age...",
-      key: "age",
-      onSelect: selectAge,
-    },
-    {
       label: "Weight",
       options: weightOptions,
       placeholder: "Select Weight...",
       key: "weight",
       onSelect: selectWeight,
+    },
+    {
+      label: "Age",
+      options: ageOptions,
+      placeholder: "Select Age...",
+      key: "age",
+      onSelect: selectAge,
     },
   ];
   const handleSelectChange = (selectedOption, item) => {
@@ -157,12 +162,12 @@ const Calculator = () => {
       ...prevState,
       [item.key]: selectedOption,
     }));
-    if(selectedOption.value !== currentSelections[item.key]?.value) {
+    if (selectedOption.value !== currentSelections[item.key]?.value) {
       if (item.key === "medicine") {
-        resetField('age');
-        resetField('weight');
-      } else if (item.key === "age") {
-        resetField('weight');
+        resetField("age");
+        resetField("weight");
+      } else if (item.key === "weight") {
+        resetField("age");
       }
     }
     if (item.onSelect) {
@@ -191,18 +196,20 @@ const Calculator = () => {
                   <React.Fragment key={item.key}>
                     {index === 0 ||
                     (index === 1 && selections[dropdownList[index - 1].key]) ||
-                    (item.key === "weight" &&
-                      data?.prevention?.[medicine]?.isWeight &&
-                      agedata) ? (
+                    (item.key === "age" &&
+                      data?.prevention?.[medicine]?.isAge &&
+                      data?.prevention?.[medicine]?.[weightData]) ? (
                       <>
-                        <label style={styles.label}>{item.label}</label>
+                        <label style={styles.label}>
+                          {item.label.toUpperCase()}
+                        </label>
                         <Controller
                           name={item.key}
                           control={control}
                           render={({ field }) => (
                             <Select
                               {...field}
-                              isSearchable={false} 
+                              isSearchable={false}
                               className={!isMenuOpen ? "fade-in" : ""}
                               styles={{
                                 option: (baseStyles, state) => ({
@@ -330,9 +337,7 @@ const Calculator = () => {
           </div>
         </div>
       ) : (
-        <DrugDosageFinder
-          treatment={data.treatment}
-        />
+        <DrugDosageFinder treatment={data.treatment} />
       )}
     </div>
   );
