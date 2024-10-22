@@ -1302,12 +1302,9 @@ export default function DrugDosageFinder(props) {
     if (months !== monthsValue) {
       setMonths(monthsValue);
       resetInputState('months');
-      reset({
-        age: age,
-        weight: "",
-        select: { value: "", label: "Please select regimen" },
-        regimen: { value: "", label: "Please select regimen" },
-      });
+      resetField("weight");
+      resetField("select");
+      resetField("regimen");
     }
   
     if (validateInput(monthsValue, numreg, 11)) {
