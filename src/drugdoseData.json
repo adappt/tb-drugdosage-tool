@@ -27,293 +27,301 @@
       }
     ],
     "isoniazid": {
-        "regimen": "Six or nine months of daily isoniazid monotherapy (6H or 9H)",
-        "isAge": false,
-        "weight": [
-          {
-            "name": "4-7.9 Kg",
-            "value": "Isoniazid 100 mg dt - 0.5 (0.5 mL)"
-          },
-          {
-            "name": "8-11.9 Kg",
-            "value": "Isoniazid 100 mg dt - 1"
-          },
-          {
-            "name": "12-15.9 Kg",
-            "value": "Isoniazid 100 mg dt - 1.5"
-          },
-          {
-            "name": "16-24.9 Kg",
-            "value": "Isoniazid 100 mg dt - 2"
-          },
-          {
-            "name": "25-29.9 Kg",
-            "value": "Isoniazid 300 mg tab - 0.5"
-          },
-          {
-            "name": "30-34.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1"
-          },
-          {
-            "name": "35-49.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1"
-          },
-          {
-            "name": "50-64.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1"
-          },
-          {
-            "name": "≥65 Kg",
-            "value": "Isoniazid 300 mg tab - 1.25"
-          }
-        ]
-      },
-      "rifapentine__isoniazid": {
-        "regimen": "One month of daily rifapentine plus isoniazid (1HP)",
-        "isAge": false,
-        "weight": [
-          {
-            "name": "25-29.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1\nRifampentine 300 mg tab - 2"
-          },
-          {
-            "name": "30-34.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1\nRifampentine 300 mg tab - 2"
-          },
-          {
-            "name": "35-49.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1\nRifampentine 300 mg tab - 2"
-          },
-          {
-            "name": "50-64.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1\nRifampentine 300 mg tab - 2"
-          },
-          {
-            "name": "≥65 Kg",
-            "value": "Rifampicin 150 mg cap - 1\nRifampentine 300 mg tab - 2"
-          }
-        ]
-      },
-      "rifampicin": {
-        "regimen": "Four months of daily rifampicin monotherapy (4R)",
-        "isAge": false,
-        "weight": [
-          {
-            "name": "4-7.9 Kg",
-            "value": "-"
-          },
-          {
-            "name": "8-11.9 Kg",
-            "value": "-"
-          },
-          {
-            "name": "12-15.9 Kg",
-            "value": "-"
-          },
-          {
-            "name": "16-24.9 Kg",
-            "value": "-"
-          },
-          {
-            "name": "25-29.9 Kg",
-            "value": "Rifampicin 150 mg cap - 2\nRifampicin 300 mg cap - 1"
-          },
-          {
-            "name": "30-34.9 Kg",
-            "value": "Rifampicin 150 mg cap - 3\nRifampicin 300 mg cap - 1.5"
-          },
-          {
-            "name": "35-49.9 Kg",
-            "value": "Rifampicin 150 mg cap - 4\n Rifampicin 300 mg cap - 2"
-          },
-          {
-            "name": "50-64.9 Kg",
-            "value": "Rifampicin 150 mg cap - 4\n Rifampicin 300 mg cap - 2"
-          },
-          {
-            "name": "≥65 Kg",
-            "value": "Rifampicin 150 mg cap - 5\n Rifampicin 300 mg cap - 2.5"
-          }
-        ]
-      },
-      "rifampicin_isoniazid": {
-        "regimen": "Three months of daily rifampicin plus isoniazid (3HR)",
-        "isAge": false,
-        "weight": [
-          {
-            "name": "4-7.9 Kg",
-            "value": "Rifampicin 75 mg and isoniazid 50 mg FDC dt - 1"
-          },
-          {
-            "name": "8-11.9 Kg",
-            "value": "Rifampicin 75 mg and isoniazid 50 mg FDC dt - 2"
-          },
-          {
-            "name": "12-15.9 Kg",
-            "value": "Rifampicin 75 mg and isoniazid 50 mg FDC dt - 3 "
-          },
-          {
-            "name": "16-24.9 Kg",
-            "value": " Rifampicin 75 mg and isoniazid 50 mg FDC dt - 4"
-          },
-          {
-            "name": "25-29.9 Kg",
-            "value": "Isoniazid 300 mg tab - 0.5\n Rifampicin 300 mg cap - 1\n Rifampicin 150 mg and isoniazid 75 mg FDC tab - 2"
-          },
-          {
-            "name": "30-34.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1\n Rifampicin 300 mg cap - 1.5\n Rifampicin 150 mg and isoniazid 75 mg FDC tab - 3"
-          },
-          {
-            "name": "35-49.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1\n Rifampicin 300 mg cap - 2\n Rifampicin 150 mg and isoniazid 75 mg FDC tab - 4"
-          },
-          {
-            "name": "50-64.9 Kg",
-            "value": "Isoniazid 300 mg tab - 1\n Rifampicin 300 mg cap - 2\n Rifampicin 150 mg and isoniazid 75 mg FDC tab - 4"
-          },
-          {
-            "name": "≥65 Kg",
-            "value": "Isoniazid 300 mg tab - 1.25\n Rifampicin 300 mg cap - 2.5\n Rifampicin 150 mg and isoniazid 75 mg FDC tab - 5"
-          }
-        ]
-      },
-      "levofloxacin": {
-        "regimen": "Six months of daily levofloxacin(6Lfx)",
-        "isAge": true,
-        "weight": [
-          {
-            "name": "3-5.9 Kg",
-            "value": "3-5"
-          },
-          {
-            "name": "6-9.9 Kg",
-            "value": "6-9"
-          },
-          {
-            "name": "10-14.9 Kg",
-            "value": "Levofloxacin 100 mg dt - 2\nLevofloxacin 250 mg tab - 1"
-          },
-          {
-            "name": "15-19.9 Kg",
-            "value": "Levofloxacin 100 mg dt - 2.5\nLevofloxacin 250 mg tab - 1.5"
-          },
-          {
-            "name": "20-24.9 Kg",
-            "value": "Levofloxacin 100 mg dt - 3"
-          },
-          {
-            "name": "25-29.9 Kg",
-            "value": "Levofloxacin 100 mg dt - 3.5\nLevofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
-          },
-          {
-            "name": "30-34.9 Kg",
-            "value": "Levofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
-          },
-          {
-            "name": "40-44.9 Kg",
-            "value": "Levofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
-          },
-          {
-            "name": "45-49.9 Kg",
-            "value": "Levofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
-          },
-          {
-            "name": ">50 Kg",
-            "value": "Levofloxacin 250 mg tab - 3\nLevofloxacin 500 mg tab - 1"
-          }
-        ],
-        "3-5": [
-          {
-            "name": "< 3 months",
-            "value": "Levofloxacin 100 mg dt - 0.5\nLevofloxacin 250 mg tab - 0.25(2.5 mL)"
-          },
-          {
-            "name": "≥ 3 months ",
-            "value": "Levofloxacin 100 mg dt - 1\nLevofloxacin 250 mg tab - 0.5(5 mL)"
-          }
-        ],
-        "6-9": [
-          {
-            "name": "< 6 months",
-            "value": "Levofloxacin 100 mg dt - 1\nLevofloxacin 250 mg tab - 0.5(5 mL)"
-          },
-          {
-            "name": "≥ 6 months ",
-            "value": "Levofloxacin 100 mg dt - 1.5\nLevofloxacin 250 mg tab - 1(10 mL)"
-          }
-        ]
-      },
-      "rifapentine_hd_isoniazid": {
-        "regimen": "Three months of weekly rifapentine plus isoniazid (3HP)",
-        "isAge": true,
-        "weight": [
-          {
-            "name": "3-5.9 Kg",
-            "value": "3-5"
-          },
-          {
-            "name": "6-9.9 Kg",
-            "value": "6-9"
-          },
-          {
-            "name": "10-14.9 Kg",
-            "value": "Isoniazid 100 mg dt - 2.5\nRifapentine 150 mg dt - 2"
-          },
-          {
-            "name": "15-19.9 Kg",
-            "value": "Isoniazid 100 mg dt - 3\nIsoniazid 300 mg tab -1\nRifapentine 150 mg dt - 3\nRifapentine 300 mg tab - 1.5"
-          },
-          {
-            "name": "20-24.9 Kg",
-            "value": "Isoniazid 100 mg dt - 4.5\nIsoniazid 300 mg tab -1.5\nRifapentine 150 mg dt - 4\nRifapentine 300 mg tab - 2"
-          },
-          {
-            "name": "25-29.9 Kg",
-            "value": "Isoniazid 100 mg dt - 4.5\nIsoniazid 300 mg tab -1.5\nRifapentine 150 mg dt - 4\nRifapentine 300 mg tab - 2"
-          },
-          {
-            "name": "30-34.9 Kg",
-            "value": "Isoniazid 100 mg dt - 6\nIsoniazid 300 mg tab -2\nRifapentine 150 mg dt - 5\nRifapentine 300 mg tab - 2.5"
-          },
-          {
-            "name": "35-39.9 Kg",
-            "value": "Isoniazid 100 mg dt - 6\nIsoniazid 300 mg tab -2\nRifapentine 150 mg dt - 6\nRifapentine 300 mg tab - 3"
-          },
-          {
-            "name": "40-44.9 Kg",
-            "value": "Isoniazid 100 mg dt - 7.5\nIsoniazid 300 mg tab -2.5\nRifapentine 150 mg dt - 6\nRifapentine 300 mg tab - 3"
-          },
-          {
-            "name": "45-49.9 Kg",
-            "value": "Isoniazid 100 mg dt - 7.5\nIsoniazid 300 mg tab -2.5\nRifapentine 150 mg dt - 6\nRifapentine 300 mg tab - 3"
-          },
-          {
-            "name": ">50 Kg",
-            "value": "Isoniazid 100 mg dt - 9\nIsoniazid 300 mg tab -3\nRifapentine 150 mg dt - 6\nRifapentine 300 mg tab - 3\nIsoniazid + Rifapentine FDC (300 mg/300 mg) - 3"
-          }
-        ],
-        "3-5": [
-          {
-            "name": "< 3 months",
-            "value": "Isoniazid 100 mg dt - 0.6(6 mL)\nRifapentine 150 mg dt - 0.5(5 mL)"
-          },
-          {
-            "name": "≥ 3 months ",
-            "value": "Isoniazid 100 mg dt - 0.7(7 mL)\nRifapentine 150 mg dt - 0.7(7 mL)"
-          }
-        ],
-        "6-9": [
-          {
-            "name": "< 6 months",
-            "value": "Isoniazid 100 mg dt - 1\nRifapentine 150 mg dt - 1.5"
-          },
-          {
-            "name": "≥ 6 months ",
-            "value": "Isoniazid 100 mg dt - 1.5\nRifapentine 150 mg dt - 1.5"
-          }
-        ]
-      }
+      "regimen": "Six or nine months of daily isoniazid monotherapy (6H or 9H)",
+      "isAge": false,
+      "weight": [
+        {
+          "name": "4-7.9 Kg",
+          "value": "Isoniazid 100 mg dt - 0.5 (0.5 mL\u1d43)"
+        },
+        {
+          "name": "8-11.9 Kg",
+          "value": "Isoniazid 100 mg dt - 1"
+        },
+        {
+          "name": "12-15.9 Kg",
+          "value": "Isoniazid 100 mg dt - 1.5"
+        },
+        {
+          "name": "16-24.9 Kg",
+          "value": "Isoniazid 100 mg dt - 2"
+        },
+        {
+          "name": "25-29.9 Kg",
+          "value": "Isoniazid 300 mg tab\u1d47 - 0.5"
+        },
+        {
+          "name": "30-34.9 Kg",
+          "value": "Isoniazid 300 mg tab\u1d47 - 1"
+        },
+        {
+          "name": "35-49.9 Kg",
+          "value": "Isoniazid 300 mg tab\u1d47 - 1"
+        },
+        {
+          "name": "50-64.9 Kg",
+          "value": "Isoniazid 300 mg tab\u1d47 - 1"
+        },
+        {
+          "name": "≥65 Kg",
+          "value": "Isoniazid 300 mg tab\u1d47 - 1.25"
+        }
+      ]
+    },
+    "rifapentine__isoniazid": {
+      "regimen": "One month of daily rifapentine plus isoniazid (1HP)\u1d49",
+      "isAge": false,
+      "weight": [
+        {
+          "name": "25-29.9 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifapentine 300 mg tab - 2"
+        },
+        {
+          "name": "30-34.9 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifapentine 300 mg tab - 2"
+        },
+        {
+          "name": "35-39.9 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifapentine 300 mg tab - 2"
+        },
+        {
+          "name": "40-44.9 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifapentine 300 mg tab - 2"
+        },
+        {
+          "name": "45-49.9 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifapentine 300 mg tab - 2"
+        },
+        {
+          "name": ">50 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifapentine 300 mg tab - 2"
+        }
+      ]
+    },
+    "rifampicin": {
+      "regimen": "Four months of daily rifampicin monotherapy (4R)",
+      "isAge": false,
+      "weight": [
+        {
+          "name": "4-7.9 Kg",
+          "value": "-"
+        },
+        {
+          "name": "8-11.9 Kg",
+          "value": "-"
+        },
+        {
+          "name": "12-15.9 Kg",
+          "value": "-"
+        },
+        {
+          "name": "16-24.9 Kg",
+          "value": "-"
+        },
+        {
+          "name": "25-29.9 Kg",
+          "value": "Rifampicin 150 mg cap - 2\nRifampicin 300 mg cap\u1d9c - 1"
+        },
+        {
+          "name": "30-34.9 Kg",
+          "value": "Rifampicin 150 mg cap - 3\nRifampicin 300 mg cap\u1d9c - 1.5"
+        },
+        {
+          "name": "35-49.9 Kg",
+          "value": "Rifampicin 150 mg cap - 4\nRifampicin 300 mg cap\u1d9c - 2"
+        },
+        {
+          "name": "50-64.9 Kg",
+          "value": "Rifampicin 150 mg cap - 4\nRifampicin 300 mg cap\u1d9c - 2"
+        },
+        {
+          "name": "≥65 Kg",
+          "value": "Rifampicin 150 mg cap - 5\nRifampicin 300 mg cap\u1d9c - 2.5"
+        }
+      ]
+    },
+    "rifampicin_isoniazid": {
+      "regimen": "Three months of daily rifampicin plus isoniazid (3HR)",
+      "isAge": false,
+      "weight": [
+        {
+          "name": "4-7.9 Kg",
+          "value": "Rifampicin 75 mg and isoniazid 50 mg FDC dt - 1"
+        },
+        {
+          "name": "8-11.9 Kg",
+          "value": "Rifampicin 75 mg and isoniazid 50 mg FDC dt - 2"
+        },
+        {
+          "name": "12-15.9 Kg",
+          "value": "Rifampicin 75 mg and isoniazid 50 mg FDC dt - 3 "
+        },
+        {
+          "name": "16-24.9 Kg",
+          "value": "Rifampicin 75 mg and isoniazid 50 mg FDC dt - 4"
+        },
+        {
+          "name": "25-29.9 Kg",
+          "value": "Isoniazid 300 mg tab - 0.5\nRifampicin 300 mg cap\u1d9c - 1\nRifampicin 150 mg and isoniazid 75 mg FDC tab - 2"
+        },
+        {
+          "name": "30-34.9 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifampicin 300 mg cap\u1d9c - 1.5\nRifampicin 150 mg and isoniazid 75 mg FDC tab - 3"
+        },
+        {
+          "name": "35-49.9 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifampicin 300 mg cap\u1d9c - 2\nRifampicin 150 mg and isoniazid 75 mg FDC tab - 4"
+        },
+        {
+          "name": "50-64.9 Kg",
+          "value": "Isoniazid 300 mg tab - 1\nRifampicin 300 mg cap\u1d9c - 2\nRifampicin 150 mg and isoniazid 75 mg FDC tab - 4"
+        },
+        {
+          "name": "≥65 Kg",
+          "value": "Isoniazid 300 mg tab - 1.25\nRifampicin 300 mg cap\u1d9c - 2.5\nRifampicin 150 mg and isoniazid 75 mg FDC tab - 5"
+        }
+      ]
+    },
+    "levofloxacin": {
+      "regimen": "Six months of daily levofloxacin(6Lfx)",
+      "isAge": true,
+      "weight": [
+        {
+          "name": "3-5.9 Kg",
+          "value": "3-5"
+        },
+        {
+          "name": "6-9.9 Kg",
+          "value": "6-9"
+        },
+        {
+          "name": "10-14.9 Kg",
+          "value": "Levofloxacin 100 mg dt - 2\nLevofloxacin 250 mg tab - 1"
+        },
+        {
+          "name": "15-19.9 Kg",
+          "value": "Levofloxacin 100 mg dt - 2.5\nLevofloxacin 250 mg tab - 1.5"
+        },
+        {
+          "name": "20-24.9 Kg",
+          "value": "Levofloxacin 100 mg dt - 3"
+        },
+        {
+          "name": "25-29.9 Kg",
+          "value": "Levofloxacin 100 mg dt - 3.5\nLevofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
+        },
+        {
+          "name": "30-34.9 Kg",
+          "value": "Levofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
+        },
+        {
+          "name": "35-39.9 Kg",
+          "value": "Levofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
+        },
+        {
+          "name": "40-44.9 Kg",
+          "value": "Levofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
+        },
+        {
+          "name": "45-49.9 Kg",
+          "value": "Levofloxacin 250 mg tab - 2\nLevofloxacin 500 mg tab - 1"
+        },
+        {
+          "name": ">50 Kg",
+          "value": "Levofloxacin 250 mg tab - 3\nLevofloxacin 500 mg tab - 1.5"
+        }
+      ],
+      "3-5": [
+        {
+          "name": "< 3 months",
+          "value": "Levofloxacin 100 mg dt - 0.5\nLevofloxacin 250 mg tab - 0.25(2.5 mL\u1d48)"
+        },
+        {
+          "name": "≥ 3 months ",
+          "value": "Levofloxacin 100 mg dt - 1\nLevofloxacin 250 mg tab - 0.5(5 mL\u1d48)"
+        }
+      ],
+      "6-9": [
+        {
+          "name": "< 6 months",
+          "value": "Levofloxacin 100 mg dt - 1\nLevofloxacin 250 mg tab - 0.5(5 mL\u1d48)"
+        },
+        {
+          "name": "≥ 6 months ",
+          "value": "Levofloxacin 100 mg dt - 1.5\nLevofloxacin 250 mg tab - 1(10 mL\u1d48)"
+        }
+      ]
+    },
+    "rifapentine_hd_isoniazid": {
+      "regimen": "Three months of weekly rifapentine plus isoniazid (3HP)",
+      "isAge": true,
+      "weight": [
+        {
+          "name": "3-5.9 Kg",
+          "value": "3-5"
+        },
+        {
+          "name": "6-9.9 Kg",
+          "value": "6-9"
+        },
+        {
+          "name": "10-14.9 Kg",
+          "value": "Isoniazid 100 mg dt - 2.5\nRifapentine 150 mg dt - 2"
+        },
+        {
+          "name": "15-19.9 Kg",
+          "value": "Isoniazid 100 mg dt - 3\nIsoniazid 300 mg tab -1\nRifapentine 150 mg dt - 3\nRifapentine 300 mg tab - 1.5"
+        },
+        {
+          "name": "20-24.9 Kg",
+          "value": "Isoniazid 100 mg dt - 4.5\nIsoniazid 300 mg tab -1.5\nRifapentine 150 mg dt - 4\nRifapentine 300 mg tab - 2"
+        },
+        {
+          "name": "25-29.9 Kg",
+          "value": "Isoniazid 100 mg dt - 4.5\nIsoniazid 300 mg tab -1.5\nRifapentine 150 mg dt - 4\nRifapentine 300 mg tab - 2"
+        },
+        {
+          "name": "30-34.9 Kg",
+          "value": "Isoniazid 100 mg dt - 6\nIsoniazid 300 mg tab -2\nRifapentine 150 mg dt - 5\nRifapentine 300 mg tab - 2.5"
+        },
+        {
+          "name": "35-39.9 Kg",
+          "value": "Isoniazid 100 mg dt - 6\nIsoniazid 300 mg tab -2\nRifapentine 150 mg dt - 6\nRifapentine 300 mg tab - 3"
+        },
+        {
+          "name": "40-44.9 Kg",
+          "value": "Isoniazid 100 mg dt - 7.5\nIsoniazid 300 mg tab -2.5\nRifapentine 150 mg dt - 6\nRifapentine 300 mg tab - 3"
+        },
+        {
+          "name": "45-49.9 Kg",
+          "value": "Isoniazid 100 mg dt - 7.5\nIsoniazid 300 mg tab -2.5\nRifapentine 150 mg dt - 6\nRifapentine 300 mg tab - 3"
+        },
+        {
+          "name": ">50 Kg",
+          "value": "Isoniazid 100 mg dt - 9\nIsoniazid 300 mg tab -3\nRifapentine 150 mg dt - 6\nRifapentine 300 mg tab - 3\nIsoniazid + Rifapentine FDC (300 mg/300 mg) tab - 3"
+        }
+      ],
+      "3-5": [
+        {
+          "name": "< 3 months",
+          "value": "Isoniazid 100 mg dt - 0.6(6 mL\u1d43)\nRifapentine 150 mg dt - 0.5(5 mL\u1d48)"
+        },
+        {
+          "name": "≥ 3 months ",
+          "value": "Isoniazid 100 mg dt - 0.7(7 mL\u1d43)\nRifapentine 150 mg dt - 0.7(7 mL\u1d48)"
+        }
+      ],
+      "6-9": [
+        {
+          "name": "< 6 months",
+          "value": "Isoniazid 100 mg dt - 1\nRifapentine 150 mg dt - 1.5"
+        },
+        {
+          "name": "≥ 6 months ",
+          "value": "Isoniazid 100 mg dt - 1.5\nRifapentine 150 mg dt - 1.5"
+        }
+      ]
+    }
   },
   "treatment": {
     "data": {
