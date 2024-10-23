@@ -207,13 +207,13 @@ export default function DrugDosageFinder(props) {
       cursor: "pointer",
       color: "blue",
       fontSize: 16,
-      marginLeft: "20px",
       textDecorationLine: "underline",
     },
     remarksContent: {
       color: "#000",
       textAlign: "left",
       fontSize: 16,
+      margin: 0,
       //margin: "5px 0px 0px 10px",
     },
     LRGRemarksContent: {
@@ -789,7 +789,9 @@ export default function DrugDosageFinder(props) {
       }
       const filteredData = groupedData?.filter(
         (item) =>
-          !(item.groupName === groupName && item.medicationName === medicineName)
+          !(
+            item.groupName === groupName && item.medicationName === medicineName
+          )
       );
       const news = selectedFormsArray.filter(
         (item) => item.medicationName !== medicineName
@@ -817,14 +819,14 @@ export default function DrugDosageFinder(props) {
       if (groupedData && groupedData.length > 0 && reorderedSelectedItems) {
         const newgroupedData = groupedData?.filter(
           (item) =>
-            !(item.groupName === groupName && item.medicationName === medicineName)
+            !(
+              item.groupName === groupName &&
+              item.medicationName === medicineName
+            )
         );
         const newReorderedSelectedItems = reorderedSelectedItems[
           groupName
-        ].filter(
-          (item) =>
-            item.name !== medicineName
-        );
+        ].filter((item) => item.name !== medicineName);
         setGroupedData(newgroupedData);
         setReorderedSelectedItems(newReorderedSelectedItems);
       }
@@ -1211,7 +1213,6 @@ export default function DrugDosageFinder(props) {
             ))}
             <div style={{ width: "100%" }}>
               <button
-                activeOpacity={0.9}
                 onClick={() => closeModal()}
                 style={styles.closeButton}
               >
@@ -1246,47 +1247,47 @@ export default function DrugDosageFinder(props) {
     setRegselected(false);
     setDownloadOptions(false);
   };
-  
+
   const validateInput = (value, regex, max) => {
     return regex.test(value) && parseInt(value) <= max;
   };
 
   const resetInputState = (type) => {
     switch (type) {
-      case 'age':
+      case "age":
         setMonths("");
         setWeight("");
         break;
-      case 'months':
+      case "months":
         setWeight("");
         break;
-      case 'weight':
+      case "weight":
         break;
       default:
         break;
     }
     resetFields();
   };
-  
+
   const ageHandler = (e) => {
     let ageValue = e.target.value;
     const numreg = /^[0-9]+$/;
-  
+
     if (age !== ageValue) {
       setAge(ageValue);
-      resetInputState('age');
+      resetInputState("age");
       resetField("weight");
       resetField("select");
       resetField("regimen");
     }
-  
+
     if (validateInput(ageValue, numreg, 99)) {
       setAge(ageValue);
       e.target.value = ageValue;
     } else {
       setAge("");
       e.target.value = "";
-      resetInputState('age');
+      resetInputState("age");
       reset({
         weight: "",
         select: { value: "", label: "Please select regimen" },
@@ -1294,51 +1295,51 @@ export default function DrugDosageFinder(props) {
       });
     }
   };
-  
+
   const monthsHandler = (e) => {
     let monthsValue = e.target.value;
     const numreg = /^[0-9]+$/;
-  
+
     if (months !== monthsValue) {
       setMonths(monthsValue);
-      resetInputState('months');
+      resetInputState("months");
       resetField("weight");
       resetField("select");
       resetField("regimen");
     }
-  
+
     if (validateInput(monthsValue, numreg, 11)) {
       setMonths(monthsValue);
       e.target.value = monthsValue;
     } else {
       setMonths("");
       e.target.value = "";
-      resetInputState('months');
+      resetInputState("months");
       reset({
         age: age,
         weight: "",
-        select: { value: "", label: "Please select regimen"},
+        select: { value: "", label: "Please select regimen" },
         regimen: { value: "", label: "Please select regimen" },
       });
     }
   };
-  
+
   const weightHandler = (e) => {
     let weightValue = e.target.value;
     const numreg = /^[0-9]+$/;
-  
+
     if (weight !== weightValue) {
       setWeight(weightValue);
-      resetInputState('weight');
+      resetInputState("weight");
     }
-  
+
     if (validateInput(weightValue, numreg, 999)) {
       setWeight(weightValue);
       e.target.value = weightValue;
     } else {
       setWeight("");
       e.target.value = "";
-      resetInputState('weight');
+      resetInputState("weight");
       reset({
         age: age,
         months: months,
@@ -1606,7 +1607,7 @@ export default function DrugDosageFinder(props) {
                       href={remarks?.trim().replace(/^[.()]+|[.()]+$/g, "")}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={styles.remarksLink}
+                      style={{...styles.remarksLink, marginLeft: regimenItem === compareLabel.en.LRG ? 10 : 0}}
                     >
                       {remarks?.trim().replace(/\s+/g, " ")}
                     </a>
@@ -1676,7 +1677,9 @@ export default function DrugDosageFinder(props) {
                 <FaRegCircle color="#DDDDDD" size={15} style={style} />
               )}
             </>
-          ) : <div style={{width: 25, height: 25}}></div>}
+          ) : (
+            <div style={{ width: 25, height: 25 }}></div>
+          )}
           {props.data.name ? props.data.name : children}
         </div>
       </components.Option>
@@ -1737,21 +1740,21 @@ export default function DrugDosageFinder(props) {
                         placeholder="Enter age in Years; Enter 0 if less than 1 year"
                         onInput={(e) => ageHandler(e)}
                       />
-                    {age &&
-                      <span
-                        style={{
-                          position: "absolute",
-                          right: "25px",
-                          top: "20%",
-                          transform: "translateY(-50%)",
-                          fontSize: "14px",
-                          color: "#666",
-                          pointerEvents: "none",
-                        }}
-                      >
-                        years
-                      </span>
-                  }
+                      {age && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            right: "25px",
+                            top: "20%",
+                            transform: "translateY(-50%)",
+                            fontSize: "14px",
+                            color: "#666",
+                            pointerEvents: "none",
+                          }}
+                        >
+                          years
+                        </span>
+                      )}
                     </>
                   )}
                 />
@@ -1772,21 +1775,21 @@ export default function DrugDosageFinder(props) {
                           placeholder="Enter age in months (1-11)"
                           onInput={(e) => monthsHandler(e)}
                         />
-                      {months &&
-                        <span
-                          style={{
-                            position: "absolute",
-                            right: "25px",
-                            top: "20%",
-                            transform: "translateY(-50%)",
-                            fontSize: "14px",
-                            color: "#666",
-                            pointerEvents: "none",
-                          }}
-                        >
-                          months
-                        </span>
-                    }
+                        {months && (
+                          <span
+                            style={{
+                              position: "absolute",
+                              right: "25px",
+                              top: "20%",
+                              transform: "translateY(-50%)",
+                              fontSize: "14px",
+                              color: "#666",
+                              pointerEvents: "none",
+                            }}
+                          >
+                            months
+                          </span>
+                        )}
                       </>
                     )}
                   />
@@ -1809,21 +1812,21 @@ export default function DrugDosageFinder(props) {
                         value={field.value}
                         onInput={(e) => weightHandler(e)}
                       />
-                    {weight &&
-                      <span
-                        style={{
-                          position: "absolute",
-                          right: "25px",
-                          top: "32%",
-                          transform: "translateY(-50%)",
-                          fontSize: "14px",
-                          color: "#666",
-                          pointerEvents: "none",
-                        }}
-                      >
-                        kg
-                      </span>
-                  }
+                      {weight && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            right: "25px",
+                            top: "32%",
+                            transform: "translateY(-50%)",
+                            fontSize: "14px",
+                            color: "#666",
+                            pointerEvents: "none",
+                          }}
+                        >
+                          kg
+                        </span>
+                      )}
                     </>
                   )}
                 />
@@ -1838,12 +1841,11 @@ export default function DrugDosageFinder(props) {
                   render={({ field }) => (
                     <Select
                       {...field}
-                      isSearchable={false} 
+                      isSearchable={false}
                       styles={{
                         option: (baseStyles, state) => ({
                           ...baseStyles,
                           ...styles.selectOption,
-                          fontWeight:  state.data.label === compareLabel.en.DRTB? "600" : null,
                           borderBottom:
                             state.data.label !==
                             dropdownOptions[dropdownOptions.length - 1].label
@@ -1897,7 +1899,7 @@ export default function DrugDosageFinder(props) {
                   render={({ field }) => (
                     <Select
                       {...field}
-                      isSearchable={false} 
+                      isSearchable={false}
                       styles={{
                         option: (baseStyles, state) => ({
                           ...baseStyles,
