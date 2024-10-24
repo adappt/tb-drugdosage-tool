@@ -214,7 +214,7 @@ export default function DrugDosageFinder(props) {
       textAlign: "left",
       fontSize: 16,
       margin: 0,
-      //margin: "5px 0px 0px 10px",
+      marginTop: 5,
     },
     LRGRemarksContent: {
       fontSize: 16,
@@ -1212,10 +1212,7 @@ export default function DrugDosageFinder(props) {
               </div>
             ))}
             <div style={{ width: "100%" }}>
-              <button
-                onClick={() => closeModal()}
-                style={styles.closeButton}
-              >
+              <button onClick={() => closeModal()} style={styles.closeButton}>
                 <p style={styles.closeButtonText}>close</p>
               </button>
             </div>
@@ -1389,13 +1386,13 @@ export default function DrugDosageFinder(props) {
     }
   };
 
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const urlRegex = /(https?:\/\/[^\s(]+)/g;
   const parts = remarks?.split(urlRegex);
 
   const renderMedication = () => {
     const newGroupedData = groupDataByGroup(groupedData);
     const renderedHeaders = new Set();
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urlRegex = /(https?:\/\/[^\s(]+)/g;
     const parts = remarks.split(urlRegex);
     //const { languageCode } = this.props;
 
@@ -1602,25 +1599,32 @@ export default function DrugDosageFinder(props) {
               {parts.map((remarks, index) => {
                 if (remarks.match(urlRegex)) {
                   return (
-                    <a
-                      key={index}
-                      href={remarks?.trim().replace(/^[.()]+|[.()]+$/g, "")}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{...styles.remarksLink, marginLeft: regimenItem === compareLabel.en.LRG ? 10 : 0}}
-                    >
-                      {remarks?.trim().replace(/\s+/g, " ")}
-                    </a>
+                    <span key={index}>
+                      {index !== 3 ? parts[0] : null}
+                      <a
+                        key={index}
+                        href={remarks.trim().replace(/^[.()]+|[.()]+$/g, "")}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={styles.remarksLink}
+                      >
+                        {remarks.trim().replace(/\s+/g, " ")}
+                      </a>
+                    </span>
                   );
                 }
+                if (index === 1) {
+                  return null;
+                }
                 return (
-                  <p key={index} style={styles.LRGRemarksContent}>
+                  <p key={index} style={styles.remarksContent}>
                     {remarks.split("\n").map((line, index) => (
                       <span
                         key={index}
-                        style={{ display: "block", marginTop: "5px" }}
+                        style={{ display: "block", marginTop: 5 }}
                       >
-                        {line}
+                        {index !== 0 &&
+                          line?.trim().replace(/^[()]+|[()]+$/g, "")}
                       </span>
                     ))}
                   </p>
@@ -2125,7 +2129,7 @@ export default function DrugDosageFinder(props) {
                 ) : null}
                 {result &&
                   result.map((item, index) => {
-                    const urlRegex = /(https?:\/\/[^\s]+)/g;
+                    const urlRegex = /(https?:\/\/[^\s(]+)/g;
                     const parts = item?.note?.split(urlRegex);
                     return (
                       <div>
@@ -2228,9 +2232,7 @@ export default function DrugDosageFinder(props) {
                                     }}
                                   >
                                     {item.tabs && (
-                                      <p style={styles.value}>
-                                        {item.tabs}
-                                      </p>
+                                      <p style={styles.value}>{item.tabs}</p>
                                     )}
                                   </div>
                                 ) : null}
@@ -2256,31 +2258,59 @@ export default function DrugDosageFinder(props) {
                                 const parts = rmkItm.split(urlRegex);
                                 return (
                                   <p style={{ margin: 0, textAlign: "left" }}>
-                                    {parts.map((part, index) => {
-                                      if (part.match(urlRegex)) {
+                                    {parts.map((remarks, index) => {
+                                      if (remarks.match(urlRegex)) {
                                         return (
-                                          <a
-                                            key={index}
-                                            href={part
-                                              ?.trim()
-                                              .replace(/^[.()]+|[.()]+$/g, "")}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            style={styles.remarksLink}
-                                          >
-                                            {part?.trim().replace(/\s+/g, " ")}
-                                          </a>
-                                        );
-                                      } else {
-                                        return (
-                                          <p
-                                            style={styles.remarksContent}
-                                            key={part}
-                                          >
-                                            {part}
-                                          </p>
+                                          <span key={index}>
+                                            {index !== 3 ? parts[0] : null}
+                                            <a
+                                              key={index}
+                                              href={remarks
+                                                .trim()
+                                                .replace(
+                                                  /^[.()]+|[.()]+$/g,
+                                                  ""
+                                                )}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              style={styles.remarksLink}
+                                            >
+                                              {remarks
+                                                .trim()
+                                                .replace(/\s+/g, " ")}
+                                            </a>
+                                          </span>
                                         );
                                       }
+                                      if (index === 1) {
+                                        return null;
+                                      }
+                                      return (
+                                        <p
+                                          key={index}
+                                          style={styles.remarksContent}
+                                        >
+                                          {remarks
+                                            .split("\n")
+                                            .map((line, index) => (
+                                              <span
+                                                key={index}
+                                                style={{
+                                                  display: "block",
+                                                  marginTop: 5,
+                                                }}
+                                              >
+                                                {index !== 0 &&
+                                                  line
+                                                    ?.trim()
+                                                    .replace(
+                                                      /^[()]+|[()]+$/g,
+                                                      ""
+                                                    )}
+                                              </span>
+                                            ))}
+                                        </p>
+                                      );
                                     })}
                                   </p>
                                 );
@@ -2308,7 +2338,7 @@ export default function DrugDosageFinder(props) {
                   })}
                 {result &&
                   result?.map((item, index) => {
-                    const urlRegex = /(https?:\/\/[^\s]+)/g;
+                    const urlRegex = /(https?:\/\/[^\s(]+)/g;
                     const parts = item?.note?.split(urlRegex);
                     return item?.note ? (
                       <div key={index}>
@@ -2327,18 +2357,24 @@ export default function DrugDosageFinder(props) {
                           {parts.map((remarks, index) => {
                             if (remarks.match(urlRegex)) {
                               return (
-                                <a
-                                  key={index}
-                                  href={remarks
-                                    ?.trim()
-                                    .replace(/^[.()]+|[.()]+$/g, "")}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  style={styles.remarksLink}
-                                >
-                                  {remarks?.trim().replace(/\s+/g, " ")}
-                                </a>
+                                <span key={index}>
+                                  {index !== 3 ? parts[0] : null}
+                                  <a
+                                    key={index}
+                                    href={remarks
+                                      .trim()
+                                      .replace(/^[.()]+|[.()]+$/g, "")}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={styles.remarksLink}
+                                  >
+                                    {remarks.trim().replace(/\s+/g, " ")}
+                                  </a>
+                                </span>
                               );
+                            }
+                            if (index === 1) {
+                              return null;
                             }
                             return (
                               <p key={index} style={styles.remarksContent}>
@@ -2347,7 +2383,10 @@ export default function DrugDosageFinder(props) {
                                     key={index}
                                     style={{ display: "block", marginTop: 5 }}
                                   >
-                                    {line}
+                                    {index !== 0 &&
+                                      line
+                                        ?.trim()
+                                        .replace(/^[()]+|[()]+$/g, "")}
                                   </span>
                                 ))}
                               </p>
@@ -2374,27 +2413,35 @@ export default function DrugDosageFinder(props) {
                       {parts.map((remarks, index) => {
                         if (remarks.match(urlRegex)) {
                           return (
-                            <a
-                              key={index}
-                              href={remarks
-                                ?.trim()
-                                .replace(/^[.()]+|[.()]+$/g, "")}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={styles.remarksLink}
-                            >
-                              {remarks?.trim().replace(/\s+/g, " ")}
-                            </a>
+                            <span key={index}>
+                              {parts[0]}
+                              <a
+                                key={index}
+                                href={remarks
+                                  .trim()
+                                  .replace(/^[.()]+|[.()]+$/g, "")}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={styles.remarksLink}
+                              >
+                                {remarks.trim().replace(/\s+/g, " ")}
+                              </a>
+                            </span>
                           );
                         }
+
+                        if (index === 1) {
+                          return null;
+                        }
+
                         return (
                           <p key={index} style={styles.remarksContent}>
-                            {remarks.split("\n").map((line, index) => (
+                            {remarks.split("\n").map((line, lineIndex) => (
                               <span
-                                key={index}
+                                key={lineIndex}
                                 style={{ display: "block", marginTop: 5 }}
                               >
-                                {line}
+                                {index !== 0 && index !== 1 && line}
                               </span>
                             ))}
                           </p>
